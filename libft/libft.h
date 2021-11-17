@@ -6,16 +6,18 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:30:28 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/16 20:40:25 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:13:59 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef LIBFT_H
+#ifndef LIBFT_H
 # define LIBFT_H
 
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdio.h> //XXXX
+# include <ctype.h>
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -26,7 +28,7 @@ int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 void	*ft_memcpy(void *dest, const void *src, size_t size);
-void	*memmove(void *dest, const void *src, size_t cnt);
+void	*ft_memmove(void *dest, const void *src, size_t cnt);
 void	*ft_memset(void *b, int c, size_t size);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(char *src);
