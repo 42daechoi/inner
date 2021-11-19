@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 18:23:11 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/17 20:17:10 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/19 19:33:03 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ size_t	ft_countword(char const *s, char c)
 		else
 			issep = 0;
 		if (inword == 1 && issep == 1)
-		{
 			inword = 0;
-		}
 		if (inword == 0 && issep == 0)
 		{
 			inword = 1;
@@ -45,56 +43,48 @@ size_t	ft_countword(char const *s, char c)
 
 size_t	ft_countspell(char const *s, char c, size_t *pos)
 {
-	size_t	i;
 	size_t	cnt;
 	int		inword;
 
-	i = *pos;
 	inword = 0;
-	while (s[i])
+	cnt = 0;
+	while (s[*pos])
 	{
-		if (inword == 1 && s[i] == c)
+		if (inword == 1 && s[*pos] == c)
 			break ;
-		if (s[i] != c)
+		if (s[*pos] != c)
 		{
-			inword == 1;
+			inword = 1;
 			cnt++;
 		}
-		i++;
+		(*pos)++;
 	}
-	*pos += cnt;
 	return (cnt);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**arr;
-	size_t	wordcnt;
 	size_t	i;
-	size_t	j;
 	size_t	pos;
+	size_t	spellcnt;
+	size_t	j;
 
 	i = 0;
 	pos = 0;
-	wordcnt = ft_countword(s, c);
-	arr = (char **)malloc(wordcnt * sizeof(char *));
+	arr = (char **)malloc(ft_countword(s, c) * sizeof(char *));
 	if (!arr)
 		return (NULL);
-	while (i < wordcnt)
+	while (i < ft_countword(s, c))
 	{
-		arr[i] = (char *)malloc(ft_countspell(s, c, &pos) * sizeof(char));
-		j = 0;
-		while (j < countspell(s, c, &pos))
-		{
-			arr[i][j] = s[pos++];
+		spellcnt = ft_countspell(s, c, &pos);
+		arr[i] = (char *)malloc(spellcnt * sizeof(char));
+		if (!arr[i])
+			return (NULL);
+		j = 1;
+		while (spellcnt > 0)
+			arr[i][(spellcnt--) - 1] = s[pos - (j++)];
+		i++;
 	}
-	return (NULL);
-}
-
-int main()
-{
-	char *s = "s0saf0fdsa0fdsg0gfh00h0h0d000gg0g0g0g0sd0";
-	char c = '0';
-
-	printf("%zu", ft_countword(s, c));
+	return (arr);
 }
