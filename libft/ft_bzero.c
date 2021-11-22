@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 15:27:41 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/16 20:43:53 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/22 16:43:31 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	int		i;
+	size_t	i;
 	char	*temp;
 
 	i = 0;

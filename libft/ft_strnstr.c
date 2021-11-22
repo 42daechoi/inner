@@ -6,13 +6,13 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:30:25 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/17 17:16:36 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/22 19:29:34 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
 	size_t	j;
