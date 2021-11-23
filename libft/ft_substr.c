@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 15:38:25 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/17 18:17:30 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:08:59 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s || start < 0 || len <= 0)
 		return (NULL);
+	if ((size_t)start >= ft_strlen(s))
+		return (ft_strdup(""));
 	str = (char *)malloc(len * sizeof(char) + 1);
 	if (!str)
 		return (NULL);
-	while (i < len)
+	while (s[i] && i < len)
 	{
 		str[i] = s[start];
 		i++;

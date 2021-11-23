@@ -5,51 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 17:17:23 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/17 19:00:19 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/23 19:15:30 by daechoi           #+#    #+#             */
+/*   Updated: 2021/11/23 20:32:28 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_countstr(char const *s1, char const *set, size_t s1_len)
-{
-	size_t	i;
-	size_t	str_len;
-
-	i = 0;
-	str_len = 0;
-	while (i < s1_len)
-	{
-		if (ft_strchr(set, s1[i]) == 0)
-			str_len++;
-		i++;
-	}
-	return (str_len);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s, char const *set)
 {
 	char	*str;
-	size_t	str_len;
-	size_t	s1_len;
 	size_t	i;
 	size_t	j;
 
+	if (!set)
+		return (NULL);
+	if (*s == '\0')
+		return (ft_strdup(""));
 	i = 0;
-	j = 0;
-	s1_len = ft_strlen(s1);
-	str_len = ft_countstr(s1, set, s1_len);
-	str = (char *)malloc(str_len * sizeof(char) + 1);
+	j = ft_strlen(s) - 1;
+	while (s[i] && ft_strchr(set, s[i]))
+		i++;
+	while (s[j] && j > 0 && ft_strchr(set, s[j]))
+		j--;
+	if (i > j)
+		return (ft_strdup(""));
+	str = (char *)malloc((j - i + 2) * sizeof(char));
 	if (!str)
 		return (NULL);
-	while (i < s1_len)
-	{
-		if (ft_strchr(set, s1[i]) == 0)
-		{
-			str[j++] = s1[i];
-		}
-		i++;
-	}
+	ft_strlcpy(str, &s[i], j - i + 2);
 	return (str);
 }

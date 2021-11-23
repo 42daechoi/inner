@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:30:25 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/22 19:29:34 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/23 14:21:49 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	j;
 
 	i = 0;
+	if (*little == '\0')
+		return ((char *)big);
 	while (big[i] && i < len)
 	{
 		j = 0;

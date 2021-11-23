@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:15:07 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/17 17:17:06 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:56:31 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	s2_len;
 	size_t	i;
 
+	if (!s1 || !s2)
+		return (NULL);
 	i = 0;
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
@@ -37,5 +39,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 		s1_len++;
 	}
+	str[s1_len] = '\0';
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 18:23:11 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/19 19:33:03 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/23 19:12:02 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,12 @@ char	**ft_split(char const *s, char c)
 
 	i = 0;
 	pos = 0;
+	if (!s || *s == '\0')
+	{
+		arr = (char **)malloc(1);
+		arr[0] = NULL;
+		return (arr);
+	}
 	arr = (char **)malloc(ft_countword(s, c) * sizeof(char *));
 	if (!arr)
 		return (NULL);
