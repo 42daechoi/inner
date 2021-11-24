@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 19:42:44 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/23 14:54:40 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/24 18:13:52 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_atoi(const char *str)
 {
-	int		i;
+	int			i;
 	long long	sign;
 	long long	res;
 
@@ -34,10 +34,8 @@ int	ft_atoi(const char *str)
 	{
 		res = res * 10 + (str[i] - '0');
 		i++;
-		if (res * sign > 2147483647)
-			return (-1);
-		if (res * sign < -2147483648)
-			return (0);
+		if (res < 0)
+			return ((sign + 1) / -2);
 	}
 	return ((int)(res * sign));
 }
