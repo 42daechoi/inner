@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:15:07 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/23 16:56:31 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/26 14:53:59 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,18 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	i = 0;
+	i = -1;
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	str = (char *)malloc((s1_len + s2_len) * sizeof(char) + 1);
 	if (!str)
 		return (NULL);
-	while (i < s1_len)
-	{
+	while (++i < s1_len)
 		str[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < s2_len)
+	i = -1;
+	while (++i < s2_len)
 	{
 		str[s1_len] = s2[i];
-		i++;
 		s1_len++;
 	}
 	str[s1_len] = '\0';

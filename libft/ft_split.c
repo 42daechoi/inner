@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 18:23:11 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/24 19:00:51 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:35:11 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ int	ft_checkleaks(char **arr, int i)
 	return (1);
 }
 
+char	**ft_errorhandler(void)
+{
+	char	**arr;
+
+	arr = malloc(1);
+	arr[0] = NULL;
+	return (arr);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**arr;
@@ -85,23 +94,35 @@ char	**ft_split(char const *s, char c)
 	i = -1;
 	pos = 0;
 	if (!s || *s == '\0')
-	{
-		arr = malloc(1);
-		arr[0] = NULL;
-		return (arr);
-	}
-	arr = (char **)malloc(ft_countword(s, c) * sizeof(char *));
+		return (ft_errorhandler());
+	//arr = (char **)malloc((ft_countword(s, c) + 1) * sizeof(char *));
+	//arr[ft_countword(s, c)] = "";
+	arr = (char **)ft_calloc((ft_countword(s, c) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
-	while (++i < ft_countword(s, c))
+	while (!arr[++i])
 	{
 		spellcnt = ft_countspell(s, c, &pos);
-		arr[i] = (char *)malloc(spellcnt * sizeof(char));
-		if (!ft_checkleaks(arr, i))
+		arr[i] = (char *)ft_calloc((spellcnt + 1), sizeof(char));
+		//arr[i] = (char *)malloc((spellcnt + 1) * sizeof(char));
+		if (ft_checkleaks(arr, i) == 0)
 			return (NULL);
 		j = 1;
+		//arr[i][spellcnt] = '\0';
 		while (spellcnt > 0)
 			arr[i][(spellcnt--) - 1] = s[pos - (j++)];
 	}
 	return (arr);
+}
+
+int main()
+{
+	char **arr = ft_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse", ' ');
+	int i = 0;
+
+	while (arr[i])
+	{
+		printf("%s\n", arr[i]);
+		i++;
+	}
 }

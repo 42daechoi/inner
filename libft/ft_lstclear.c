@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 17:26:20 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/24 19:11:12 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/26 14:25:02 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*cur;
-	t_list	*next;
+	t_list	*tmp;
 
 	if (lst == NULL || del == NULL)
 		return ;
-	cur = *lst;
-	while (cur != NULL)
+	while (*lst != NULL)
 	{
-		next = cur->next;
-		ft_lstdelone(cur, del);
-		cur = next;
+		tmp = (*lst)->next;
+		del((*lst)->content);
+		free((*lst));
+		*lst = tmp;
 	}
+	*lst = NULL;
 }

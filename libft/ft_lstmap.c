@@ -5,19 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/24 18:22:49 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/24 19:04:59 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/26 15:10:26 by daechoi           #+#    #+#             */
+/*   Updated: 2021/11/26 15:27:16 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*res;
+	t_list	*new_lst;
 	t_list	*tmp;
 
-	if (lst == NULL || f == NULL)
+	if (lst == NULL || f == NULL || del == NULL)
 		return (NULL);
-	while (
-*/
+	while (lst != NULL)
+	{
+		tmp = ft_lstnew(f(lst->content));
+		if (tmp == NULL)
+		{
+			ft_lstclear(&new_lst, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&new_lst, tmp);
+		tmp = tmp->next;
+		lst = lst->next;
+	}
+	return (new_lst);
+}
