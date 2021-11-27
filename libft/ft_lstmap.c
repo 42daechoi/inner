@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:10:26 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/26 15:27:16 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:08:28 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 
 	if (lst == NULL || f == NULL || del == NULL)
 		return (NULL);
+	new_lst = NULL;
 	while (lst != NULL)
 	{
 		tmp = ft_lstnew(f(lst->content));

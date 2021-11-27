@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:33:23 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/23 17:49:44 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:06:16 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_zerostr(void)
 {
 	char	*str;
 
-	str = (char *)malloc(2);
+	str = (char *)malloc(2 * sizeof(char));
 	if (!str)
 		return (NULL);
 	str[0] = '0';
@@ -46,7 +46,7 @@ char	*ft_strmalloc(int sign, int *i, int *cnt)
 	return (str);
 }
 
-char	*ft_setstr(unsigned int num, unsigned int digit, int cnt, int sign)
+char	*ft_setstr(long long num, long long digit, int cnt, int sign)
 {
 	int		i;
 	char	*str;
@@ -66,11 +66,11 @@ char	*ft_setstr(unsigned int num, unsigned int digit, int cnt, int sign)
 	return (str);
 }
 
-void	ft_setparam(unsigned int *num, unsigned int *digit, int *cnt)
+void	ft_setparam(long long *num, long long *digit, int *cnt)
 {
 	while (1)
 	{
-		if (*num / *digit > 0)
+		if ((long long)*num / *digit > 0)
 			(*cnt)++;
 		else
 			break ;
@@ -81,11 +81,11 @@ void	ft_setparam(unsigned int *num, unsigned int *digit, int *cnt)
 
 char	*ft_itoa(int n)
 {
-	unsigned int	digit;
-	unsigned int	num;
-	int				cnt;
-	char			*str;
-	int				sign;
+	long long	digit;
+	long long	num;
+	int			cnt;
+	char		*str;
+	int			sign;
 
 	digit = 1;
 	cnt = 0;
@@ -97,10 +97,10 @@ char	*ft_itoa(int n)
 	else if (n < 0)
 	{
 		sign = -1;
-		num = (unsigned int)(-n);
+		num = (long long)n * -1;
 	}
 	else
-		num = (unsigned int)n;
+		num = (long long)n;
 	ft_setparam(&num, &digit, &cnt);
 	str = ft_setstr(num, digit, cnt, sign);
 	if (!str)
