@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:30:28 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/29 15:45:15 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/29 17:55:45 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
-# include <string.h>
 # include <unistd.h>
-# include <stdio.h> //XXXX
-# include <ctype.h>
 
 typedef struct s_list
 {
