@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daechoi <daechoi@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:48:25 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/29 20:11:38 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/11/30 16:09:48 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,29 @@ char	*ft_take_newline(char *line, int pos)
 
 char	*get_next_line(int fd)
 {
-	static char	line[OPEN_MAX];
+	static char	*line;
 	char		buff[BUFFER_SIZE + 1];
 	int			rdsize;
 	int			pos;
 
-	if (fd > OPEN_MAX || fd < 0)
-		return (NULL);
+	//if (fd > OPEN_MAX || fd < 0)
+	//	return (NULL);
 	while (rdsize = read(fd, buff, BUFFER_SIZE) > 0)
 	{
-		buff[rdsize] == '\0';
-		line[fd] = ft_strjoin(line[fd], buff);
-		pos = ft_check_newline(line[fd]);
+		buff[rdsize] = '\0';
+		printf("%s", buff);
+		line = ft_strjoin(line, buff);
+		pos = ft_check_newline(line);
 		if (pos > 0)
-			return (ft_take_newline(line[fd], pos));
+			return (ft_take_newline(line, pos));
 	}
 	return (line);
+}
+
+int main()
+{
+	int fd = open("fileA", O_RDONLY);
+	printf("%s", get_next_line(fd));
+	free(get_next_line(fd));
+	close(fd);
 }
