@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:48:25 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/07 20:25:29 by daechoi          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:02:36 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	ft_check_newline(char *line)
 {
 	int	i;
-	
+
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\n')
 			return (i);
-			i++;
+		i++;
 	}
 	return (-1);
 }
@@ -31,7 +31,7 @@ char	*ft_take_newline(char **line, int rdsize)
 	char	*res;
 	char	*temp;
 	int		pos;
-	
+
 	if (!line || !*line || rdsize < 0)
 		return (NULL);
 	pos = ft_check_newline(*line);
@@ -44,8 +44,8 @@ char	*ft_take_newline(char **line, int rdsize)
 		if (**line != '\0')
 			return (res);
 	}
-	else 
-		res = ft_strdup(*line);	
+	else
+		res = ft_strdup(*line);
 	free(*line);
 	*line = NULL;
 	return (res);
