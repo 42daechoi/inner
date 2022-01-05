@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:35:51 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/13 20:10:38 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:37:29 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_putstr_fd(char *s, int fd)
 	size_t	i;
 
 	i = 0;
-	if (!s)
+	if (!s || !*s)
 		return ;
 	while (i < ft_strlen(s))
 	{

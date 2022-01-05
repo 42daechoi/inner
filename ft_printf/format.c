@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:30:37 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/20 20:25:22 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:45:23 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char    *padding(int zero_flag, int pad_len)
     int     i;
 
     i = 0;
+    if (pad_len < 0)
+        return (ft_strdup(""));
     pad_str = (char *)malloc((pad_len + 1) * sizeof(char));
     if (!pad_str)
         return (NULL);
@@ -67,7 +69,7 @@ int str_format(char *s, t_info info)
     if (!s)
         return (-1);
     if (info.width > 0)
-        pad_str = padding(info.zero, info.width - ft_strlen(s));
+        pad_str = padding(info.zero, info.width - ft_strlen(s) + 1);
     else
         pad_str = ft_strdup("");
     if (!pad_str)
@@ -91,4 +93,58 @@ int str_format(char *s, t_info info)
     }
     free(pad_str);
     return (info.width);
+}
+
+int int_format(int n, t_info info)
+{
+    char    *zpad_str;
+	char	*pad_str;
+	char	*abs;
+	char	*temp;
+	int		print_len;
+	
+	abs = ft_itoa(n);
+    if (info.prec > 0)
+        zpad_str = padding(1, info.prec - ft_strlen(abs) + 1);
+	else
+		zpad_str = ft_strdup("");
+	if (abs[0] == '-')
+	{
+		temp = zpad_str;
+		zpad_str = ft_strjoin(temp, abs + 1);
+		free(temp);
+		if (!zpad_str)
+			return (-1);
+		temp = zpad_str;
+		zpad_str = ft_strjoin("-", temp);
+		free(temp);
+		if (!zpad_str)
+			return (-1);
+	}
+	else
+	{
+		temp = zpad_str;
+		zpad_str = ft_strjoin(temp, abs);
+		free(temp);
+		if (!zpad_str)
+			return (-1);
+	}
+	pad_str = padding(info.zero, info.width - info.prec - 1);
+    if (!pad_str)
+	    return (-1);
+    if (info.minus > 0)
+    {
+        ft_putstr_fd(zpad_str, 1);
+        ft_putstr_fd(pad_str, 1);
+    }
+    else
+    {
+        ft_putstr_fd(pad_str, 1);
+        ft_putstr_fd(zpad_str, 1);
+    }
+    print_len = ft_strlen(pad_str) + ft_strlen(zpad_str);
+	free(abs);
+    free(pad_str);
+    free(zpad_str);
+	return (print_len);
 }
