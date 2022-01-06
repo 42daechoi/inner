@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 14:35:51 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/05 18:37:29 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/16 15:13:01 by daechoi           #+#    #+#             */
+/*   Updated: 2022/01/06 18:11:33 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-void	ft_putstr_fd(char *s, int fd)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
 	i = 0;
-	if (!s || !*s)
-		return ;
-	while (i < ft_strlen(s))
-	{
-		write(fd, &s[i], 1);
+	while (str[i])
 		i++;
-	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/06 18:20:30 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:13:27 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,12 @@ int ft_printf(const char *str, ...)
 	}
 	va_end(ap);
 	return (print_len);
+}
+
+
+int main()
+{
+	unsigned int temp = 30;
+	printf("<%d>\n", ft_printf("%30.5x\n", temp));
+	printf("<%d>\n", printf("%30.5x\n", temp));
 }

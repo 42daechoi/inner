@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 20:26:37 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/20 18:40:03 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/22 14:35:51 by daechoi           #+#    #+#             */
+/*   Updated: 2022/01/06 18:11:18 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-char	*ft_strdup(char *src)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int		i;
-	char	*temp;
+	size_t	i;
 
 	i = 0;
-	while (src[i])
-		i++;
-	temp = (char *)malloc(i * sizeof(char) + 1);
-	if (!temp)
-		return (0);
-	i = 0;
-	while (src[i])
+	if (!s || !*s)
+		return ;
+	while (i < ft_strlen(s))
 	{
-		temp[i] = src[i];
+		write(fd, &s[i], 1);
 		i++;
 	}
-	temp[i] = '\0';
-	return (temp);
 }

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 15:13:01 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/13 20:29:21 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/16 14:28:28 by daechoi           #+#    #+#             */
+/*   Updated: 2022/01/06 18:11:03 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-size_t	ft_strlen(const char *str)
+int	ft_isdigit(int c)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }

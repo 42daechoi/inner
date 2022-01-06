@@ -6,11 +6,11 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 18:18:55 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/20 16:44:07 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:11:22 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 char	*ft_strchr(const char *s, int c)
 {

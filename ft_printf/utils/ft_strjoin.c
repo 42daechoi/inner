@@ -6,11 +6,11 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 16:15:07 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/20 20:21:47 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:11:30 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

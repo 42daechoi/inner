@@ -6,11 +6,11 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:33:23 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/05 17:10:49 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:10:59 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 char	*ft_zerostr(void)
 {

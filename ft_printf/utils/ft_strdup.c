@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 14:44:05 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/13 20:09:16 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/16 20:26:37 by daechoi           #+#    #+#             */
+/*   Updated: 2022/01/06 18:11:26 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
-void	ft_putnbr_fd(int n, int fd)
+char	*ft_strdup(char *src)
 {
-	char	c;
+	int		i;
+	char	*temp;
 
-	if (n == -2147483648)
+	i = 0;
+	while (src[i])
+		i++;
+	temp = (char *)malloc(i * sizeof(char) + 1);
+	if (!temp)
+		return (0);
+	i = 0;
+	while (src[i])
 	{
-		ft_putnbr_fd(n / 10, fd);
-		write(fd, "8", 1);
+		temp[i] = src[i];
+		i++;
 	}
-	else if (n < 0)
-	{
-		write(fd, "-", 1);
-		ft_putnbr_fd(-n, fd);
-	}
-	else
-	{
-		if (n > 9)
-			ft_putnbr_fd(n / 10, fd);
-		c = n % 10 + '0';
-		write(fd, &c, 1);
-	}
+	temp[i] = '\0';
+	return (temp);
 }
