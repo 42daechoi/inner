@@ -16,11 +16,11 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar -rc
 SRC = ./utils/ft_isdigit.c ./utils/ft_itoa.c ./utils/ft_putchar_fd.c \
 		./utils/ft_malloc_nbr_base.c ./utils/ft_putstr_fd.c ./utils/ft_strchr.c\
-		./utils/ft_strdup.c ./utils/ft_strjoin.c ./utils/ft_strlen.c \
+		./utils/ft_strdup.c ./utils/ft_strjoin.c ./utils/ft_strlen.c ./utils/ft_substr.c\
 		ft_printf.c format.c format2.c
 SRC_BONUS = ./utils/ft_isdigit.c ./utils/ft_itoa.c ./utils/ft_putchar_fd.c \
 		./utils/ft_malloc_nbr_base.c ./utils/ft_putstr_fd.c ./utils/ft_strchr.c\
-		./utils/ft_strdup.c ./utils/ft_strjoin.c ./utils/ft_strlen.c \
+		./utils/ft_strdup.c ./utils/ft_strjoin.c ./utils/ft_strlen.c ./utils/ft_substr.c \
 		ft_printf_bonus.c format_bonus.c format2_bonus.c
 OBJ = $(SRC:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)

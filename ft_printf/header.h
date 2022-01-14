@@ -25,6 +25,9 @@ typedef struct s_info
     int     width;
     int     prec;
     char    type;
+    int     sharp;
+    int     plus;
+    int     space;
 }   t_info;
 
 void	ft_putnbr_fd(int n, int fd);
@@ -38,12 +41,14 @@ char	*ft_strjoin(char const *s1, char const *s2);
 int     str_format(char *s, t_info info);
 int     char_format(char c, t_info info);
 int     int_format(int n, t_info info);
-char	*ft_itoa(int n);
+char	*ft_itoa(long long n);
 char    *padding(int zero_flag, int pad_len);
-char    *ft_malloc_nbr_base(long long nbr, char *base);
-int     pointer_format(long long n, t_info info);
+char    *ft_malloc_nbr_base(unsigned long nbr, char *base);
+int     pointer_format(unsigned long n, t_info info);
 char	*set_zpad(t_info info, char *abs);
 int     unsignedint_format(unsigned int n, t_info info);
 int     ft_printf(const char *str, ...);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char    *spec_flags(t_info info, int *print_len, char sign);
 
 #endif

@@ -79,7 +79,7 @@ void	ft_setparam(long long *num, long long *digit, int *cnt)
 	(*digit) /= 10;
 }
 
-char	*ft_itoa(int n)
+char	*ft_itoa(long long n)
 {
 	long long	digit;
 	long long	num;
@@ -90,8 +90,6 @@ char	*ft_itoa(int n)
 	digit = 1;
 	cnt = 0;
 	sign = 1;
-	if (n < -2147483648 || n > 2147483647)
-		return (NULL);
 	if (n == 0)
 		return (ft_zerostr());
 	else if (n < 0)

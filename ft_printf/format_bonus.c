@@ -66,36 +66,36 @@ int char_format(char c, t_info info)
 int str_format(char *s, t_info info)
 {
     char    *pad_str;
-    char    *temp;
 	int		print_len;
+    char    *str;
 
 	print_len = 0;
     if (!s)
+        s = "(null)";
+    if (info.prec > -1)
+		str = ft_substr(s, 0, info.prec);
+    else
+        str = ft_strdup(s);
+    if (!str)
         return (-1);
     if (info.width > 0)
-        pad_str = padding(info.zero, info.width - ft_strlen(s) + 1);
+        pad_str = padding(info.zero, info.width - ft_strlen(str));
     else
         pad_str = ft_strdup("");
     if (!pad_str)
         return (-1);
-    temp = pad_str;
     if (info.minus > 0)
     {
-        pad_str = ft_strjoin(s, temp);
-        free(temp);
-        if (!pad_str)
-            return (-1);
+        ft_putstr_fd(str, 1);
         ft_putstr_fd(pad_str, 1);
     }
     else
     {
-        pad_str = ft_strjoin(temp, s);
-        free(temp);
-        if (!pad_str)
-            return (-1);
         ft_putstr_fd(pad_str, 1);
+        ft_putstr_fd(str, 1);
     }
-	print_len = ft_strlen(pad_str);
+	print_len = ft_strlen(pad_str) + ft_strlen(str);
+    free(str);
     free(pad_str);
     return (print_len);
 }
@@ -105,10 +105,14 @@ char	*set_zpad(t_info info, char *abs)
 	char	*zpad_str;
     char    *temp;
 
-	if (info.prec > 0)
+	if (info.prec > 0 && abs[0] != '-')
         zpad_str = padding(1, info.prec - ft_strlen(abs));
-	else
+    else if (info.prec > 0 && abs[0] == '-' )
+        zpad_str = padding(1, info.prec - ft_strlen(abs) + 1);
+    else
 		zpad_str = ft_strdup("");
+        if (!zpad_str)
+            return (NULL);
 	if (abs[0] == '-')
 	{
 		temp = zpad_str;
@@ -140,25 +144,47 @@ int int_format(int n, t_info info)
 	char	*abs;
 	int		print_len;
 	
-	print_len = 0;
-	abs = ft_itoa(n);
+    if (!n && info.prec == -1)
+        abs = ft_strdup("0");
+    else if (!n && info.prec == 0)
+		abs = ft_strdup("");
+    else
+	    abs = ft_itoa(n);
+    print_len = 0;
 	zpad_str = set_zpad(info, abs);
+	if (info.prec > -1)
+		info.zero = 0;
 	if (!zpad_str)
 		return (-1);
-	pad_str = padding(info.zero, info.width - info.prec - 1);
+    if (info.prec < (int)ft_strlen(abs))
+        pad_str = padding(info.zero, info.width - ft_strlen(abs));
+    else
+    {
+        if (abs[0] == '-')
+            pad_str = padding(info.zero, info.width - info.prec - 1);
+        else
+            pad_str = padding(info.zero, info.width - info.prec);
+    }
     if (!pad_str)
 	    return (-1);
+    if (info.zero > 0 && info.width > (int)ft_strlen(abs) && zpad_str[0] == '-')
+    {
+        zpad_str[0] = '0';
+        pad_str[0] = '-';
+    }
     if (info.minus > 0)
     {
+		ft_putstr_fd(spec_flags(info, &print_len, abs[0]), 1);
         ft_putstr_fd(zpad_str, 1);
         ft_putstr_fd(pad_str, 1);
     }
     else
     {
         ft_putstr_fd(pad_str, 1);
+        ft_putstr_fd(spec_flags(info, &print_len, abs[0]), 1);
         ft_putstr_fd(zpad_str, 1);
     }
-    print_len = ft_strlen(pad_str) + ft_strlen(zpad_str);
+    print_len += ft_strlen(pad_str) + ft_strlen(zpad_str);
 	free(abs);
     free(pad_str);
     free(zpad_str);

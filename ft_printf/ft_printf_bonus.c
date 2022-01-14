@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/06 18:13:27 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/06 18:20:30 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	init_info(t_info *info)
 	info->width = 0;
 	info->prec = -1;
 	info->type = '0';
+	info->sharp = 0;
+	info->plus = 0;
+	info->space = 0;
 }
 
 static void	set_w_or_p(t_info *info, char c)
@@ -40,6 +43,12 @@ static int	parsing(const char *str, int *i, t_info *info)
 			info->zero = 1;
 		else if (str[*i] == '.')
 			info->prec = 0;
+		else if (str[*i] == '#')
+			info->sharp = 1;
+		else if (str[*i] == '+')
+			info->plus = 1;
+		else if (str[*i] == ' ')
+			info->space = 1;
 		if (ft_isdigit(str[*i]))
 			set_w_or_p(info, str[*i]);
 		(*i)++;
@@ -52,18 +61,18 @@ static int	parsing(const char *str, int *i, t_info *info)
 	return (1);
 }
 
-static int	print_format(va_list ap, t_info info)
+static int	print_format(va_list *ap, t_info info)
 {
 	if (info.type == 'c')
-		return (char_format(va_arg(ap, int), info));
+		return (char_format(va_arg(*ap, int), info));
 	else if (info.type == 's')
-		return (str_format(va_arg(ap, char *), info));
+		return (str_format(va_arg(*ap, char *), info));
 	else if (info.type == 'p')
-	 	return (pointer_format(va_arg(ap, long long), info));
+	 	return (pointer_format(va_arg(*ap, long long), info));
 	else if (info.type == 'd' || info.type == 'i')
-		return (int_format(va_arg(ap, int), info));
+		return (int_format(va_arg(*ap, int), info));
 	else if (info.type == 'u' || info.type == 'x' || info.type == 'X')
-		return (unsignedint_format(va_arg(ap, int), info));
+		return (unsignedint_format(va_arg(*ap, int), info));
 	else if (info.type == '%')
 		return (char_format(info.type, info));
 	else
@@ -76,6 +85,7 @@ int ft_printf(const char *str, ...)
 	va_list	ap;
 	t_info 	info;
 	int		print_len;
+	int		curr_len;
 
 	print_len = 0;
 	i = 0;
@@ -87,7 +97,12 @@ int ft_printf(const char *str, ...)
 		{
 			i++;
 			if (parsing(str, &i, &info) > -1)
-				print_len += print_format(ap, info);
+			{
+				curr_len = print_format(&ap, info);
+				if (curr_len == -1)
+					return (-1);
+				print_len += curr_len;
+			}
 			else
 				return (-1);
 		}
@@ -97,15 +112,8 @@ int ft_printf(const char *str, ...)
 			print_len++;
 		}
 		i++;
+		init_info(&info);
 	}
 	va_end(ap);
 	return (print_len);
-}
-
-
-int main()
-{
-	unsigned int temp = 30;
-	printf("<%d>\n", ft_printf("%30.5x\n", temp));
-	printf("<%d>\n", printf("%30.5x\n", temp));
 }
