@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:22:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 02:26:10 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 04:41:25 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_info
 void	ft_putnbr_fd(int n, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
+void	ft_putstr_va(int n, ...);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 int		ft_isdigit(int c);
@@ -49,6 +50,12 @@ char	*set_zpad(t_info info, char *abs);
 int		unsignedint_format(unsigned int n, t_info info);
 int		ft_printf(const char *str, ...);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*spec_flags(t_info info, int *print_len, char sign);
+char	*spec_flags(t_info info, int *print_len, char sign, unsigned int n);
+char	*print_strformat(char *str, t_info info);
+char	*sort_zpad(char *abs, char *zpad_str);
+char	*set_itoa_str(t_info info, int n);
+char	*set_pad_str(char *itoa_str, t_info info);
+void	ft_free_va(int n, ...);
+char	*set_s(unsigned int n, t_info info);
 
 #endif

@@ -1,27 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   vautils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 14:35:51 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 03:50:30 by daechoi          ###   ########.fr       */
+/*   Created: 2022/01/16 03:51:05 by daechoi           #+#    #+#             */
+/*   Updated: 2022/01/16 05:10:12 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "header.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_va(int n, ...)
 {
-	size_t	i;
+	va_list	ap;
+	int		i;
+	char	*str;
 
+	va_start(ap, n);
 	i = 0;
-	if (!s || !*s)
-		return ;
-	while (i < ft_strlen(s))
+	while (i < n)
 	{
-		write(fd, &s[i], 1);
+		str = va_arg(ap, char *);
+		ft_putstr_fd(str, 1);
 		i++;
 	}
+	va_end(ap);
+}
+
+void	ft_free_va(int n, ...)
+{
+	va_list	ap;
+	int		i;
+
+	va_start(ap, n);
+	i = 0;
+	while (i < n)
+	{
+		free(va_arg(ap, char *));
+		i++;
+	}
+	va_end(ap);
 }

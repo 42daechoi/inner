@@ -6,7 +6,7 @@
 #    By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/06 17:54:17 by daechoi           #+#    #+#              #
-#    Updated: 2022/01/06 18:25:45 by daechoi          ###   ########.fr        #
+#    Updated: 2022/01/16 04:43:13 by daechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ AR = ar -rc
 SRC = ./utils/ft_isdigit.c ./utils/ft_itoa.c ./utils/ft_putchar_fd.c \
 		./utils/ft_malloc_nbr_base.c ./utils/ft_putstr_fd.c ./utils/ft_strchr.c\
 		./utils/ft_strdup.c ./utils/ft_strjoin.c ./utils/ft_strlen.c ./utils/ft_substr.c\
-		ft_printf.c format.c format2.c
+		ft_printf.c format.c format2.c strsetting.c vautils.c
 SRC_BONUS = ./utils/ft_isdigit.c ./utils/ft_itoa.c ./utils/ft_putchar_fd.c \
 		./utils/ft_malloc_nbr_base.c ./utils/ft_putstr_fd.c ./utils/ft_strchr.c\
 		./utils/ft_strdup.c ./utils/ft_strjoin.c ./utils/ft_strlen.c ./utils/ft_substr.c \
-		ft_printf_bonus.c format_bonus.c format2_bonus.c
+		ft_printf_bonus.c format_bonus.c format2_bonus.c strsetting.c vautils.c
 OBJ = $(SRC:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 RM = /bin/rm -f

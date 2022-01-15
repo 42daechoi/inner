@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 02:21:59 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 04:52:42 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ static int	parsing(const char *str, int *i, t_info *info)
 		(*i)++;
 	}
 	info->type = str[*i];
-	if (!(info->type == 'd' || info->type == 'i' || info->type == 'x' || info->type == 'X' || info->type == 'u'))
+	if (!(info->type == 'd' || info->type == 'i' \
+		|| info->type == 'x' || info->type == 'X' || info->type == 'u'))
 		info->zero = 0;
 	if (info->minus == 1 && info->zero == 1)
-			return (-1);
+		return (-1);
 	return (1);
 }
 
@@ -68,7 +69,7 @@ static int	print_format(va_list *ap, t_info info)
 	else if (info.type == 's')
 		return (str_format(va_arg(*ap, char *), info));
 	else if (info.type == 'p')
-	 	return (pointer_format(va_arg(*ap, long long), info));
+		return (pointer_format(va_arg(*ap, long long), info));
 	else if (info.type == 'd' || info.type == 'i')
 		return (int_format(va_arg(*ap, int), info));
 	else if (info.type == 'u' || info.type == 'x' || info.type == 'X')
@@ -79,9 +80,9 @@ static int	print_format(va_list *ap, t_info info)
 		return (-1);
 }
 
-int ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
-	int 	i;
+	int		i;
 	va_list	ap;
 	t_info 	info;
 	int		print_len;

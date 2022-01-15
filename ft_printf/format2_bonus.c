@@ -6,25 +6,26 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 14:34:07 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 02:20:48 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 04:37:53 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-char	*spec_flags(t_info info, int *print_len, char sign)
+char	*spec_flags(t_info info, int *print_len, char sign, unsigned int n)
 {
-	if (info.sharp && info.type == 'x')
+	if (n && info.sharp && info.type == 'x')
 	{
 		(*print_len) += 2;
 		return ("0x");
 	}
-	else if (info.sharp && info.type == 'X')
+	else if (n && info.sharp && info.type == 'X')
 	{
 		(*print_len) += 2;
 		return ("0X");
 	}
-	else if (sign != '-' && info.space && (info.type == 'd' || info.type == 'i'))
+	else if (sign != '-' && info.space \
+			&& (info.type == 'd' || info.type == 'i'))
 	{
 		(*print_len)++;
 		return (" ");
@@ -34,7 +35,8 @@ char	*spec_flags(t_info info, int *print_len, char sign)
 		(*print_len)++;
 		return ("+");
 	}
-	else return (NULL);
+	else
+		return (NULL);
 }
 
 int	pointer_format(unsigned long n, t_info info)
@@ -55,21 +57,12 @@ int	pointer_format(unsigned long n, t_info info)
 	if (!pad_str)
 		return (-1);
 	if (info.minus > 0)
-	{
-		ft_putstr_fd("0x", 1);
-		ft_putstr_fd(s, 1);
-		ft_putstr_fd(pad_str, 1);
-	}
+		ft_putstr_va(3, "0x", s, pad_str);
 	else
-	{
-		ft_putstr_fd(pad_str, 1);
-		ft_putstr_fd("0x", 1);
-		ft_putstr_fd(s, 1);
-	}
+		ft_putstr_va(3, pad_str, "0x", s);
 	print_len += ft_strlen(pad_str);
 	print_len += 2;
-	free(s);
-	free(pad_str);
+	ft_free_va(2, s, pad_str);
 	return (print_len);
 }
 
@@ -81,16 +74,9 @@ int	unsignedint_format(unsigned int n, t_info info)
 	int		print_len;
 
 	print_len = 0;
-	if (!n && info.prec == 0)
-		s = ft_strdup("");
-	else if (info.type == 'u')
-		s = ft_itoa(n);
-	else if (info.type == 'x')
-		s = ft_malloc_nbr_base(n, "0123456789abcdef");
-	else
-		s = ft_malloc_nbr_base(n, "0123456789ABCDEF");
+	s = set_s(n, info);
 	zpad_str = set_zpad(info, s);
-	if (!zpad_str)
+	if (!zpad_str || !s)
 		return (-1);
 	if (info.prec > -1)
 		info.zero = 0;
@@ -101,22 +87,10 @@ int	unsignedint_format(unsigned int n, t_info info)
 	if (!pad_str)
 		return (-1);
 	if (info.minus > 0)
-	{
-		if (n)
-			ft_putstr_fd(spec_flags(info, &print_len, '+'), 1);
-		ft_putstr_fd(zpad_str, 1);
-		ft_putstr_fd(pad_str, 1);
-	}
+		ft_putstr_va(3, spec_flags(info, &print_len, '+', n), zpad_str, pad_str);
 	else
-	{
-		ft_putstr_fd(pad_str, 1);
-		if (n)
-			ft_putstr_fd(spec_flags(info, &print_len, '+'), 1);
-		ft_putstr_fd(zpad_str, 1);
-	}
+		ft_putstr_va(3, pad_str, spec_flags(info, &print_len, '+', n), zpad_str);
 	print_len += ft_strlen(pad_str) + ft_strlen(zpad_str);
-	free(s);
-	free(pad_str);
-	free(zpad_str);
+	ft_free_va(3, s, pad_str, zpad_str);
 	return (print_len);
 }
