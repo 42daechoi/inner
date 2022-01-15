@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 14:53:37 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 02:24:02 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:21:33 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_malloc_nbr_base(unsigned long nbr, char *base)
 {
 	unsigned long	base_len;
 	char			*arr;
-    unsigned long	temp;
+	unsigned long	temp;
 	int				i;
 
 	i = 0;
@@ -36,5 +36,5 @@ char	*ft_malloc_nbr_base(unsigned long nbr, char *base)
 		arr[i] = base[nbr % base_len];
 		nbr = nbr / base_len;
 	}
-    return (arr);
+	return (arr);
 }

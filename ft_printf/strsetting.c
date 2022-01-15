@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 02:52:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:05:46 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:20:07 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*print_strformat(char *str, t_info info)
 {
 	char	*pad_str;
-	
+
 	if (info.width > 0)
 		pad_str = padding(info.zero, info.width - ft_strlen(str));
 	else
@@ -74,7 +74,7 @@ char	*set_pad_str(char *itoa_str, t_info info)
 {
 	char	*pad_str;
 
-	if(!itoa_str)
+	if (!itoa_str)
 		return (NULL);
 	if (info.prec < (int)ft_strlen(itoa_str))
 		pad_str = padding(info.zero, info.width - ft_strlen(itoa_str));

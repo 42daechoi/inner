@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 04:52:42 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:30:13 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_printf(const char *str, ...)
 {
 	int		i;
 	va_list	ap;
-	t_info 	info;
+	t_info	info;
 	int		print_len;
 	int		curr_len;
 
