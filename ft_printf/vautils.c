@@ -6,13 +6,13 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 03:51:05 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:20:50 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:41:18 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	ft_putstr_va(int n, ...)
+void	putstr_va(int n, ...)
 {
 	va_list	ap;
 	int		i;
@@ -29,7 +29,7 @@ void	ft_putstr_va(int n, ...)
 	va_end(ap);
 }
 
-void	ft_free_va(int n, ...)
+void	free_va(int n, ...)
 {
 	va_list	ap;
 	int		i;

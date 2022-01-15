@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 14:34:07 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 04:37:53 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:40:55 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	pointer_format(unsigned long n, t_info info)
 	if (!pad_str)
 		return (-1);
 	if (info.minus > 0)
-		ft_putstr_va(3, "0x", s, pad_str);
+		putstr_va(3, "0x", s, pad_str);
 	else
-		ft_putstr_va(3, pad_str, "0x", s);
+		putstr_va(3, pad_str, "0x", s);
 	print_len += ft_strlen(pad_str);
 	print_len += 2;
-	ft_free_va(2, s, pad_str);
+	free_va(2, s, pad_str);
 	return (print_len);
 }
 
@@ -87,10 +87,10 @@ int	unsignedint_format(unsigned int n, t_info info)
 	if (!pad_str)
 		return (-1);
 	if (info.minus > 0)
-		ft_putstr_va(3, spec_flags(info, &print_len, '+', n), zpad_str, pad_str);
+		putstr_va(3, spec_flags(info, &print_len, '+', n), zpad_str, pad_str);
 	else
-		ft_putstr_va(3, pad_str, spec_flags(info, &print_len, '+', n), zpad_str);
+		putstr_va(3, pad_str, spec_flags(info, &print_len, '+', n), zpad_str);
 	print_len += ft_strlen(pad_str) + ft_strlen(zpad_str);
-	ft_free_va(3, s, pad_str, zpad_str);
+	free_va(3, s, pad_str, zpad_str);
 	return (print_len);
 }

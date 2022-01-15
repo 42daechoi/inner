@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format.c                                           :+:      :+:    :+:   */
+/*   format_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:30:37 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:05:06 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:40:15 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	str_format(char *s, t_info info)
 	if (!pad_str)
 		return (-1);
 	print_len = ft_strlen(pad_str) + ft_strlen(str);
-	ft_free_va(2, str, pad_str);
+	free_va(2, str, pad_str);
 	return (print_len);
 }
 
@@ -124,10 +124,10 @@ int	int_format(int n, t_info info)
 		pad_str[0] = '-';
 	}
 	if (info.minus > 0)
-		ft_putstr_va(3, spec_flags(info, &print_len, itoa_str[0], 0), zpad_str, pad_str);
+		putstr_va(3, spec_flags(info, &print_len, itoa_str[0], 0), zpad_str, pad_str);
 	else
-		ft_putstr_va(3, pad_str, spec_flags(info, &print_len, itoa_str[0], 0), zpad_str);
+		putstr_va(3, pad_str, spec_flags(info, &print_len, itoa_str[0], 0), zpad_str);
 	print_len += ft_strlen(pad_str) + ft_strlen(zpad_str);
-	ft_free_va(3, itoa_str, pad_str, zpad_str);
+	free_va(3, itoa_str, pad_str, zpad_str);
 	return (print_len);
 }
