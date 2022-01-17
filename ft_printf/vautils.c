@@ -6,13 +6,13 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 03:51:05 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/17 16:41:46 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 19:28:17 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	putstr_va(int n, ...)
+void	putstr_va(int n, ...) 
 {
 	va_list	ap;
 	int		i;
