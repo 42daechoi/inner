@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:30:13 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 15:17:40 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_info(t_info *info)
 	info->space = 0;
 }
 
-static void	set_w_or_p(t_info *info, char c)
+void	set_w_or_p(t_info *info, char c)
 {
 	if (info->prec == -1)
 		info->width = info->width * 10 + (c - '0');
@@ -32,7 +32,7 @@ static void	set_w_or_p(t_info *info, char c)
 		info->prec = info->prec * 10 + (c - '0');
 }
 
-static int	parsing(const char *str, int *i, t_info *info)
+int	parsing(const char *str, int *i, t_info *info)
 {
 	while (str[*i] && !ft_strchr("cspdiuxX%", str[*i]))
 	{
@@ -62,7 +62,7 @@ static int	parsing(const char *str, int *i, t_info *info)
 	return (1);
 }
 
-static int	print_format(va_list *ap, t_info info)
+int	print_format(va_list *ap, t_info info)
 {
 	if (info.type == 'c')
 		return (char_format(va_arg(*ap, int), info));
@@ -82,39 +82,14 @@ static int	print_format(va_list *ap, t_info info)
 
 int	ft_printf(const char *str, ...)
 {
-	int		i;
 	va_list	ap;
 	t_info	info;
 	int		print_len;
-	int		curr_len;
 
 	print_len = 0;
-	i = 0;
 	va_start(ap, str);
 	init_info(&info);
-	while (str[i])
-	{
-		if (str[i] == '%')
-		{
-			i++;
-			if (parsing(str, &i, &info) > -1)
-			{
-				curr_len = print_format(&ap, info);
-				if (curr_len == -1)
-					return (-1);
-				print_len += curr_len;
-			}
-			else
-				return (-1);
-		}
-		else
-		{
-			ft_putchar_fd(str[i], 1);
-			print_len++;
-		}
-		i++;
-		init_info(&info);
-	}
+	print_len = check_spell(str, ap, info);
 	va_end(ap);
 	return (print_len);
 }

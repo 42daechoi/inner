@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 02:52:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:20:07 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 15:11:20 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*print_strformat(char *str, t_info info)
 	if (!pad_str)
 		return (NULL);
 	if (info.minus > 0)
-		ft_putstr_va(2, str, pad_str);
+		putstr_va(2, str, pad_str);
 	else
-		ft_putstr_va(2, pad_str, str);
+		putstr_va(2, pad_str, str);
 	return (pad_str);
 }
 

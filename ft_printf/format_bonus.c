@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_bonus.c                                     :+:      :+:    :+:   */
+/*   format.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 18:30:37 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:40:15 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/16 05:47:29 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,27 +107,27 @@ int	int_format(int n, t_info info)
 {
 	char	*zpad_str;
 	char	*pad_str;
-	char	*itoa_str;
-	int		print_len;
+	char	*str;
+	int		len;
 
-	print_len = 0;
-	itoa_str = set_itoa_str(info, n);
-	zpad_str = set_zpad(info, itoa_str);
+	len = 0;
+	str = set_itoa_str(info, n);
+	zpad_str = set_zpad(info, str);
 	if (info.prec > -1)
 		info.zero = 0;
-	pad_str = set_pad_str(itoa_str, info);
-	if (!itoa_str || !zpad_str || !pad_str)
+	pad_str = set_pad_str(str, info);
+	if (!str || !zpad_str || !pad_str)
 		return (-1);
-	if (info.zero > 0 && info.width > (int)ft_strlen(itoa_str) && zpad_str[0] == '-')
+	if (info.zero > 0 && info.width > (int)ft_strlen(str) && zpad_str[0] == '-')
 	{
 		zpad_str[0] = '0';
 		pad_str[0] = '-';
 	}
 	if (info.minus > 0)
-		putstr_va(3, spec_flags(info, &print_len, itoa_str[0], 0), zpad_str, pad_str);
+		putstr_va(3, spec_flags(info, &len, str[0], 0), zpad_str, pad_str);
 	else
-		putstr_va(3, pad_str, spec_flags(info, &print_len, itoa_str[0], 0), zpad_str);
-	print_len += ft_strlen(pad_str) + ft_strlen(zpad_str);
-	free_va(3, itoa_str, pad_str, zpad_str);
-	return (print_len);
+		putstr_va(3, pad_str, spec_flags(info, &len, str[0], 0), zpad_str);
+	len += ft_strlen(pad_str) + ft_strlen(zpad_str);
+	free_va(3, str, pad_str, zpad_str);
+	return (len);
 }

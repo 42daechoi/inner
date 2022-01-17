@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:22:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/16 05:41:10 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 15:14:43 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ char	*set_itoa_str(t_info info, int n);
 char	*set_pad_str(char *itoa_str, t_info info);
 void	free_va(int n, ...);
 char	*set_s(unsigned int n, t_info info);
+int		check_spell(const char *str, va_list ap, t_info info);
+int		parsing(const char *str, int *i, t_info *info);
+int		print_format(va_list *ap, t_info info);
+void	init_info(t_info *info);
 
 #endif
