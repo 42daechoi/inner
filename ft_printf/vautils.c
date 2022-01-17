@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 03:51:05 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/17 15:39:59 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:41:46 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	check_spell(const char *str, va_list ap, t_info info)
 	int	curr_len;
 	int	print_len;
 
-	i = 0;
+	i = -1;
 	print_len = 0;
-	while (str[i++])
+	while (str[++i])
 	{
 		if (str[i] == '%')
 		{
