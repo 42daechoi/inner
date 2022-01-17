@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/17 15:17:40 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 15:31:27 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	parsing(const char *str, int *i, t_info *info)
 	if (!(info->type == 'd' || info->type == 'i' \
 		|| info->type == 'x' || info->type == 'X' || info->type == 'u'))
 		info->zero = 0;
-	if (info->minus == 1 && info->zero == 1)
-		return (-1);
 	return (1);
 }
 
