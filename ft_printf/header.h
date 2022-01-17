@@ -6,14 +6,13 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:22:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/17 15:14:43 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/17 20:35:38 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HEADER_H
 # define HEADER_H
 
-# include <stdio.h>
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdlib.h>
