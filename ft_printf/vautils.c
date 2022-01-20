@@ -6,13 +6,13 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 03:51:05 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/17 19:28:17 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/20 21:34:56 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	putstr_va(int n, ...) 
+void	putstr_va(int n, ...)
 {
 	va_list	ap;
 	int		i;
@@ -44,7 +44,7 @@ void	free_va(int n, ...)
 	va_end(ap);
 }
 
-int	check_spell(const char *str, va_list ap, t_info info)
+int	check_spell(const char *str, va_list *ap, t_info info)
 {
 	int	i;
 	int	curr_len;
@@ -58,7 +58,7 @@ int	check_spell(const char *str, va_list ap, t_info info)
 		{
 			i++;
 			parsing(str, &i, &info);
-			curr_len = print_format(&ap, info);
+			curr_len = print_format(&(*ap), info);
 			if (curr_len == -1)
 				return (-1);
 			print_len += curr_len;

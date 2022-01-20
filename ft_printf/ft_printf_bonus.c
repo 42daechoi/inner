@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 18:17:31 by daechoi           #+#    #+#             */
-/*   Updated: 2022/01/17 15:31:27 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/01/20 21:35:18 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ int	ft_printf(const char *str, ...)
 	print_len = 0;
 	va_start(ap, str);
 	init_info(&info);
-	print_len = check_spell(str, ap, info);
+	print_len = check_spell(str, &ap, info);
+	if (print_len == -1)
+		return (-1);
 	va_end(ap);
 	return (print_len);
 }
