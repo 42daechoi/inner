@@ -1,54 +1,54 @@
-#include <mlx.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "solong.h"
 
-#define X_EVENT_KEYPRESS		2
-#define X_EVENT_KEYRELEASE		3
-
-#define KEYCODE_W   			13
-#define KEYCODE_A   			0
-#define KEYCODE_S   			1
-#define KEYCODE_D   			2
-#define KEYCODE_ESC				53
-
-typedef	struct s_param
+void	param_init(t_gameset *gameset)
 {
-	int	x;
-	int	y;
-} t_param;
-
-void	param_init(t_param *param)
-{
-	param->x = 0;
-	param->y = 0;
+	gameset->x = 0;
+	gameset->y = 0;
 }
 
-int	press_key(int keycode, t_param *param)
+int	press_key(int keycode, t_gameset *gameset)
 {
 	if (keycode == KEYCODE_A)
-		param->y++;
+		gameset->y++;
 	else if (keycode == KEYCODE_S)
-		param->x--;
+		gameset->x--;
 	else if (keycode == KEYCODE_D)
-		param->y--;
+		gameset->y--;
 	else if (keycode == KEYCODE_W)
-		param->x++;
+		gameset->x++;
 	else if (keycode == KEYCODE_ESC)
 		exit(0);
-	printf("x : %d, y : %d\n", param->x, param->y);
 	return (0);
 }
 
-int main(void)
+void	image_rendering(void *mlx_ptr, void *win_ptr)
 {
-	t_param	param;
-	void	*mlx_ptr;
-	void	*win_ptr;
+	void	*img_land;
+	void	*img_wall;
+	void	*img_;
+	void	*img4;
+	void	*img5;
+	int 	img_size = 64;
 
+	img_land = mlx_xpm_file_to_image(mlx_ptr, "./tile.xpm", &img_size, &img_size);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, img_land, 0, 0);
+}
+
+int main(int argc, char **argv)
+{
+	t_gameset	gameset;
+	void		*mlx_ptr;
+	void		*win_ptr;
+
+	if (argc != 2)
+		write(2, "ERROR\n", 6);
+	read_map(argv[1], &gameset);
+	printf("%s\n",gameset.map_line);
 	mlx_ptr = mlx_init();
-	param_init(&param);
+	param_init(&gameset);
 	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "mlx 42");
-	mlx_hook(win_ptr, X_EVENT_KEYPRESS, 0, &press_key, &param);
+	image_rendering(mlx_ptr, win_ptr);
+	mlx_hook(win_ptr, X_EVENT_KEYPRESS, 0, &press_key, &gameset);
 	mlx_loop(mlx_ptr);
 	return (0);
 }

@@ -1,3 +1,3 @@
 all:
-	gcc -L./minilibx_opengl_20191021 -lmlx -framework OpenGL -framework AppKit *.c
-	./a.out
+	gcc -L./mlx -lmlx -framework OpenGL -framework AppKit *.c get_next_line/*.c
+	./a.out map.ber
