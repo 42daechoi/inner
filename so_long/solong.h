@@ -1,3 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solong.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
+/*   Updated: 2022/04/21 17:25:49 by daechoi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SOLONG_H
+# define SOLONG_H
+
 #include <mlx.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -23,4 +38,9 @@ typedef	struct s_gameset
 	char	*map_line;
 } t_gameset;
 
-void    read_map(char *file, t_gameset *gameset);
+void	read_map(char *file, t_gameset *gameset);
+void	image_rendering(void *mlx_ptr, void *win_ptr, t_gameset gameset);
+void	ft_printerr(char *s);
+void    check_map(t_gameset gameset);
+
+#endif

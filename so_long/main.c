@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/21 16:16:10 by daechoi           #+#    #+#             */
+/*   Updated: 2022/04/21 17:25:45 by daechoi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "solong.h"
 
 void	param_init(t_gameset *gameset)
@@ -21,19 +33,6 @@ int	press_key(int keycode, t_gameset *gameset)
 	return (0);
 }
 
-void	image_rendering(void *mlx_ptr, void *win_ptr)
-{
-	void	*img_land;
-	void	*img_wall;
-	void	*img_;
-	void	*img4;
-	void	*img5;
-	int 	img_size = 64;
-
-	img_land = mlx_xpm_file_to_image(mlx_ptr, "./tile.xpm", &img_size, &img_size);
-	mlx_put_image_to_window(mlx_ptr, win_ptr, img_land, 0, 0);
-}
-
 int main(int argc, char **argv)
 {
 	t_gameset	gameset;
@@ -41,13 +40,13 @@ int main(int argc, char **argv)
 	void		*win_ptr;
 
 	if (argc != 2)
-		write(2, "ERROR\n", 6);
+		ft_printerr("ERROR\n");
 	read_map(argv[1], &gameset);
-	printf("%s\n",gameset.map_line);
+	check_map(gameset);
 	mlx_ptr = mlx_init();
 	param_init(&gameset);
 	win_ptr = mlx_new_window(mlx_ptr, 500, 500, "mlx 42");
-	image_rendering(mlx_ptr, win_ptr);
+	//image_rendering(mlx_ptr, win_ptr, gameset);
 	mlx_hook(win_ptr, X_EVENT_KEYPRESS, 0, &press_key, &gameset);
 	mlx_loop(mlx_ptr);
 	return (0);
