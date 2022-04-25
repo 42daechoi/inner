@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/04/21 17:25:49 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/04/26 00:37:35 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef	struct s_gameset
 } t_gameset;
 
 void	read_map(char *file, t_gameset *gameset);
-void	image_rendering(void *mlx_ptr, void *win_ptr, t_gameset gameset);
+void	image_rendering(void *mlx, void *win, t_gameset gameset);
 void	ft_printerr(char *s);
 void    check_map(t_gameset gameset);
 
