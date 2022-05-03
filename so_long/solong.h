@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/04/26 00:37:35 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:22:26 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,33 @@
 
 typedef	struct s_gameset
 {
-	int		x;
-	int		y;
 	int		map_width;
 	int		map_height;
 	char	*map_line;
+	int		move_cnt;
+	int		coll_cnt;
+	int		coll_max;
+	void	*mlx;
+	void	*win;
 } t_gameset;
 
+typedef struct s_imgset
+{
+	void	wall;
+	void	tile;
+	void	coll;
+	void	exit;
+	void	player;
+} t_imgset;
+
+
 void	read_map(char *file, t_gameset *gameset);
-void	image_rendering(void *mlx, void *win, t_gameset gameset);
+void	image_rendering(t_gameset gameset);
 void	ft_printerr(char *s);
-void    check_map(t_gameset gameset);
+void    check_map(t_gameset *gameset);
+void	move_s(t_gameset *g);
+void	move_d(t_gameset *g);
+void	move_w(t_gameset *g);
+void	move_a(t_gameset *g);
 
 #endif
