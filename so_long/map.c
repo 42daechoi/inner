@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:15 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/03 16:57:52 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/04 19:01:59 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void    read_map(char *file, t_gameset *gameset)
     }
     close(fd);
 }
-
+int aaaa=1;
 void    check_map_compare(char c, t_gameset gameset, char compare)
 {
     if (c != compare)
@@ -87,10 +87,10 @@ void    check_map(t_gameset *gameset)
             check_map_compare(gameset->map_line[i], *gameset, '1');
         else if (i % (gameset->map_width + 1) == 0)
             check_map_compare(gameset->map_line[i], *gameset, '1');
-        else if (i / gameset->map_height == gameset->map_width - 1)
+        else if (i / gameset->map_width == gameset->map_width - 1)
             check_map_compare(gameset->map_line[i], *gameset, '1');
 		else if (i > ft_strlen(gameset->map_line) - gameset->map_width)
-			check_map_compare(gameset->map_line[i], *gameset, '1');
+            check_map_compare(gameset->map_line[i], *gameset, '1');
         else if (i % (gameset->map_width + 1) == gameset->map_width)
         {
             check_map_compare(gameset->map_line[i], *gameset, '\n');

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/03 18:22:26 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/04 19:01:56 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 #include <mlx.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "get_next_line/get_next_line.h"
-
-#include <stdio.h>
+#include "utils/get_next_line/get_next_line.h"
 
 #define X_EVENT_KEYPRESS		2
-#define X_EVENT_KEYRELEASE		3
+#define X_EVENT_DESTROYNOTIFY	17
 
 #define KEYCODE_W   			13
 #define KEYCODE_A   			0
@@ -43,11 +41,11 @@ typedef	struct s_gameset
 
 typedef struct s_imgset
 {
-	void	wall;
-	void	tile;
-	void	coll;
-	void	exit;
-	void	player;
+	void	*wall;
+	void	*tile;
+	void	*coll;
+	void	*exit;
+	void	*player;
 } t_imgset;
 
 
