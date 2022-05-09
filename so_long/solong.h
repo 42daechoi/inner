@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/04 19:01:56 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/09 16:00:04 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void	move_s(t_gameset *g);
 void	move_d(t_gameset *g);
 void	move_w(t_gameset *g);
 void	move_a(t_gameset *g);
+void	ft_putnbr_fd(int n, int fd);
 
 #endif
