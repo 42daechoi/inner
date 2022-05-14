@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:32 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/14 20:29:58 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/14 22:33:35 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	move_w(t_gameset *g)
 	int	i;
 
 	i = -1;
-	while (g->map_line[++i] != 'P');
+	while (g->map_line[++i] != 'P')
+		;
 	if (g->map_line[i - g->map_width - 1] == 'C')
 		g->coll_cnt++;
 	if (g->map_line[i - g->map_width - 1] == 'E' && g->coll_cnt == g->coll_max)
@@ -32,7 +33,8 @@ void	move_w(t_gameset *g)
 		g->move_cnt++;
 		end_game(*g);
 	}
-	else if (g->map_line[i - g->map_width - 1] != '1' && g->map_line[i - g->map_width - 1] != 'E')
+	else if (g->map_line[i - g->map_width - 1] != '1' \
+				&& g->map_line[i - g->map_width - 1] != 'E')
 	{
 		g->map_line[i] = '0';
 		g->map_line[i - g->map_width - 1] = 'P';
@@ -48,7 +50,8 @@ void	move_s(t_gameset *g)
 	int	i;
 
 	i = -1;
-	while (g->map_line[++i] != 'P');
+	while (g->map_line[++i] != 'P')
+		;
 	if (g->map_line[i + g->map_width + 1] == 'C')
 		g->coll_cnt++;
 	if (g->map_line[i + g->map_width + 1] == 'E' && g->coll_cnt == g->coll_max)
@@ -56,7 +59,8 @@ void	move_s(t_gameset *g)
 		g->move_cnt++;
 		end_game(*g);
 	}
-	else if (g->map_line[i + g->map_width + 1] != '1' && g->map_line[i + g->map_width + 1] != 'E')
+	else if (g->map_line[i + g->map_width + 1] != '1' \
+				&& g->map_line[i + g->map_width + 1] != 'E')
 	{
 		g->map_line[i] = '0';
 		g->map_line[i + g->map_width + 1] = 'P';
@@ -72,7 +76,8 @@ void	move_a(t_gameset *g)
 	int	i;
 
 	i = -1;
-	while (g->map_line[++i] != 'P');
+	while (g->map_line[++i] != 'P')
+		;
 	if (g->map_line[i - 1] == 'C')
 		g->coll_cnt++;
 	if (g->map_line[i - 1] == 'E' && g->coll_cnt == g->coll_max)
@@ -96,7 +101,8 @@ void	move_d(t_gameset *g)
 	int	i;
 
 	i = -1;
-	while (g->map_line[++i] != 'P');
+	while (g->map_line[++i] != 'P')
+		;
 	if (g->map_line[i + 1] == 'C')
 		g->coll_cnt++;
 	if (g->map_line[i + 1] == 'E' && g->coll_cnt == g->coll_max)

@@ -6,44 +6,44 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:15 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/14 22:04:56 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/14 22:26:06 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void    read_map(char *file, t_gameset *gameset)
+void	read_map(char *file, t_gameset *gameset)
 {
-    int     fd;
-    char    *line;
-    char    *temp;
+	int		fd;
+	char	*line;
+	char	*temp;
 
-    fd = open(file, O_RDONLY);
-    if (fd <= 0)
-        ft_printerr("file open error\n");
-    line = get_next_line(fd);
-    gameset->map_height = 0;
-    gameset->map_width = ft_strlen(line) - 1;
-    gameset->map_line = line;
-    while (line)
-    {
-        line = get_next_line(fd);
-        if (line)
-        {
-            temp = gameset->map_line;
-            gameset->map_line = ft_strjoin(temp, line);
-            free(temp);
-            free(line);
-        }
-        gameset->map_height++;
-    }
-    close(fd);
+	fd = open(file, O_RDONLY);
+	if (fd <= 0)
+		ft_printerr("file open error\n");
+	line = get_next_line(fd);
+	gameset->map_height = 0;
+	gameset->map_width = ft_strlen(line) - 1;
+	gameset->map_line = line;
+	while (line)
+	{
+		line = get_next_line(fd);
+		if (line)
+		{
+			temp = gameset->map_line;
+			gameset->map_line = ft_strjoin(temp, line);
+			free(temp);
+			free(line);
+		}
+		gameset->map_height++;
+	}
+	close(fd);
 }
 
-void    check_map_compare(char c, char compare)
+void	check_map_compare(char c, char compare)
 {
-    if (c != compare)
-        ft_printerr("map error\n");
+	if (c != compare)
+		ft_printerr("map error\n");
 }
 
 int	check_object(t_gameset gameset)
@@ -67,37 +67,33 @@ int	check_object(t_gameset gameset)
 			exit_cnt++;
 		i++;
 	}
-	if (exit_cnt == 0)
-		ft_printerr("exit error\n");
-	if (position_cnt != 1)
-		ft_printerr("position error\n");
-	if (collectible_cnt == 0)
-		ft_printerr("collectible error\n");
-    return (collectible_cnt);
+	if (exit_cnt == 0 || position_cnt != 1 || collectible_cnt == 0)
+		ft_printerr("map element error\n");
+	return (collectible_cnt);
 }
 
-void    check_map(t_gameset *gameset)
+void	check_map(t_gameset *gameset)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while ((size_t)i < ft_strlen(gameset->map_line))
-    {
-        if (i < gameset->map_width)
-            check_map_compare(gameset->map_line[i], '1');
-        else if (i % (gameset->map_width + 1) == 0)
-            check_map_compare(gameset->map_line[i], '1');
-        else if (i / gameset->map_width == gameset->map_width - 1)
-            check_map_compare(gameset->map_line[i], '1');
+	i = 0;
+	while ((size_t)i < ft_strlen(gameset->map_line))
+	{
+		if (i < gameset->map_width)
+			check_map_compare(gameset->map_line[i], '1');
+		else if (i % (gameset->map_width + 1) == 0)
+			check_map_compare(gameset->map_line[i], '1');
+		else if (i / gameset->map_width == gameset->map_width - 1)
+			check_map_compare(gameset->map_line[i], '1');
 		else if (i > (int)ft_strlen(gameset->map_line) - gameset->map_width)
-            check_map_compare(gameset->map_line[i], '1');
-        else if (i % (gameset->map_width + 1) == gameset->map_width)
-        {
-            check_map_compare(gameset->map_line[i], '\n');
+			check_map_compare(gameset->map_line[i], '1');
+		else if (i % (gameset->map_width + 1) == gameset->map_width)
+		{
+			check_map_compare(gameset->map_line[i], '\n');
 			check_map_compare(gameset->map_line[i - 1], '1');
-        }
-        i++;
-    }
+		}
+		i++;
+	}
 	if (i % (gameset->map_width + 1) != gameset->map_width)
 		check_map_compare(gameset->map_line[i], '\n');
 	gameset->coll_max = check_object(*gameset);

@@ -12,8 +12,8 @@
 
 #include "solong.h"
 
-void    ft_printerr(char *s)
+void	ft_printerr(char *s)
 {
-    write(2, s, ft_strlen(s));
-    exit(1);
+	write(2, s, ft_strlen(s));
+	exit(1);
 }
