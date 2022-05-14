@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 00:35:04 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/04 16:13:17 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/14 20:01:09 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	image_init(t_gameset g, t_imgset *imgset)
 
 void	image_rendering(t_gameset g)
 {
-	int 		img_size;
 	t_imgset	imgset;
 
 	image_init(g, &imgset);

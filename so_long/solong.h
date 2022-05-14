@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/09 16:00:04 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/14 20:26:04 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <mlx.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "utils/get_next_line/get_next_line.h"
+#include "get_next_line.h"
 
 #define X_EVENT_KEYPRESS		2
 #define X_EVENT_DESTROYNOTIFY	17

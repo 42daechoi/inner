@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:15 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/04 19:01:59 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/14 22:04:56 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void    read_map(char *file, t_gameset *gameset)
     }
     close(fd);
 }
-int aaaa=1;
-void    check_map_compare(char c, t_gameset gameset, char compare)
+
+void    check_map_compare(char c, char compare)
 {
     if (c != compare)
         ft_printerr("map error\n");
@@ -57,7 +57,7 @@ int	check_object(t_gameset gameset)
 	exit_cnt = 0;
 	position_cnt = 0;
 	collectible_cnt = 0;
-	while (i < ft_strlen(gameset.map_line))
+	while ((size_t)i < ft_strlen(gameset.map_line))
 	{
 		if (gameset.map_line[i] == 'P')
 			position_cnt++;
@@ -68,11 +68,11 @@ int	check_object(t_gameset gameset)
 		i++;
 	}
 	if (exit_cnt == 0)
-		ft_printerr("exit err\n");
+		ft_printerr("exit error\n");
 	if (position_cnt != 1)
-		ft_printerr("position err\n");
+		ft_printerr("position error\n");
 	if (collectible_cnt == 0)
-		ft_printerr("collectible err\n");
+		ft_printerr("collectible error\n");
     return (collectible_cnt);
 }
 
@@ -81,24 +81,24 @@ void    check_map(t_gameset *gameset)
     int i;
 
     i = 0;
-    while (i < ft_strlen(gameset->map_line))
+    while ((size_t)i < ft_strlen(gameset->map_line))
     {
         if (i < gameset->map_width)
-            check_map_compare(gameset->map_line[i], *gameset, '1');
+            check_map_compare(gameset->map_line[i], '1');
         else if (i % (gameset->map_width + 1) == 0)
-            check_map_compare(gameset->map_line[i], *gameset, '1');
+            check_map_compare(gameset->map_line[i], '1');
         else if (i / gameset->map_width == gameset->map_width - 1)
-            check_map_compare(gameset->map_line[i], *gameset, '1');
-		else if (i > ft_strlen(gameset->map_line) - gameset->map_width)
-            check_map_compare(gameset->map_line[i], *gameset, '1');
+            check_map_compare(gameset->map_line[i], '1');
+		else if (i > (int)ft_strlen(gameset->map_line) - gameset->map_width)
+            check_map_compare(gameset->map_line[i], '1');
         else if (i % (gameset->map_width + 1) == gameset->map_width)
         {
-            check_map_compare(gameset->map_line[i], *gameset, '\n');
-			check_map_compare(gameset->map_line[i - 1], *gameset, '1');
+            check_map_compare(gameset->map_line[i], '\n');
+			check_map_compare(gameset->map_line[i - 1], '1');
         }
         i++;
     }
 	if (i % (gameset->map_width + 1) != gameset->map_width)
-		check_map_compare(gameset->map_line[i], *gameset, '\n');
+		check_map_compare(gameset->map_line[i], '\n');
 	gameset->coll_max = check_object(*gameset);
 }

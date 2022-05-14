@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/29 17:53:36 by daechoi           #+#    #+#             */
-/*   Updated: 2021/12/07 20:18:08 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/22 14:44:05 by daechoi           #+#    #+#             */
+/*   Updated: 2022/05/14 20:26:27 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "solong.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	c;
 
-# include <unistd.h>
-# include <limits.h>
-# include <stdlib.h>
-
-size_t	ft_strlen(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(char *src);
-char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-
-#endif
+	if (n == -2147483648)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		write(fd, "8", 1);
+	}
+	else if (n < 0)
+	{
+		write(fd, "-", 1);
+		ft_putnbr_fd(-n, fd);
+	}
+	else
+	{
+		if (n > 9)
+			ft_putnbr_fd(n / 10, fd);
+		c = n % 10 + '0';
+		write(fd, &c, 1);
+	}
+}
