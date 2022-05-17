@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/14 22:39:37 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/17 15:22:20 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define KEYCODE_A   			0
 # define KEYCODE_S   			1
 # define KEYCODE_D   			2
-# define KEYCODE_ESC				53
+# define KEYCODE_ESC			53
 
 typedef struct s_gameset
 {
