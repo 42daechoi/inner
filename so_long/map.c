@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 16:16:15 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/17 15:56:37 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/17 18:13:47 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,21 @@ int	check_object(t_gameset gameset)
 	if (exit_cnt == 0 || position_cnt != 1 || collectible_cnt == 0)
 		ft_printerr("map element error\n");
 	return (collectible_cnt);
+}
+
+void	check_other_char(t_gameset g)
+{
+	int	i;
+
+	i = 0;
+	while ((size_t)i < ft_strlen(g.map_line))
+	{
+		if (!(g.map_line[i] == '1' || g.map_line[i] == '0' || \
+			g.map_line[i] == 'P' || g.map_line[i] == 'C' || g.map_line[i] == 'E'))
+			ft_printerr("map error\n");
+		i++;
+		//개행의 경우 어떻게 처리 할건지?
+	}
 }
 
 void	check_map(t_gameset *gameset)
