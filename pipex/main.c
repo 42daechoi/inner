@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:07:36 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/24 20:14:35 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/05/30 20:17:06 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char    *set_path_cmd(char *cmd, t_pipe *p)
 	while (p->path[i])
 	{
 		path_cmd = ft_strjoin(p->path[i], temp);
-		if (access(path_cmd, X_OK) == 0)
+		if (access(path_cmd, X_OK) != -1)
 		{
 			free(temp);
 			return (path_cmd);
@@ -56,7 +56,7 @@ void    parse_path(char **envp, t_pipe *p)
             break ;
         i++;
     }
-    p->path = ft_split(&envp[i][5], ':');
+    p->path = ft_split(&(envp[i][5]), ':');
     if (!p->path)
         ft_printerr("malloc error");
     p->path_cmd0 = set_path_cmd(p->cmd0[0], p);
@@ -68,17 +68,17 @@ void    parse_path(char **envp, t_pipe *p)
 int main(int ac, char **av, char **envp)
 {
 	t_pipe	p;
+	int		fd[2];
+	pid_t	pid;
 
     if (ac != 5)
-    {
-        write(2, "argument error", 14);
-        exit(1);
-    }
+		ft_printerr("argument error");
     parse_cmd_line(av, &p);
     parse_path(envp, &p);
-	if (!redirect_in(p.path_cmd0))
-	{
-		ft_printerr("error\n");
-	}
+	if (pipe(fd) == -1)
+		ft_printerr("pipe error");
+	pid = fork();
+	if (pipex(p, fd, envp, pid) == -1)
+		ft_printerr("pipex error");
 	return (0);
 }
