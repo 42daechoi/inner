@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:07:36 by daechoi           #+#    #+#             */
-/*   Updated: 2022/05/30 20:17:06 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:07:15 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char    *set_path_cmd(char *cmd, t_pipe *p)
 	char	*temp;
 
 	i = 0;
+	if (ft_strchr(cmd, '/') > 0)
+		return (cmd);
     temp = ft_strjoin("/", cmd);
 	while (p->path[i])
 	{
@@ -62,7 +64,7 @@ void    parse_path(char **envp, t_pipe *p)
     p->path_cmd0 = set_path_cmd(p->cmd0[0], p);
     p->path_cmd1 = set_path_cmd(p->cmd1[0], p);
 	if (!p->path_cmd0 || !p->path_cmd1)
-		ft_printerr("malloc error");
+		ft_printerr("command not found or malloc error");
 }
 
 int main(int ac, char **av, char **envp)
