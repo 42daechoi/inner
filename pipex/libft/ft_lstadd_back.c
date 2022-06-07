@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 16:49:47 by daechoi           #+#    #+#             */
-/*   Updated: 2021/11/29 16:35:09 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/07 15:23:51 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		return ;
 	if (*lst == NULL)
 	{
-		 *lst = new;
-		 return ;
+		*lst = new;
+		return ;
 	}
 	tail = ft_lstlast(*lst);
 	tail->next = new;

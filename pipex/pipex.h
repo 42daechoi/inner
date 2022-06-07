@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/01 18:59:51 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/07 15:51:34 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef struct s_pipe
 {
-    char	*file[2];
+	char	*file[2];
 	char	**cmd0;
 	char	**cmd1;
 	char	*path_cmd0;
@@ -29,8 +29,8 @@ typedef struct s_pipe
 	char	**path;
 }	t_pipe;
 
-void	redirect_in(char *path_cmd);
-void	redirect_out(char *path_cmd);
+void	std_in(char *path_cmd);
+void	std_out(char *path_cmd);
 int		pipex(t_pipe p, int fd[2], char **envp, pid_t pid);
 
 #endif
