@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:07:36 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/07 15:28:13 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/08 17:42:16 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	parse_cmd_line(char **av, t_pipe *p)
 {
+	if (*av[3] == 0 || *av[2] == 0)
+		ft_printerr("command not found");
 	p->file[0] = ft_strdup(av[1]);
-	p->file[1] = ft_strdup(av[3]);
+	p->file[1] = ft_strdup(av[4]);
 	p->cmd0 = ft_split(av[2], ' ');
-	p->cmd1 = ft_split(av[4], ' ');
+	p->cmd1 = ft_split(av[3], ' ');
 	if (!p->file[0] || !p->file[1] || !p->cmd0 || !p->cmd1)
 		ft_printerr("malloc error");
 }
