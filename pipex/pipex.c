@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:08:47 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/08 15:13:09 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/13 20:28:57 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	pipex(t_pipe p, int fd[2], char **envp, pid_t pid)
 {
 	if (pid > 0)
 	{
-		waitpid(pid, NULL, WNOHANG);
+		waitpid(pid, NULL, 0);
 		close(fd[1]);
 		dup2(fd[0], 0);
 		std_out(p.file[1]);
