@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/13 20:23:26 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/15 19:53:14 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include "libft/libft.h"
 
