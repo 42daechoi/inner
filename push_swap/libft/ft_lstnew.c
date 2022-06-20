@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/20 15:27:18 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/24 16:22:50 by daechoi           #+#    #+#             */
+/*   Updated: 2021/11/24 18:15:38 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-typedef struct s_pipe
+t_list	*ft_lstnew(void *content)
 {
-	char	*file[2];
-	char	**cmd0;
-	char	**cmd1;
-	char	*path_cmd0;
-	char	*path_cmd1;
-	char	**path;
-}	t_pipe;
+	t_list	*new;
 
-void	std_in(char *file);
-void	std_out(char *file);
-int		pipex(t_pipe p, int fd[2], char **envp);
-
-#endif
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}

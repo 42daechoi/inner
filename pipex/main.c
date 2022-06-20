@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:07:36 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/08 17:42:16 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/20 15:54:23 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipe	p;
 	int		fd[2];
-	pid_t	pid;
 
 	if (ac != 5)
 		ft_printerr("argument error");
@@ -81,8 +80,7 @@ int	main(int ac, char **av, char **envp)
 	parse_path(envp, &p);
 	if (pipe(fd) == -1)
 		ft_printerr("pipe error");
-	pid = fork();
-	if (pipex(p, fd, envp, pid) == -1)
+	if (pipex(p, fd, envp) == -1)
 		ft_printerr("pipex error");
 	return (0);
 }

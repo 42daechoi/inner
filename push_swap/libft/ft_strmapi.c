@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/20 15:27:18 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/19 20:25:07 by daechoi           #+#    #+#             */
+/*   Updated: 2021/11/19 20:31:29 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-typedef struct s_pipe
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*file[2];
-	char	**cmd0;
-	char	**cmd1;
-	char	*path_cmd0;
-	char	*path_cmd1;
-	char	**path;
-}	t_pipe;
+	size_t	len;
+	size_t	i;
+	char	*str;
 
-void	std_in(char *file);
-void	std_out(char *file);
-int		pipex(t_pipe p, int fd[2], char **envp);
-
-#endif
+	i = 0;
+	if (!s || !f)
+		return (NULL);
+	len = ft_strlen(s);
+	str = (char *)malloc(len * sizeof(char) + 1);
+	if (!str)
+		return (NULL);
+	while (i < len)
+	{
+		str[i] = f((unsigned int)i, s[i]);
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}

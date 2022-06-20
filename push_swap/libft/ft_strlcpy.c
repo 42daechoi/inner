@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/20 15:27:18 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/16 17:44:29 by daechoi           #+#    #+#             */
+/*   Updated: 2021/11/22 21:06:03 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-typedef struct s_pipe
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
-	char	*file[2];
-	char	**cmd0;
-	char	**cmd1;
-	char	*path_cmd0;
-	char	*path_cmd1;
-	char	**path;
-}	t_pipe;
+	size_t	i;
+	size_t	str_len;
 
-void	std_in(char *file);
-void	std_out(char *file);
-int		pipex(t_pipe p, int fd[2], char **envp);
-
-#endif
+	i = 0;
+	str_len = ft_strlen(src);
+	if (size == 0)
+		return (str_len);
+	while (i < size - 1 && src[i] && size != 0)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (str_len);
+}

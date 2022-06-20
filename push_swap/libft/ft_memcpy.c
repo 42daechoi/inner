@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/20 15:27:18 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/16 16:05:57 by daechoi           #+#    #+#             */
+/*   Updated: 2021/11/26 16:06:17 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-typedef struct s_pipe
+void	*ft_memcpy(void *dest, const void *src, size_t size)
 {
-	char	*file[2];
-	char	**cmd0;
-	char	**cmd1;
-	char	*path_cmd0;
-	char	*path_cmd1;
-	char	**path;
-}	t_pipe;
+	char		*temp;
+	const char	*s;
 
-void	std_in(char *file);
-void	std_out(char *file);
-int		pipex(t_pipe p, int fd[2], char **envp);
-
-#endif
+	if (!dest && !src)
+		return (0);
+	temp = dest;
+	s = src;
+	while (size > 0)
+	{
+		*temp++ = *s++;
+		size--;
+	}
+	return (dest);
+}

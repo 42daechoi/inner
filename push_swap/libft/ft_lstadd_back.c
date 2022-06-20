@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 17:12:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/20 15:27:18 by daechoi          ###   ########.fr       */
+/*   Created: 2021/11/24 16:49:47 by daechoi           #+#    #+#             */
+/*   Updated: 2022/06/20 17:39:51 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include "libft/libft.h"
-
-typedef struct s_pipe
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	char	*file[2];
-	char	**cmd0;
-	char	**cmd1;
-	char	*path_cmd0;
-	char	*path_cmd1;
-	char	**path;
-}	t_pipe;
+	t_list	*tail;
 
-void	std_in(char *file);
-void	std_out(char *file);
-int		pipex(t_pipe p, int fd[2], char **envp);
-
-#endif
+	if (lst == NULL || new == NULL)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	tail = ft_lstlast(*lst);
+	tail->next = new;
+}
