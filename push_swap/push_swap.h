@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:52 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/20 16:46:04 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/21 18:55:51 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "libft/libft.h"
 # include <stdio.h>
 
-void	sa(int *a);
+void	sa(t_list *a);
 
 #endif
