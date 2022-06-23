@@ -6,71 +6,62 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:33:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/21 19:07:19 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/23 20:16:08 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_list *a)
+void	cal_swap(t_stack *stack)
 {
-	char	*temp;
-	char	*temp2;
+	int		temp;
+	int		temp2;
 	int		i;
 
-	if (ft_lstsize(a) <= 2)
+	if (ft_stacksize(stack) <= 2)
 		return ;
 	i = 0;
-	temp = ft_lstlast(a)->content;
-	while (i < ft_lstsize(a) - 2)
-		a = a->next;
-	temp2 = a->content;
-	a->content = temp;
-	a = a->next;
-	a->content = temp2;
+	temp = ft_stacklast(stack)->data;
+	while (i < ft_stacksize(stack) - 2)
+		stack = stack->next;
+	temp2 = stack->data;
+	stack->data = temp;
+	stack = stack->next;
+	stack->data = temp2;
 }
 
-// void	sb(int *b)
-// {
-//     int	len;
-// 	int	temp;
+void	cal_push(t_stack *receiver, t_stack *giver)
+{
+	t_stack	*head;
 
-// 	len = ft_strlen(b);
-// 	if (len < 2)
-// 		return ;
-// 	temp = b[len - 1];
-// 	b[len - 1] = b[len - 2];
-// 	b[len - 2] = temp;
-// }
+	if (!giver)
+		return ;
+	head = ft_stacklast(receiver);
+	head->next = ft_newstack(ft_pop(giver));
+	head = head->next;
+	head->next = NULL;
+}
 
-// void	ss(char *a, char *b)
-// {
-// 	sa(a);
-// 	sa(b);
-// }
+void	cal_rotate(t_stack **stack)
+{
+	t_stack	*head;
+	
+	head = ft_newstack(ft_pop(*stack));
+	head->next = *stack;
+	*stack = head;
+}
 
-// void	pa(char **a, char *b)
-// {
-// 	int		a_len;
-// 	int		b_len;
-// 	int		i;
-// 	char	*temp;
+void	cal_rev_rotate(t_stack **stack)
+{
+	t_stack *temp;
+	t_stack *head;
+	t_stack	*temp2;
 
-// 	i = 0;
-// 	a_len = ft_strlen(*a);
-// 	b_len = ft_strlen(b);
-// 	if (b_len < 1)
-// 		return ;
-// 	temp = *a;
-// 	*a = malloc((a_len + 2) * sizeof(char));
-// 	while (i < a_len-1)
-// 	{
-// 		*a[i] = temp[i];
-// 		i++;
-// 	}
-// 	*a[i++] = b[b_len - 1];
-// 	printf("%c", *a[i - 1]);
-// 	*a[i] = '\0';
-// 	printf("[%s]", *a);
-// 	//free(temp);
-// }
+	head = *stack;
+	*stack = (*stack)->next;
+	temp = ft_newstack(head->data);
+	head->data = 0;
+	head->next = NULL;
+	free(head);
+	ft_stacklast(*stack)->next = temp;
+}
