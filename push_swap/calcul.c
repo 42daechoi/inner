@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:33:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/23 20:16:08 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/27 20:35:55 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	cal_swap(t_stack *stack)
 	int		temp2;
 	int		i;
 
-	if (ft_stacksize(stack) <= 2)
+	if (ft_stacksize(stack) < 2)
 		return ;
 	i = 0;
 	temp = ft_stacklast(stack)->data;
@@ -32,36 +32,45 @@ void	cal_swap(t_stack *stack)
 
 void	cal_push(t_stack *receiver, t_stack *giver)
 {
-	t_stack	*head;
+	t_stack	*node;
 
 	if (!giver)
 		return ;
-	head = ft_stacklast(receiver);
-	head->next = ft_newstack(ft_pop(giver));
-	head = head->next;
-	head->next = NULL;
+	node = ft_stacklast(receiver);
+	node->next = ft_newstack(ft_pop(giver));
+	node = node->next;
+	node->next = NULL;
 }
 
-void	cal_rotate(t_stack **stack)
+void	cal_rotate(t_stack *stack)
 {
 	t_stack	*head;
+	int		temp;
+	int		temp2;
 	
-	head = ft_newstack(ft_pop(*stack));
-	head->next = *stack;
-	*stack = head;
+	head = stack;
+	temp = stack->data;
+	while (stack->next != NULL)
+	{
+		temp2 = stack->next->data;
+		stack->next->data = temp;
+		temp = temp2;
+		stack = stack->next;
+	}
+	head->data = temp;
 }
 
-void	cal_rev_rotate(t_stack **stack)
+void	cal_rev_rotate(t_stack *stack)
 {
-	t_stack *temp;
-	t_stack *head;
-	t_stack	*temp2;
+	t_stack	*tail;
+	int		tail_data;
 
-	head = *stack;
-	*stack = (*stack)->next;
-	temp = ft_newstack(head->data);
-	head->data = 0;
-	head->next = NULL;
-	free(head);
-	ft_stacklast(*stack)->next = temp;
+	tail = ft_stacklast(stack);
+	tail_data = stack->data;
+	while (stack->next != NULL)
+	{
+		stack->data = stack->next->data;
+		stack = stack->next;
+	}
+	tail->data = tail_data;
 }

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/23 20:16:40 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/27 20:37:16 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ int main(int ac, char **av)
 	}
 	//cal_swap(a);
 	//cal_push(a, b);
-	cal_rev_rotate(&a);
+	//cal_rotate(a);
+	sort(a, b);
+	printf("bottom\n");
 	while (a != NULL)
 	{
 		printf("a : %d\n", a->data);
 		a = a->next;
 	}
-	printf("\n");
+	printf("top\n");
 	while (b != NULL)
 	{
 		printf("b : %d\n", b->data);
