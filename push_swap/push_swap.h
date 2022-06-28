@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:52 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/27 20:37:01 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/28 23:33:31 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ void	rr(t_stack *a, t_stack *b);
 void	rra(t_stack *stack);
 void	rrb(t_stack *stack);
 void	rrr(t_stack *a, t_stack *b);
-void    sort(t_stack *a, t_stack *b);
+void    sort(t_stack *a, t_stack *b, int pivot);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/27 20:37:16 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/28 23:32:57 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int main(int ac, char **av)
 	//cal_swap(a);
 	//cal_push(a, b);
 	//cal_rotate(a);
-	sort(a, b);
+	int	pivot;
+	
+	pivot = ft_stacklast(a)->data;
+	sort(a, b, pivot);
 	printf("bottom\n");
 	while (a != NULL)
 	{
