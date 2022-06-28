@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:25:03 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/29 00:15:15 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/29 00:16:44 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,27 @@ int init_stack_size = 11;
 
 void	quick_sort(t_stack *a, t_stack *b, int pivot)
 {
-	cal_cnt = 0;
-	if (cal_cnt == init_stack_size && is_sorted(b, 'b'))
-	{
-		pa(a, b);
-	}
-	else if (cal_cnt == init_stack_size && !is_sorted(b, 'b'))
-	{
-		sb(b);
-		rb(b);
-	}
-	if (ft_stacklast(a)->data < pivot)
-	{
-		pb(a, b);
-		cal_cnt++;
-	}
-	else
-	{
-		ra(a);
-		cal_cnt++;
-	}
-	sort(a, b, pivot);
+	// cal_cnt = 0;
+	// if (cal_cnt == init_stack_size && is_sorted(b, 'b'))
+	// {
+	// 	pa(a, b);
+	// }
+	// else if (cal_cnt == init_stack_size && !is_sorted(b, 'b'))
+	// {
+	// 	sb(b);
+	// 	rb(b);
+	// }
+	// if (ft_stacklast(a)->data < pivot)
+	// {
+	// 	pb(a, b);
+	// 	cal_cnt++;
+	// }
+	// else
+	// {
+	// 	ra(a);
+	// 	cal_cnt++;
+	// }
+	// sort(a, b, pivot);
 }
 
 void    sort(t_stack *a, t_stack *b, int pivot)
