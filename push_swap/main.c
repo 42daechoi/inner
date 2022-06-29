@@ -6,50 +6,50 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/28 23:32:57 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:55:15 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void	init_info(t_info *info, int ac, char **av)
+{
+	int	temp;
+	
+	temp = ft_atoi(av[--ac]);
+	info->a = ft_newstack(temp);
+	while (ac > 1)
+	{
+		temp = ft_atoi(av[--ac]);
+		ft_push(&info->a, ft_newstack(temp));
+	}
+	info->cal_cnt = 0;
+	info->init_ssize = ft_stacksize(info->a);
+	info->pivot = ft_stacklast(info->a)->data;
+}
+
+
+
 int main(int ac, char **av)
 {
-	t_stack	*a;
-	t_stack *b;
+	t_info	info;
 	int		temp;
 
 	if (ac < 2)
 		exit(1);
-	temp = ft_atoi(av[--ac]);
-	a = ft_newstack(temp);
-	while (ac > 1)
-	{
-		temp = ft_atoi(av[--ac]);
-		ft_push(&a, ft_newstack(temp));
-	}
+	init_info(&info, ac, av);
 	int i = 0;
-	b = ft_newstack(i++);
-	while (i < 3)
-	{
-		ft_push(&b, ft_newstack(i++));
-	}
-	//cal_swap(a);
-	//cal_push(a, b);
-	//cal_rotate(a);
-	int	pivot;
-	
-	pivot = ft_stacklast(a)->data;
-	sort(a, b, pivot);
+	sort(&info);
 	printf("bottom\n");
-	while (a != NULL)
+	while (info.a != NULL)
 	{
-		printf("a : %d\n", a->data);
-		a = a->next;
+		printf("a : %d\n", info.a->data);
+		info.a = info.a->next;
 	}
 	printf("top\n");
-	while (b != NULL)
+	while (info.b != NULL)
 	{
-		printf("b : %d\n", b->data);
-		b = b->next;
+		printf("b : %d\n", info.b->data);
+		info.b = info.b->next;
 	}
 }

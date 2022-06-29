@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:33:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/27 20:35:55 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:55:48 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,18 @@ void	cal_swap(t_stack *stack)
 	stack->data = temp2;
 }
 
-void	cal_push(t_stack *receiver, t_stack *giver)
+void	cal_push(t_stack **giver, t_stack **receiver)
 {
 	t_stack	*node;
 
-	if (!giver)
+	if (!*giver)
 		return ;
-	node = ft_stacklast(receiver);
+	if (!*receiver)
+	{
+		*receiver = ft_newstack(ft_pop(giver));
+		return ;
+	}
+	node = ft_stacklast(*receiver);
 	node->next = ft_newstack(ft_pop(giver));
 	node = node->next;
 	node->next = NULL;

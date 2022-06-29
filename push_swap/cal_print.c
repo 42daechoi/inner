@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:10:27 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/27 19:30:59 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:45:58 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	ss(t_stack *a, t_stack *b)
 	write(1, "ss\n", 3);
 }
 
-void	pa(t_stack *a, t_stack *b)
+void	pa(t_info *info)
 {
-	cal_push(a, b);
+	cal_push(&(info->b), &(info->a));
 	write(1, "pa\n", 3);
 }
 
-void	pb(t_stack *a, t_stack *b)
+void	pb(t_info *info)
 {
-	cal_push(b, a);
+	cal_push(&(info->a), &(info->b));
 	write(1, "pb\n", 3);
 }

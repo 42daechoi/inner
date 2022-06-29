@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:09:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/27 19:23:24 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:53:57 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,26 @@ int	ft_stacksize(t_stack *stack)
 	return (cnt);
 }
 
-int	ft_pop(t_stack *stack)
+int	ft_pop(t_stack **stack)
 {
-	t_stack *head;
+	t_stack *tail;
+	t_stack	*node;
 	int		ret;
 	int		i;
 
 	i = 0;
-	head = ft_stacklast(stack);
-	ret = head->data;
-	head->data = 0;
-	while (i < ft_stacksize(stack) - 2)
-		stack = stack->next;
-	stack->next = NULL;
-	free(head);
+	node = *stack;
+	tail = ft_stacklast(*stack);
+	ret = tail->data;
+	if (ft_stacksize(*stack) == 1)
+	{
+		*stack = NULL;
+		return (ret);
+	}
+	tail->data = 0;
+	while (i < ft_stacksize(node) - 2)
+		node = node->next;
+	node->next = NULL;
+	free(tail);
 	return (ret);
 }

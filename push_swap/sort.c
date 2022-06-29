@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:25:03 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/29 00:16:44 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:42:16 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,42 +50,26 @@ void	triple_sort(t_stack *a)
 		sa(a);
 }
 
-int	cal_cnt;
-int init_stack_size = 11;
-
-void	quick_sort(t_stack *a, t_stack *b, int pivot)
+void	quick_sort(t_info *info)
 {
-	// cal_cnt = 0;
-	// if (cal_cnt == init_stack_size && is_sorted(b, 'b'))
-	// {
-	// 	pa(a, b);
-	// }
-	// else if (cal_cnt == init_stack_size && !is_sorted(b, 'b'))
-	// {
-	// 	sb(b);
-	// 	rb(b);
-	// }
-	// if (ft_stacklast(a)->data < pivot)
-	// {
-	// 	pb(a, b);
-	// 	cal_cnt++;
-	// }
-	// else
-	// {
-	// 	ra(a);
-	// 	cal_cnt++;
-	// }
-	// sort(a, b, pivot);
+	if (info->cal_cnt == info->init_ssize)
+		return ;
+	if (ft_stacklast(info->a)->data < info->pivot)
+		pb(info);
+	else
+		ra(info->a);
+	info->cal_cnt++;
+	sort(info);
 }
 
-void    sort(t_stack *a, t_stack *b, int pivot)
+void    sort(t_info *info)
 {
-	if (ft_stacksize(a) < 2)
+	if (ft_stacksize(info->a) < 2)
 		return ;
-    else if (ft_stacksize(a) == 2)
-		double_sort(a);
-    else if (ft_stacksize(a) == 3)
-		triple_sort(a);
+    else if (ft_stacksize(info->a) == 2)
+		double_sort(info->a);
+    else if (ft_stacksize(info->a) == 3)
+		triple_sort(info->a);
     else
-		quick_sort(a, b, pivot);
+		quick_sort(info);
 }
