@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:15:36 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/27 20:36:45 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/04 20:25:57 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ void	rra(t_stack *stack)
 void	rrb(t_stack *stack)
 {
 	cal_rev_rotate(stack);
-	write(1, "rra\n", 4);
+	write(1, "rrb\n", 4);
 }

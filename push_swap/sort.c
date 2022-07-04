@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:25:03 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/29 17:42:16 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/04 20:59:29 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,109 @@ void	triple_sort(t_stack *a)
 		sa(a);
 }
 
-void	quick_sort(t_info *info)
+void	a_to_b(t_info *info, int s_size)
 {
-	if (info->cal_cnt == info->init_ssize)
+	t_stack	*top;
+	int     ra_cnt;
+	int     rb_cnt;
+	int     pb_cnt;
+
+	if (hard_sort(info, info->a))
 		return ;
-	if (ft_stacklast(info->a)->data < info->pivot)
-		pb(info);
-	else
-		ra(info->a);
-	info->cal_cnt++;
-	sort(info);
+	get_pivot(info, info->a);
+	init_cnt(info);
+	while (s_size > 0)
+	{
+		top = ft_stacklast(info->a);
+		if (top->data < info->pivot_b)
+		{
+			pb(info);
+			info->pb_cnt++;
+			if (top->data >= info->pivot_s)
+			{
+				rb(info->b);
+				info->rb_cnt++;
+			}
+		}
+		else
+		{
+			ra(info->a);
+			info->ra_cnt++;
+		}
+		s_size--;
+	}
+	ra_cnt = info->ra_cnt;
+	rb_cnt = info->rb_cnt;
+	while (ra_cnt-- > 0 && rb_cnt-- > 0)
+		rrr(info->a, info->b);
+	while (ra_cnt-- > 0)
+		rra(info->a);
+	while (rb_cnt-- > 0)
+		rrb(info->b);
+	ra_cnt = info->ra_cnt;
+	rb_cnt = info->rb_cnt;
+	pb_cnt = info->pb_cnt;
+	a_to_b(info, ra_cnt);
+	b_to_a(info, rb_cnt);
+	b_to_a(info, info->pb_cnt - rb_cnt);
 }
 
-void    sort(t_info *info)
+void	b_to_a(t_info *info, int s_size)
 {
-	if (ft_stacksize(info->a) < 2)
+	t_stack	*top;
+	int     ra_cnt;
+	int     rb_cnt;
+	int     pa_cnt;
+	
+	if (hard_sort(info, info->b))
 		return ;
-    else if (ft_stacksize(info->a) == 2)
-		double_sort(info->a);
-    else if (ft_stacksize(info->a) == 3)
-		triple_sort(info->a);
+	get_pivot(info, info->b);
+	init_cnt(info);
+	while (s_size > 0)
+	{
+		top = ft_stacklast(info->b);
+		if (top->data < info->pivot_s)
+		{
+			rb(info->b);
+			info->rb_cnt++;
+		}
+		else
+		{
+			pa(info);
+			info->pa_cnt++;
+			if (top->data < info->pivot_b)
+			{
+				ra(info->b);
+				info->ra_cnt++;
+			}
+		}
+		s_size--;
+	}
+	print_all(info, s_size);
+	sleep(2);
+	ra_cnt = info->ra_cnt;
+	rb_cnt = info->rb_cnt;
+	pa_cnt = info->pa_cnt;
+	a_to_b(info, pa_cnt - ra_cnt);
+	while (ra_cnt-- > 0 && rb_cnt-- != 0)
+		rrr(info->a, info->b);
+	while (ra_cnt-- > 0)
+		rra(info->a);
+	while (rb_cnt-- > 0)
+		rrb(info->b);
+	ra_cnt = info->ra_cnt;
+	rb_cnt = info->rb_cnt;
+	a_to_b(info, ra_cnt);
+	b_to_a(info, rb_cnt);
+}
+
+int	hard_sort(t_info *info, t_stack *s)
+{
+	if (ft_stacksize(s) == 2)
+		double_sort(s);
+    else if (ft_stacksize(s) == 3)
+		triple_sort(s);
     else
-		quick_sort(info);
+		return (0);
+	return (1);
 }

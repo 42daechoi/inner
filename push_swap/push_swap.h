@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:52 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/29 17:54:08 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/04 20:34:21 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ typedef struct s_info
 {
 	t_stack *a;
 	t_stack *b;
-	int	cal_cnt;
-	int	init_ssize;
-	int	pivot;
+	int	ra_cnt;
+	int rb_cnt;
+	int pb_cnt;
+	int pa_cnt;
+	int	pivot_s;
+	int	pivot_b;
 } t_info;
 
 t_stack	*ft_newstack(int data);
@@ -52,6 +55,15 @@ void	rr(t_stack *a, t_stack *b);
 void	rra(t_stack *stack);
 void	rrb(t_stack *stack);
 void	rrr(t_stack *a, t_stack *b);
-void    sort(t_info *info);
+void	get_pivot(t_info *info, t_stack *stack);
+void	init_cnt(t_info *info);
+void	a_to_b(t_info *info, int s_size);
+void	b_to_a(t_info *info, int s_size);
+int		hard_sort(t_info *info, t_stack *b);
+
+
+
+
+void	print_all(t_info *info, int s_size);
 
 #endif
