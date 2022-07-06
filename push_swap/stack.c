@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:09:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/06/29 17:53:57 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/06 19:32:23 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	ft_pop(t_stack **stack)
 	ret = tail->data;
 	if (ft_stacksize(*stack) == 1)
 	{
+		free(*stack);
 		*stack = NULL;
 		return (ret);
 	}

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/04 20:29:52 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/06 19:34:49 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_info(t_info *info, int ac, char **av)
 		temp = ft_atoi(av[--ac]);
 		ft_push(&info->a, ft_newstack(temp));
 	}
+	info->b = NULL;
 	info->ra_cnt = 0;
 	info->rb_cnt = 0;
 	info->pa_cnt = 0;
@@ -60,12 +61,14 @@ int main(int ac, char **av)
 {
 	t_info	info;
 	int		temp;
+	t_stack *a = info.a;
 
 	if (ac < 2)
 		exit(1);
 	init_info(&info, ac, av);
 	int i = 0;
-	a_to_b(&info, ft_stacksize(info.a));
+	if (!is_sorted(info.a))
+		a_to_b(&info, ft_stacksize(info.a));
 	printf("bottom\n");
 	while (info.a != NULL)
 	{

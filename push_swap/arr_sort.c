@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:20:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/04 19:11:29 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/06 18:30:57 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ void	get_pivot(t_info *info, t_stack *stack)
 	arr_quick_sort(arr, 0, --i);
 	info->pivot_s = arr[(int)(size / 3)];
 	info->pivot_b = arr[(int)(size / 3) * 2];
+	free(arr);
 }
