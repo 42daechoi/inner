@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/06 19:34:49 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/07 20:47:01 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,24 @@ int main(int ac, char **av)
 {
 	t_info	info;
 	int		temp;
-	t_stack *a = info.a;
+	int     i;
+	int     size;
 
+	i = 0;
 	if (ac < 2)
 		exit(1);
 	init_info(&info, ac, av);
-	int i = 0;
-	if (!is_sorted(info.a))
+	if (!is_sorted(info.a, 0))
 		a_to_b(&info, ft_stacksize(info.a));
+	// if (info.b)
+	// {
+	// 	size = ft_stacksize(info.b);
+	// 	while (i < size)
+	// 	{
+	// 		pa(&info);
+	// 		i++;
+	// 	}
+	// }
 	printf("bottom\n");
 	while (info.a != NULL)
 	{

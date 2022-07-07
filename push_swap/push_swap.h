@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:52 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/06 19:12:29 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/07 19:54:49 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_cnt(t_info *info);
 void	a_to_b(t_info *info, int s_size);
 void	b_to_a(t_info *info, int s_size);
 int		hard_sort(t_info *info, t_stack *b, int flag);
-bool	is_sorted(t_stack *stack);
+bool	is_sorted(t_stack *stack, int flag);
 
 
 
