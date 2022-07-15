@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/07 20:47:01 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:09:22 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int main(int ac, char **av)
 	if (ac < 2)
 		exit(1);
 	init_info(&info, ac, av);
-	if (!is_sorted(info.a, 0))
-		a_to_b(&info, ft_stacksize(info.a));
+	if (!is_sorted(info.a, ft_stacksize(info.a), 0))
+		q_sort_a(&info, info.a, ft_stacksize(info.a));
 	// if (info.b)
 	// {
 	// 	size = ft_stacksize(info.b);
@@ -79,7 +79,6 @@ int main(int ac, char **av)
 	// 		i++;
 	// 	}
 	// }
-	printf("bottom\n");
 	while (info.a != NULL)
 	{
 		printf("a : %d\n", info.a->data);

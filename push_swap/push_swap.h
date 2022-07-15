@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:52 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/07 19:54:49 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/15 20:52:26 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <stdbool.h>
 # include <stdio.h>
+# include <limits.h>
 
 typedef struct s_stack
 {
@@ -55,12 +56,16 @@ void	rr(t_stack *a, t_stack *b);
 void	rra(t_stack *stack);
 void	rrb(t_stack *stack);
 void	rrr(t_stack *a, t_stack *b);
-void	get_pivot(t_info *info, t_stack *stack);
+void	get_pivot(t_info *info, t_stack *stack, int s_size);
 void	init_cnt(t_info *info);
-void	a_to_b(t_info *info, int s_size);
-void	b_to_a(t_info *info, int s_size);
+//void	a_to_b(t_info *info, int s_size);
+//void	b_to_a(t_info *info, int s_size);
 int		hard_sort(t_info *info, t_stack *b, int flag);
-bool	is_sorted(t_stack *stack, int flag);
+bool	is_sorted(t_stack *stack, int s_size, int flag);
+void	q_sort_a(t_info *info, t_stack *s, int s_size);
+void	q_sort_b(t_info *info, t_stack *s, int s_size);
+t_stack	*get_count_prev(t_stack *s, int prev_count);
+int		find_min_max(t_stack *s, int flag, int s_size);
 
 
 

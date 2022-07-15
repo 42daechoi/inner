@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:20:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/07 17:40:46 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:09:07 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,26 @@ void arr_quick_sort(int *data, int start, int end)
 	arr_quick_sort(data, j + 1, end);
 }
 
-void	get_pivot(t_info *info, t_stack *stack)
+void	get_pivot(t_info *info, t_stack *stack, int s_size)
 {
 	int		*arr;
 	int		i;
-	int		size;
-	t_stack	*node;
+	t_stack *temp;
 
 	if (ft_stacksize(stack) < 4)
 		return ;
+	temp = stack;
 	i = 0;
-	node = stack;
-	size = ft_stacksize(stack);
-	arr = (int *)malloc(ft_stacksize(stack) * sizeof(int));
+	arr = (int *)malloc(s_size * sizeof(int));
 	if (!arr)
 		ft_printerr("arr_sort error");
-	while (node != NULL)
+	while (i < s_size)
 	{
-		arr[i] = node->data;
+		arr[i] = get_count_prev(stack, i)->data;
 		i++;
-		node = node->next;
 	}
 	arr_quick_sort(arr, 0, --i);
-	info->pivot_s = arr[(int)(size / 3)];
-	info->pivot_b = arr[(int)(size / 3) * 2];
+	info->pivot_s = arr[(int)(s_size / 3)];
+	info->pivot_b = arr[(int)(s_size / 3) * 2];
 	free(arr);
 }

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:33:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/06 19:31:20 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:15:03 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	cal_rotate(t_stack *stack)
 	int		temp;
 	int		temp2;
 	
+	if (ft_stacksize(stack) == 1)
+		return ;
 	head = stack;
 	temp = stack->data;
 	while (stack->next != NULL)
@@ -70,6 +72,8 @@ void	cal_rev_rotate(t_stack *stack)
 	t_stack	*tail;
 	int		tail_data;
 
+	if (ft_stacksize(stack) == 1)
+		return ;
 	tail = ft_stacklast(stack);
 	tail_data = stack->data;
 	while (stack->next != NULL)
