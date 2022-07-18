@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 19:03:15 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/15 16:46:09 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:21:54 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_stack	*get_count_prev(t_stack *s, int prev_count)
 {
-	int	i;
-	t_stack *temp;
+	int		i;
+	t_stack	*temp;
 
 	i = 1;
 	temp = s;

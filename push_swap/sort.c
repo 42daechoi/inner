@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:25:03 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/15 21:12:28 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/18 20:04:17 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,20 +155,15 @@ int	find_min_max(t_stack *s, int flag, int s_size)
 
 void	do_instruct_a(t_info *info, int s_size)
 {
-	int		top_data;
-	int     ra_cnt;
-	int     rb_cnt;
-	int     pb_cnt;
-	int		i;
-	int		j;
+	int	top_data;
+	int	ra_cnt;
+	int	rb_cnt;
+	int	pb_cnt;
 
 	get_pivot(info, info->a, s_size);
-	init_cnt(info);
 	ra_cnt = 0;
 	rb_cnt = 0;
 	pb_cnt = 0;
-	i = 0;
-	j = 0;
 	while (s_size > 0)
 	{
 		top_data = ft_stacklast(info->a)->data;
@@ -187,34 +182,32 @@ void	do_instruct_a(t_info *info, int s_size)
 				rb_cnt++;
 			}
 		}
-		printf("a_to_b\n");
-		print_all(info, s_size);
 		s_size--;
 	}
-	i = ra_cnt;
-	j = rb_cnt;
-	while (ra_cnt-- > 0 && rb_cnt-- > 0)
+	reverse_in_sort(info, ra_cnt, rb_cnt);
+	q_sort_a(info, info->a, ra_cnt);
+	q_sort_b(info, info->b, rb_cnt);
+	q_sort_b(info, info->b, pb_cnt - rb_cnt);
+}
+
+void	reverse_in_sort(t_info *info, int ra_cnt, int rb_cnt)
+{
+	while (ra_cnt-- > 0 && rb_cnt-- != 0)
 		rrr(info->a, info->b);
 	while (ra_cnt-- > 0)
 		rra(info->a);
 	while (rb_cnt-- > 0)
 		rrb(info->b);
-	q_sort_a(info, info->a, i);
-	q_sort_b(info, info->b, j);
-	q_sort_b(info, info->b, pb_cnt - j);
 }
 
 void	do_instruct_b(t_info *info, int s_size)
 {
-	int     top_data;
-	int     ra_cnt;
-	int     rb_cnt;
-	int     pa_cnt;
-	int		i;
-	int		j;
+	int	top_data;
+	int	ra_cnt;
+	int	rb_cnt;
+	int	pa_cnt;
 	
 	get_pivot(info, info->b, s_size);
-	init_cnt(info);
 	ra_cnt = 0;
 	rb_cnt = 0;
 	pa_cnt = 0;
@@ -238,20 +231,11 @@ void	do_instruct_b(t_info *info, int s_size)
 			}
 		}
 		s_size--;
-		printf("b_to_a\n");
-		print_all(info, s_size);
 	}
-	i = ra_cnt;
-	j = rb_cnt;
 	q_sort_a(info, info->a, pa_cnt - ra_cnt);
-	while (ra_cnt-- > 0 && rb_cnt-- != 0)
-		rrr(info->a, info->b);
-	while (ra_cnt-- > 0)
-		rra(info->a);
-	while (rb_cnt-- > 0)
-		rrb(info->b);
-	q_sort_a(info, info->a, i);
-	q_sort_b(info, info->b, j);
+	reverse_in_sort(info, ra_cnt, rb_cnt);
+	q_sort_a(info, info->a, ra_cnt);
+	q_sort_b(info, info->b, rb_cnt);
 }
 
 void	q_sort_a(t_info *info, t_stack *s, int s_size)
@@ -276,7 +260,7 @@ void	q_sort_a(t_info *info, t_stack *s, int s_size)
 	do_instruct_a(info, s_size);
 }
 
-void	push_iter(t_info *info, t_stack *s, int s_size)
+void	push_iter(t_info *info, int s_size)
 {
 	while (s_size > 0)
 	{
@@ -289,7 +273,7 @@ void	q_sort_b(t_info *info, t_stack *s, int s_size)
 {
 	if (is_sorted(info->b, s_size, 1))
 	{
-		push_iter(info, s, s_size);
+		push_iter(info, s_size);
 		return ;
 	}
 	if (s_size == 1)

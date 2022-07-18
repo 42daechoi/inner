@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:33:46 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/14 17:15:03 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:27:33 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	cal_rotate(t_stack *stack)
 	t_stack	*head;
 	int		temp;
 	int		temp2;
-	
+
 	if (ft_stacksize(stack) == 1)
 		return ;
 	head = stack;

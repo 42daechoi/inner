@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:09:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/07 16:07:03 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/18 16:22:12 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_stack	*ft_newstack(int data)
 	new->next = NULL;
 	return (new);
 }
-
 
 void	ft_push(t_stack **stack, t_stack *new)
 {
@@ -64,7 +63,7 @@ int	ft_stacksize(t_stack *stack)
 
 int	ft_pop(t_stack **stack)
 {
-	t_stack *tail;
+	t_stack	*tail;
 	t_stack	*node;
 	int		ret;
 	int		i;
