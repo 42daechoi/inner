@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 16:20:43 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/18 19:09:37 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:44:34 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	get_pivot(t_info *info, t_stack *stack, int s_size)
 		ft_printerr("Error\n");
 	while (i < s_size)
 	{
-		arr[i] = get_count_prev(stack, i)->data;
+		arr[i] = get_prev(stack, i)->data;
 		i++;
 	}
 	arr_quick_sort(arr, 0, --i);

@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:52 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/18 20:04:22 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:36:34 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 # include <stdbool.h>
-# include <stdio.h>
 # include <limits.h>
 
 typedef struct s_stack
@@ -30,6 +29,7 @@ typedef struct s_info
 	t_stack	*b;
 	int		pivot_s;
 	int		pivot_b;
+	int		depth;
 }	t_info;
 
 typedef struct s_aqinfo
@@ -39,6 +39,20 @@ typedef struct s_aqinfo
 	int	j;
 	int	temp;
 }	t_aqinfo;
+
+typedef struct s_var
+{
+	int	var;
+	int	min;
+	int	next_min;
+	int	i;
+	int	cnt;
+	int	max;
+	int	ra_cnt;
+	int	rb_cnt;
+	int	pa_cnt;
+	int	pb_cnt;
+}	t_var;
 
 t_stack	*ft_newstack(int data);
 void	ft_push(t_stack **lst, t_stack *new);
@@ -65,8 +79,11 @@ int		hard_sort(t_info *info, t_stack *b, int flag);
 bool	is_sorted(t_stack *stack, int s_size, int flag);
 void	q_sort_a(t_info *info, t_stack *s, int s_size);
 void	q_sort_b(t_info *info, t_stack *s, int s_size);
-t_stack	*get_count_prev(t_stack *s, int prev_count);
+t_stack	*get_prev(t_stack *s, int prev_count);
 int		find_min_max(t_stack *s, int flag, int s_size);
 void	reverse_in_sort(t_info *info, int ra_cnt, int rb_cnt);
+int		err_check(char **av);
+void	double_sort(t_info *info, t_stack *s, int flag);
+void	triple_sort(t_info *info, t_stack *s, int flag);
 
 #endif

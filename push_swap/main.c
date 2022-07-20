@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:30:22 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/18 20:04:29 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/20 16:34:29 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,7 @@ void	init_info(t_info *info, int ac, char **av)
 		ft_push(&info->a, ft_newstack(temp));
 	}
 	info->b = NULL;
-}
-
-int err_check(char **av)
-{
-	int i;
-	int j;
-	int	k;
-	int	temp;
-
-	i = 1;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (av[i][j] == '+' || av[i][j] == '-')
-				j++;
-			if (!ft_isdigit(av[i][j]))
-				return (0);
-			j++;
-		}
-		temp = ft_atoi(av[i]);
-		if (temp > INT_MAX || temp < INT_MIN)
-			return (0);
-		k = i + 1;
-		while (av[k])
-		{
-			if (av[i] == av[k])
-				return (0);
-			k++;
-		}
-		i++;
-	}
-	return (1);
+	info->depth = 0;
 }
 
 void	only_triple_sort(t_info info)
@@ -69,6 +36,41 @@ void	only_triple_sort(t_info info)
 		ra(a);
 	if (a->next->data < a->next->next->data)
 		sa(a);
+}
+
+void	init_ofs(t_var *var, t_stack *s)
+{
+	var->i = -1;
+	var->cnt = 0;
+	var->min = find_min_max(s, 0, 5);
+	var->next_min = find_min_max(s, 2, 5);
+}
+
+void	only_fifth_sort(t_info *info)
+{
+	t_var	var;
+	t_stack	*s;
+
+	s = info->a;
+	init_ofs(&var, s);
+	while (++var.i < 5)
+	{
+		if (get_prev(s, 0)->data == var.min \
+			|| get_prev(s, 0)->data == var.next_min)
+		{
+			pb(info);
+			var.cnt++;
+		}
+		else
+			ra(s);
+		if (var.cnt == 2)
+			break ;
+	}
+	if (info->b->data > info->b->next->data)
+		sb(info->b);
+	only_triple_sort(*info);
+	pa(info);
+	pa(info);
 }
 
 int	main(int ac, char **av)
@@ -84,12 +86,9 @@ int	main(int ac, char **av)
 	{
 		if (ac == 4)
 			only_triple_sort(info);
+		else if (ac == 6)
+			only_fifth_sort(&info);
 		else
 			q_sort_a(&info, info.a, ft_stacksize(info.a));
-	}
-	while (info.a != NULL)
-	{
-		printf("a : %d", info.a->data);
-		info.a = info.a->next;
 	}
 }

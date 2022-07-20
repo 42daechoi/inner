@@ -6,13 +6,13 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 19:03:15 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/18 16:21:54 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/19 20:44:53 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*get_count_prev(t_stack *s, int prev_count)
+t_stack	*get_prev(t_stack *s, int prev_count)
 {
 	int		i;
 	t_stack	*temp;
