@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 20:49:55 by daechoi           #+#    #+#             */
-/*   Updated: 2022/07/19 20:51:51 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/07/20 21:03:34 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_samenum(char **av, int i)
 	k = i + 1;
 	while (av[k])
 	{
-		if (av[i] == av[k])
+		if (ft_atoi(av[i]) == ft_atoi(av[k]))
 			return (0);
 		k++;
 	}
@@ -28,9 +28,9 @@ int	check_samenum(char **av, int i)
 
 int	err_check(char **av)
 {
-	int	i;
-	int	j;
-	int	temp;
+	int			i;
+	int			j;
+	long long	temp;
 
 	i = 1;
 	while (av[i])
@@ -44,7 +44,7 @@ int	err_check(char **av)
 				return (0);
 			j++;
 		}
-		temp = ft_atoi(av[i]);
+		temp = ft_atol(av[i]);
 		if (temp > INT_MAX || temp < INT_MIN)
 			return (0);
 		if (!check_samenum(av, i))
