@@ -6,7 +6,7 @@
 #    By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 14:58:28 by daechoi           #+#    #+#              #
-#    Updated: 2021/11/26 14:02:07 by daechoi          ###   ########.fr        #
+#    Updated: 2022/09/14 18:06:40 by daechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ $(NAME): $(OBJECTS)
 	$(AR) $@ $(OBJECTS)
 
 bonus:
-	@make WITH_B=1 all
+	make WITH_B=1 all
 
 clean:
 	$(RM) *.o

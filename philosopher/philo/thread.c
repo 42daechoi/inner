@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:34:32 by daechoi           #+#    #+#             */
-/*   Updated: 2022/09/06 21:22:51 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/09/14 12:18:07 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	is_solo(t_philo *philo, t_info info)
 	{
 		pthread_mutex_lock(philo->leftfork);
 		philo_print(philo, philo->me, "has taken a fork");
-		usleep(info.d_time);
+		ft_usleep(info.d_time);
 		philo_print(philo, philo[0].me, "died");
 		return (1);
 	}

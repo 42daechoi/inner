@@ -6,7 +6,7 @@
 /*   By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 20:58:44 by daechoi           #+#    #+#             */
-/*   Updated: 2022/09/06 21:21:38 by daechoi          ###   ########.fr       */
+/*   Updated: 2022/09/07 17:52:25 by daechoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_usleep(long long time)
 	{
 		if (get_time() - starttime >= time)
 			break ;
-		usleep(42);
+		usleep(128);
 	}
 }
 
