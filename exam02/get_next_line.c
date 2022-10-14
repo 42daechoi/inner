@@ -53,58 +53,55 @@ int	get_nl_idx(char *str)
 		if (str[i] == '\n')
 			return (i);
 	}
-	return (0);
+	return (-1);
 }
 
-int get_next_line(char **line)
+char *get_next_line(int fd)
 {
 	static char	*stdinput;
-	char		*buff;
+	char		buff[BUFFER_SIZE + 1];
 	int			rdsize;
 	char		*temp;
 	int			nl_idx;
+	char		*ret;
 	int			i = -1;
 
-	buff = malloc(2 * sizeof(char));
-	if (!buff)
-		return (-1);
 	if (!stdinput)
 	{
 		stdinput = ft_strdup("", 0);
-		while ((rdsize = read(0, buff, 1) > 0))
+		while ((rdsize = read(fd, buff, BUFFER_SIZE) > 0))
 		{
-			buff[1] = '\0';;
+			buff[rdsize] = '\0';
 			temp = stdinput;
 			stdinput = ft_strjoin(temp, buff);
 			free(temp);
 		}
 		if (rdsize == -1)
-			return (-1);
+			return (NULL);
 	}
-	free(buff);
+	if (!*stdinput)
+		return (NULL);
 	if ((nl_idx = get_nl_idx(stdinput)))
 	{
-		*line = ft_strdup(stdinput, nl_idx);
+		ret = ft_strdup(stdinput, nl_idx);
 		stdinput = stdinput + nl_idx + 1;
-		return (1);
 	}
-	*line = ft_strdup(stdinput, ft_strlen(stdinput));
-	return (0);
+	else
+		ret = ft_strdup(stdinput, ft_strlen(stdinput));
+	return (ret);
 }
 
 int main(void)
 {
-	char 	*line;
-	int	ret;
+	char	*ret;
 
-	line = NULL;
-	while ((ret = get_next_line(&line)) > 0)
+	while ((ret = get_next_line(0)))
 	{
-		printf("%d %s\n", ret, line);
-		free(line);
-		line = NULL;
+		printf("%s\n", ret);
+		free(ret);
+		ret = NULL;
 	}
-	printf("%d %s\n", ret, line);
-	free(line);
+	printf("%s\n", ret);
+	free(ret);;
 	system("leaks a.out");
 }
