@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"minirt_bonus.h": "c",
+		"minirt.h": "c",
+		"string": "c",
+		"vector": "c",
+		"complex": "c",
+		"libft.h": "c",
+		"mlx.h": "c"
+	}
+}
