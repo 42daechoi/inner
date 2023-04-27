@@ -1,6 +1,6 @@
 #include "header.hpp"
 #include "Socket.hpp"
-#include "Parser.hpp"
+#include "Command.hpp"
 
 // int main(int ac, char **av)
 // {
@@ -40,6 +40,12 @@
 // 	return 0;
 // }
 
+void print_map(map<string, Client> m) {
+	map<string, Client>::iterator it;
+	for (it = m.begin(); it != m.end(); it++)
+		cout << "{" << (*it).first << "}\n";
+}
+
 int main(int ac, char **av)
 {
 	if (ac != 3) 
@@ -54,6 +60,8 @@ int main(int ac, char **av)
 	servpoll.fd = ss.getServSock();
 	servpoll.events = POLLIN;
 	vfds.push_back(servpoll);
+
+	map<string, Client> clntList;
 	
 	while (1) {
 
@@ -67,6 +75,20 @@ int main(int ac, char **av)
 			clntpoll.fd = clntfd;
 			clntpoll.events = POLLIN;
 			vfds.push_back(clntpoll);
+			string msg = ss.recv(clntfd);
+			Client clnt = Client(clntfd);
+			Command cmd = Command(msg, clnt);
+			cmd.execute();
+			unsigned long before = clntList.size();
+			clntList.insert(make_pair(clnt.getNickname(), clnt));
+			if (before == clntList.size()) {
+				ss.send("same nickname exist.\n", clntfd);
+				vfds.pop_back();
+				close(clntfd);
+			}
+			else
+				ss.send("create client list.\n", clntfd);
+			print_map(clntList);
 		}
 
 		for (size_t i = 1; i < vfds.size(); i++) {
@@ -79,8 +101,8 @@ int main(int ac, char **av)
 					vfds.erase(vfds.begin() + i);
 					continue ;
 				}
-				Parser ps(msg);
-				ps.printCommand();
+				// Command cmd(msg, clnt);
+				// cmd.printCommand();
 				ss.send(msg, clntfd);
 			}
 		}

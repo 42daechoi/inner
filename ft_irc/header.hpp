@@ -13,8 +13,7 @@
 # include <vector>
 # include <algorithm>
 # include <iterator>
-
-# define CLIENT_MAX 30
+# include <map>
 
 using namespace std;
 
