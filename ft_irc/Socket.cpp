@@ -1,6 +1,6 @@
 #include "Socket.hpp"
 
-Socket::Socket() : _servfd(-1), _clntfd(-1) {}
+Socket::Socket() : _servfd(-1) {}
 
 Socket::Socket(int domain, int type, int protocol) {
 	_servfd = socket(domain, type, protocol);
@@ -10,7 +10,6 @@ Socket::Socket(int domain, int type, int protocol) {
 
 Socket::~Socket() {
 	close(_servfd);
-	close(_clntfd);
 }
 
 void Socket::bind(int port) {
@@ -28,31 +27,29 @@ void Socket::listen() {
 		perr("Error: listen error");
 }
 
-void Socket::accept() {
+int Socket::accept() {
+	int					clntfd;
 	struct sockaddr_in	clnt_addr;
 	socklen_t			ca_size;
 
-	if ((_clntfd = ::accept(_servfd, (struct sockaddr*)&clnt_addr, &ca_size)) == -1)
+	if ((clntfd = ::accept(_servfd, (struct sockaddr*)&clnt_addr, &ca_size)) == -1)
 		perr("Error: accept error");
+	return clntfd;
 }
 
-string Socket::recv() {
+string Socket::recv(int clntfd) {
 	char	buffer[4096];
-	int 	rsize = ::recv(_clntfd, buffer, sizeof(buffer), 0);
+	int 	rsize = ::recv(clntfd, buffer, sizeof(buffer), 0);
 	if (rsize == -1)
 		perr("Error: recv error");
 	return string(buffer, rsize);
 }
 
-void Socket::send(const string &msg) {
-	if (::send(_clntfd, msg.c_str(), msg.length(), 0) == -1)
+void Socket::send(const string &msg, int clntfd) {
+	if (::send(clntfd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 }
 
 int Socket::getServSock() {
 	return _servfd;
-}
-
-int Socket::getClntSock() {
-	return _clntfd;
 }

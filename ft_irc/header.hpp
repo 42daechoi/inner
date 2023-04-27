@@ -6,9 +6,15 @@
 # include <cstdlib>
 # include <iostream>
 # include <cstring>
+# include <string>
 # include <cctype>
 # include <unistd.h>
-# include <poll.h>
+# include <sys/poll.h>
+# include <vector>
+# include <algorithm>
+# include <iterator>
+
+# define CLIENT_MAX 30
 
 using namespace std;
 

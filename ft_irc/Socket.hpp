@@ -11,15 +11,13 @@ class Socket {
 
 		void	bind(int port);
 		void	listen();
-		void	accept();
-		string	recv();
-		void	send(const string &msg);
+		int		accept();
+		string	recv(int clntfd);
+		void	send(const string &msg, int clntfd);
 
 		int getServSock();
-		int getClntSock();
 	private:
 		int _servfd;
-		int _clntfd;
 };
 
 #endif
