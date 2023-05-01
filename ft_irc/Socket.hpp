@@ -15,7 +15,7 @@ class Socket {
 		string	recv(int clntfd);
 		void	send(const string &msg, int clntfd);
 
-		int getServSock();
+		int getSock();
 	private:
 		int _servfd;
 };

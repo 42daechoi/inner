@@ -50,6 +50,6 @@ void Socket::send(const string &msg, int clntfd) {
 		perr("Error: send error");
 }
 
-int Socket::getServSock() {
+int Socket::getSock() {
 	return _servfd;
 }
