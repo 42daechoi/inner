@@ -40,6 +40,9 @@ int Socket::accept() {
 string Socket::recv(int clntfd) {
 	char	buffer[4096];
 	int 	rsize = ::recv(clntfd, buffer, sizeof(buffer), 0);
+
+	if (errno == EWOULDBLOCK)
+		return "";
 	if (rsize == -1)
 		perr("Error: recv error");
 	return string(buffer, rsize);
