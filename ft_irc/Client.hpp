@@ -9,6 +9,7 @@ class Client {
 
 		void	setNickname(string nickname);
 		void	setUsername(string username);
+		int 	getClntfd();
 		string	getNickname();
 		string 	getUsername();
 	private:

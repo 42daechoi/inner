@@ -8,6 +8,8 @@ void Client::setNickname(string nickname) { _nickname = nickname; }
 
 void Client::setUsername(string username) { _username = username; }
 
+int Client::getClntfd() { return _clntfd; }
+
 string Client::getNickname() { return _nickname; }
 
 string Client::getUsername() { return _username; }

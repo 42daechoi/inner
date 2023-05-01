@@ -15,6 +15,7 @@
 # include <iterator>
 # include <map>
 # include <fcntl.h>
+# include <limits.h>
 
 using namespace std;
 
