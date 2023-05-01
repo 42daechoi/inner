@@ -11,3 +11,4 @@ void Client::setUsername(string username) { _username = username; }
 string Client::getNickname() { return _nickname; }
 
 string Client::getUsername() { return _username; }
+
