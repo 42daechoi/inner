@@ -44,7 +44,8 @@ int main(int ac, char **av)
 			clntpoll.events = POLLIN;
 			vfds.push_back(clntpoll);
 			clntList.push_back(clnt);
-			if (clntList.size() + 1 > OPEN_MAX)
+			// if (clntList.size() + 1 > OPEN_MAX) 왠진 모르겠지만 OPEN_MAX 우분투에서 안먹음..ㅜ
+			if (clntList.size() + 1 > 32)
 				perr("Error: out of range descriptor");
 			continue;
 		}
@@ -64,10 +65,10 @@ int main(int ac, char **av)
 						break;
 					}
 					else {
-						Command cmd = Command(msg, clntList[i - 1]);
+						Command cmd = Command(msg, clntList[i - 1], clntList);
 						cmd.execute();
 						// ss.send(msg, clntfd);
-						print_List(clntList);
+						// print_List(clntList);
 						break;
 					}
 				}

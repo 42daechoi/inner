@@ -16,6 +16,8 @@
 # include <map>
 # include <fcntl.h>
 # include <limits.h>
+# include <cerrno>
+# include <climits>
 
 using namespace std;
 
