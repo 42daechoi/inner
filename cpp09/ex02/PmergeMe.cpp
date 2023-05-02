@@ -15,7 +15,7 @@ PmergeMe::PmergeMe(int ac, char **av)
 	for (int i = 1; i < ac; i++) {
 		std::stringstream ss(av[i]);
 		ss >> n;
-		vec.push_back(n);
+		list.push_back(n);
 		dq.push_back(n);
 	}
 }
@@ -43,7 +43,7 @@ PmergeMe &				PmergeMe::operator=( PmergeMe const & rhs )
 {
 	if ( this != &rhs )
 	{
-		this->vec = rhs.getVector();
+		this->list = rhs.getList();
 		this->dq = rhs.getDeque();
 	}
 	return *this;
@@ -54,17 +54,19 @@ PmergeMe &				PmergeMe::operator=( PmergeMe const & rhs )
 ** --------------------------------- METHODS ----------------------------------
 */
 
-std::vector<int> PmergeMe::insert(std::vector<int> &vec) {
-	for (int i = 1; i < (int)vec.size(); i++) {
-		int temp = vec[i]; 
-		int j = i;
-		while (j > 0 && vec[j - 1] > temp) {
-			vec[j] = vec[j - 1];
-			j--;
+std::list<int> PmergeMe::insert(std::list<int> &list) {
+	std::list<int>::iterator it;
+
+	for (it = ++list.begin(); it != list.end(); it++) {
+		int temp = *it;
+		std::list<int>::iterator prev = std::prev(it);
+		while (std::next(prev) != list.begin() && *prev > temp) {
+			*std::next(prev) = *prev;
+			prev--;
 		}
-		vec[j] = temp;
-	}
-	return vec;
+		*std::next(prev) = temp;
+  	}
+	return list;
 }
 
 std::deque<int> PmergeMe::insert(std::deque<int> &dq) {
@@ -80,26 +82,27 @@ std::deque<int> PmergeMe::insert(std::deque<int> &dq) {
 	return dq;
 }
 
-std::vector<int> PmergeMe::merge(std::vector<int> &lv, std::vector<int> &rv) {
-	std::vector<int>	res;
-	int					lidx = 0, ridx = 0;
+std::list<int> PmergeMe::merge(std::list<int> &ll, std::list<int> &rl) {
+	std::list<int>::iterator	itl = ll.begin();
+	std::list<int>::iterator	itr = rl.begin();
+	std::list<int>				res;
 
-	for (int i = 0; i < (int)vec.size(); i++) {
-		if (ridx == (int)rv.size()) {
-			res.push_back(lv[lidx]);
-			lidx++;
+	for (int i = 0; i < (int)(ll.size() + rl.size()); i++) {
+		if (itr == rl.end()) {
+			res.push_back(*itl);
+			itl++;
 		}
-		else if (lidx == (int)lv.size()) {
-			res.push_back(rv[ridx]);
-			ridx++;
+		else if (itl == ll.end()) {
+			res.push_back(*itr);
+			itr++;
 		}
-		else if (rv[ridx] > lv[lidx]) {
-			res.push_back(lv[lidx]);
-			lidx++;
+		else if (*itr > *itl) {
+			res.push_back(*itl);
+			itl++;
 		}
 		else {
-			res.push_back(rv[ridx]);
-			ridx++;
+			res.push_back(*itr);
+			itr++;
 		}
 	}
 	return res;
@@ -107,45 +110,51 @@ std::vector<int> PmergeMe::merge(std::vector<int> &lv, std::vector<int> &rv) {
 
 std::deque<int> PmergeMe::merge(std::deque<int> &lq, std::deque<int> &rq) {
 	std::deque<int>	res;
-	int				lidx = 0, ridx = 0;
+	std::deque<int>::iterator	itl = lq.begin();
+	std::deque<int>::iterator	itr = rq.begin();
 
-	for (int i = 0; i < (int)dq.size(); i++) {
-		if (ridx == (int)rq.size()) {
-			res.push_back(lq[lidx]);
-			lidx++;
+	for (int i = 0; i < (int)(lq.size() + rq.size()); i++) {
+		if (itr == rq.end()) {
+			res.push_back(*itl);
+			itl++;
 		}
-		else if (lidx == (int)lq.size()) {
-			res.push_back(rq[ridx]);
-			ridx++;
+		else if (itl == lq.end()) {
+			res.push_back(*itr);
+			itr++;
 		}
-		else if (rq[ridx] > lq[lidx]) {
-			res.push_back(lq[lidx]);
-			lidx++;
+		else if (*itr > *itl) {
+			res.push_back(*itl);
+			itl++;
 		}
 		else {
-			res.push_back(rq[ridx]);
-			ridx++;
+			res.push_back(*itr);
+			itr++;
 		}
 	}
 	return res;
 }
 
-std::vector<int> PmergeMe::mergeInsertSort(std::vector<int> &vec) {
-	if (vec.size() <= 5)
-		return insert(vec);
-	std::vector<int> lv(vec.begin(), vec.begin() + vec.size() / 2);
-	std::vector<int> rv(vec.begin() + vec.size() / 2, vec.end());
+std::list<int> PmergeMe::mergeInsertSort(std::list<int> &list) {
+	std::list<int>::iterator	it = list.begin();
 
-	lv = mergeInsertSort(lv);
-	rv = mergeInsertSort(rv);
-	return merge(lv, rv);
+	if (list.size() <= 10)
+		return insert(list);
+	std::advance(it, list.size() / 2);
+	std::list<int> ll(list.begin(), it);
+	std::list<int> rl(it, list.end());
+
+	ll = mergeInsertSort(ll);
+	rl = mergeInsertSort(rl);
+	return merge(ll, rl);
 }
 
 std::deque<int> PmergeMe::mergeInsertSort(std::deque<int> &dq) {
-	if (dq.size() <= 5)
+	std::deque<int>::iterator	it = dq.begin();
+	if (dq.size() <= 10)
 		return insert(dq);
-	std::deque<int> lq(dq.begin(), dq.begin() + dq.size() / 2);
-	std::deque<int> rq(dq.begin() + dq.size() / 2, dq.end());
+	std::advance(it, dq.size() / 2);
+	std::deque<int> lq(dq.begin(), it);
+	std::deque<int> rq(it, dq.end());
 
 	lq = mergeInsertSort(lq);
 	rq = mergeInsertSort(rq);
@@ -153,24 +162,24 @@ std::deque<int> PmergeMe::mergeInsertSort(std::deque<int> &dq) {
 }
 
 void PmergeMe::print() {
-	std::vector<int>	temp(vec.begin(), vec.end());
-	clock_t				start, end;
+	std::deque<int>				temp(dq.begin(), dq.end());
+	clock_t						start, end;
 
 	std::cout << "Before :";
-	for (int i = 0; i < (int)vec.size(); i++) 
-		std::cout << " " << vec[i];
+	for (int i = 0; i < (int)dq.size(); i++)
+		std::cout << " " << dq[i];
 	sort(temp.begin(), temp.end());
 
 	std::cout << "\nAfter :";
-	for (int i = 0; i < (int)temp.size(); i++) 
+	for (int i = 0; i < (int)temp.size(); i++)
 		std::cout << " " << temp[i];
 	std::cout << "\n";
 	
 	start = clock();
-	vec = mergeInsertSort(vec);
+	list = mergeInsertSort(list);
 	end = clock();
 
-	std::cout << vec.size() << " elements with vector " << end - start << "ms\n";
+	std::cout << list.size() << " elements with list " << end - start << "ms\n";
 
 	start = clock();
 	dq = mergeInsertSort(dq);
@@ -179,9 +188,10 @@ void PmergeMe::print() {
 	std::cout << dq.size() << " elements with deque " << end - start << "ms\n";
 }
 
-void PmergeMe::vecPrint() {
-	for (int i = 0; i < (int)vec.size(); i++)
-		std::cout << vec[i] << " ";
+void PmergeMe::listPrint() {
+	std::list<int>::iterator it;
+	for (it = list.begin(); it != list.end(); it++)
+		std::cout << *it << " ";
 }
 
 void PmergeMe::dqPrint() {
@@ -193,8 +203,8 @@ void PmergeMe::dqPrint() {
 ** --------------------------------- ACCESSOR ---------------------------------
 */
 
-std::vector<int> PmergeMe::getVector() const {
-	return this->vec;
+std::list<int> PmergeMe::getList() const {
+	return this->list;
 }
 
 std::deque<int> PmergeMe::getDeque() const {
