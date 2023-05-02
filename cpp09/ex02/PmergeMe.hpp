@@ -4,10 +4,11 @@
 # include <iostream>
 # include <string>
 # include <ctime>
-# include <vector>
+# include <list>
 # include <deque>
 # include <algorithm>
 # include <sstream>
+# include <iterator>
 
 class PmergeMe
 {
@@ -22,21 +23,21 @@ class PmergeMe
 		PmergeMe &			operator=( PmergeMe const & rhs );
 
 		void				print();
-		void				vecPrint();
+		void				listPrint();
 		void				dqPrint();
 
-		std::vector<int> 	getVector() const;
+		std::list<int> 		getList() const;
 		std::deque<int> 	getDeque() const;
 
 	private:
-		std::vector<int>	insert(std::vector<int> &vec);
+		std::list<int>		insert(std::list<int> &list);
 		std::deque<int>		insert(std::deque<int> &dq);
-		std::vector<int>	merge(std::vector<int> &lv, std::vector<int> &rv);
+		std::list<int>		merge(std::list<int> &ll, std::list<int> &rl);
 		std::deque<int>		merge(std::deque<int> &lq, std::deque<int> &rq);
-		std::vector<int>	mergeInsertSort(std::vector<int> &vec);
+		std::list<int>		mergeInsertSort(std::list<int> &list);
 		std::deque<int>		mergeInsertSort(std::deque<int> &dq);
 
-		std::vector<int>	vec;
+		std::list<int>		list;
 		std::deque<int>		dq;
 };
 

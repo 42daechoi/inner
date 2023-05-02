@@ -6,13 +6,13 @@
 #    By: daechoi <daechoi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 16:29:03 by daechoi           #+#    #+#              #
-#    Updated: 2023/04/12 16:29:24 by daechoi          ###   ########.fr        #
+#    Updated: 2023/04/14 15:30:40 by daechoi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = PmergeMe
 CC = c++
-CFLAGS = --std=c++98 -Wall -Wextra -Werror
+CFLAGS = --std=c++98 -Wall -Wextra -Werror -fsanitize=address -g3
 SRCS = main.cpp PmergeMe.cpp
 OBJS = $(SRCS:.cpp=.o)
 
