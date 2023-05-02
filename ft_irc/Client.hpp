@@ -7,8 +7,10 @@ class Client {
 	public:
 		Client(int clntfd);
 
+		void	setInit(bool flag);
 		void	setNickname(string nickname);
 		void	setUsername(string username);
+		bool	getInit();
 		int 	getClntfd();
 		string	getNickname();
 		string 	getUsername();
@@ -17,6 +19,7 @@ class Client {
 		string 	_nickname;
 		string 	_username;
 		// bool 	_isOp;
+		bool	_isInit;
 };
 
 #endif

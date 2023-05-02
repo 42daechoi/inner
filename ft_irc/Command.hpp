@@ -4,17 +4,23 @@
 # include "header.hpp"
 # include "Client.hpp"
 
+# define SERVERNEMA irc.local
+
 class Command {
 	public:
 		Command(string data, Client &client);
 
-		void printCommand();
-		void execute();
+		void	printCommand();
+		string	makeWelcomeMsg();
+		void	user();
+		void	nick();
+		void	execute();
 
 		vector<string> getCmd();
 	private:
 		Client& 		_client;
 		vector<string>	_cmd;
+		const string	_server;
 };
 
 #endif
