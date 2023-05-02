@@ -27,6 +27,9 @@ int main(int ac, char **av)
 	vfds.push_back(servpoll);
 
 	vector<Client>		clntList;
+
+	vector<Channel>		chList;
+
 	while (1) {
 
 		if (poll(&vfds[0], vfds.size(), 0) == -1)
@@ -57,7 +60,7 @@ int main(int ac, char **av)
 					string msg = ss.recv(clntfd);
 					if (errno == EWOULDBLOCK)
 						continue;
-					else if (msg.empty()) {
+					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
 						cout << "client end\n";
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
@@ -65,7 +68,7 @@ int main(int ac, char **av)
 						break;
 					}
 					else {
-						Command cmd = Command(msg, clntList[i - 1], clntList);
+						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
 						cmd.execute();
 						// ss.send(msg, clntfd);
 						// print_List(clntList);

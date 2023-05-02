@@ -1,6 +1,6 @@
 #include "Command.hpp"
 
-Command::Command(string data, Client &client, vector<Client> clntList) : _clntList(clntList), _client(client), _server("irc.local") {
+Command::Command(string data, Client &client, vector<Client> &clntList, vector<Channel> &chList) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local") {
 	char *ptr = strtok((char *)data.c_str(), " \t");
 	while (ptr != NULL)
 	{
@@ -98,17 +98,76 @@ void Command::user()
 	}
 }
 
+int Command::findSharp() {
+	for (int i = 0; i < (int)_cmd.size(); i++) {
+		if (_cmd[i][0] == '#')
+			return i;
+	}
+	return -1;
+}
+
+Channel *Command::findChannel(string ch_name) {
+	for (int i = 0; i < (int)_chList.size(); i++) {
+		if (ch_name == _chList[i].getChannelName())
+			return &_chList[i];
+	}
+	return NULL;
+}
+
+void Command::shoutOutToChannel(Channel *channel) {
+	string 			msg;
+	vector<Client>	members = channel->getMemberList();
+
+	for (int i = 0; i < (int)members.size(); i++) {
+			msg = ":" + _client.getNickname() +  
+				+ "!" + members[i].getUsername() +
+				+ "@" + "127.0.0.1" + " JOIN :"
+				+ channel->getChannelName() + "\n";
+			if (send(members[i].getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+				perr("Error: send error");
+	}
+
+	msg = ":irc.local 353 " + _client.getNickname()
+		+ channel->getChannelName() + " :@";
+	for (int i = 0; i < (int)members.size() - 1; i++)
+		msg + members[i].getNickname() + " ";
+	msg + members[members.size() - 1].getNickname() + "\n";
+	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+	
+	msg = ":irc.local 366 " + _client.getNickname()
+		+ " " + channel->getChannelName()
+		+ " :End of /NAMES list.\n";
+	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+}
+
+void Command::join() {
+	int 	chname_flag = findSharp();
+	string 	ch_name;
+	Channel *channel;
+
+	if (chname_flag == -1)
+		perr("Error: cannot find #ChannelName");
+	ch_name = _cmd[chname_flag];
+	if (!(channel = findChannel(ch_name))) {
+		channel = new Channel(ch_name, _client);
+		_chList.push_back(*channel);
+	}
+	else 
+		channel->addMember(_client);
+	shoutOutToChannel(channel);
+	delete channel;
+}
+
 void Command::execute() {
-	if (_cmd[0] == "JOIN")	return;
+	if (_cmd[0] == "JOIN") join();
 	else if (_cmd[0] == "KICK") return;
 	else if (_cmd[0] == "MODE") return;
 	else if (_cmd[0] == "PASS") return;
 	else if (_cmd[0] == "PING") return;
-	else if (_cmd[0] == "QUIT") return;
-	else if (_cmd[0] == "NICK")
-		nick();
-	else if (_cmd[0] == "USER")
-		user();
+	else if (_cmd[0] == "NICK") nick();
+	else if (_cmd[0] == "USER") user();
 	else if (_cmd[0] == "PRIVMSG") return ;
 	// else
 	// 	cout << "Error: command execute\n";
