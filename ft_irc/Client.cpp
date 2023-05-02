@@ -4,6 +4,13 @@ Client::Client(int clntfd) : _nickname(""), _username(""), _isInit(false) {
 	_clntfd = clntfd;
 }
 
+void Client::addChannel(Channel ch) {
+	for (int i = 0; i < (int)_chList.size(); i++) {
+		if (_chList[i].getChannelName() == ch.getChannelName())
+			return;
+	}
+	_chList.push_back(ch);
+}
 
 void	Client::setInit(bool flag) { _isInit = flag; }
 

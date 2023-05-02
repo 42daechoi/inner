@@ -4,6 +4,8 @@
 # include "header.hpp"
 # include "Client.hpp"
 
+class Client;
+
 class Channel {
 	public:
 		Channel(string ch_name, Client op_clnt);

@@ -130,8 +130,8 @@ void Command::shoutOutToChannel(Channel *channel) {
 	msg = ":irc.local 353 " + _client.getNickname()
 		+ channel->getChannelName() + " :@";
 	for (int i = 0; i < (int)members.size() - 1; i++)
-		msg + members[i].getNickname() + " ";
-	msg + members[members.size() - 1].getNickname() + "\n";
+		msg += members[i].getNickname() + " ";
+	msg += members[members.size() - 1].getNickname() + "\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	
@@ -156,6 +156,7 @@ void Command::join() {
 	}
 	else 
 		channel->addMember(_client);
+	_client.addChannel(*channel);
 	shoutOutToChannel(channel);
 	delete channel;
 }
