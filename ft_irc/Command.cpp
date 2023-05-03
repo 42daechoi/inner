@@ -57,7 +57,6 @@ int		Command::isSameNick()
 void	Command::nick()
 {
 	string msg;
-
 	if (_client.getInit() == false)//최초 생성시
 	{
 		if (isSameNick())
@@ -70,6 +69,7 @@ void	Command::nick()
 				perr("Error: send error");
 			else
 				_client.setInit(true);
+			cout << "O " << msg;
 		}
 	}
 	else//이미 생성 이력 있고 NICK바꿀시
@@ -79,6 +79,7 @@ void	Command::nick()
 			msg = makeChangeNickMsg(); //이 함수 내부에서 set이랑 중복검사함
 			if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
+			cout << "O " << msg;
 		}
 	}
 }
@@ -95,6 +96,7 @@ void Command::user()
 			perr("Error: send error");
 		else
 			_client.setInit(true);
+		cout << "O " << msg << endl;
 	}
 }
 
@@ -125,6 +127,7 @@ void Command::shoutOutToChannel(Channel *channel) {
 				+ channel->getChannelName() + "\n";
 			if (send(members[i].getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
+			cout << "O " << msg;
 	}
 
 	msg = ":irc.local 353 " + _client.getNickname()
@@ -134,19 +137,19 @@ void Command::shoutOutToChannel(Channel *channel) {
 	msg += members[members.size() - 1].getNickname() + "\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	
+	cout << "O " << msg;
 	msg = ":irc.local 366 " + _client.getNickname()
 		+ " " + channel->getChannelName()
 		+ " :End of /NAMES list.\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
+	cout << "O " << msg;
 }
 
 void Command::join() {
 	int 	chname_flag = findSharp();
 	string 	ch_name;
 	Channel *channel;
-
 	if (chname_flag == -1)
 		perr("Error: cannot find #ChannelName");
 	ch_name = _cmd[chname_flag];

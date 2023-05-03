@@ -69,6 +69,7 @@ int main(int ac, char **av)
 					}
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
+						cout << "I " << msg << endl;
 						cmd.execute();
 						// ss.send(msg, clntfd);
 						// print_List(clntList);
