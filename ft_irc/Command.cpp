@@ -83,6 +83,8 @@ void	Command::nick()
 		}
 	}
 	_cmd.erase(_cmd.begin());
+	_cmd.erase(_cmd.begin());
+	_cmd.erase(_cmd.begin());
 }
 
 void Command::user()
@@ -99,6 +101,8 @@ void Command::user()
 			_client.setInit(true);
 		cout << "O " << msg << endl;
 	}
+	_cmd.erase(_cmd.begin());
+	_cmd.erase(_cmd.begin());
 	_cmd.erase(_cmd.begin());
 }
 
@@ -163,6 +167,8 @@ void Command::join() {
 		channel->addMember(_client);
 	_client.addChannel(*channel);
 	shoutOutToChannel(channel);
+	_cmd.erase(_cmd.begin());
+	_cmd.erase(_cmd.begin());
 	_cmd.erase(_cmd.begin());
 	delete channel;
 }
