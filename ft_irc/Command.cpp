@@ -1,11 +1,11 @@
 #include "Command.hpp"
 
 Command::Command(string data, Client &client, vector<Client> &clntList, vector<Channel> &chList) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local") {
-	char *ptr = strtok((char *)data.c_str(), " \t");
+	char *ptr = strtok((char *)data.c_str(), " \t\n");
 	while (ptr != NULL)
 	{
 		_cmd.push_back(string(ptr));
-		ptr = strtok(NULL, " \t");
+		ptr = strtok(NULL, " \t\n");
 	}
 }
 
@@ -168,20 +168,18 @@ void Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 OUTPUT이 안나감 왜지...??
 	//그리고 JOIN명령어 이후에 클라이언트 접속 끊기면 정상종료가 아니라 recv error가 발생함
-	while (_cmd.size() > 0)
+	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
-		if (_cmd[0] == "JOIN") join();
-		else if (_cmd[0] == "KICK") return;
-		else if (_cmd[0] == "MODE") return;
-		else if (_cmd[0] == "PASS") return;
-		else if (_cmd[0] == "PING") return;
-		else if (_cmd[0] == "NICK") nick();
-		else if (_cmd[0] == "USER") user();
-		else if (_cmd[0] == "PRIVMSG") return;
-		_cmd.erase(_cmd.begin());
-		_cmd.erase(_cmd.begin());
-		_cmd.erase(_cmd.begin());
+		cout << "[" <<*iter << "]";
 	}
+	if (_cmd[0] == "JOIN") join();
+	else if (_cmd[0] == "KICK") return;
+	else if (_cmd[0] == "MODE") return;
+	else if (_cmd[0] == "PASS") return;
+	else if (_cmd[0] == "PING") return;
+	else if (_cmd[0] == "NICK") nick();
+	else if (_cmd[0] == "USER") user();
+	else if (_cmd[0] == "PRIVMSG") return;
 	
 	// else
 	// 	cout << "Error: command execute\n";
