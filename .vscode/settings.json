@@ -3,6 +3,12 @@
         "vector": "cpp",
         "iostream": "cpp",
         "ostream": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "string": "cpp",
+        "filesystem": "cpp",
+        "__config": "cpp",
+        "__string": "cpp",
+        "fstream": "cpp",
+        "list": "cpp"
     }
 }

@@ -13,17 +13,17 @@ class Command {
 
 		void		printCommand();
 		string		makeWelcomeMsg();
-		string		makeChangeNickMsg();
-		int			isSameNick();
-		void		user();
-		void		nick();
+		string		makeChangeNickMsg(string cmd);
+		int			isSameNick(string cmd);
+		void		user(string opt);
+		void		nick(string opt);
 		void		execute();
 
 		void 		sendToClnt();
 		void 		shoutOutToChannel(Channel *channel);
 		Channel* 	findChannel(string ch_name);
 		int 		findSharp();
-		void		join();
+		void		join(string opt);
 
 		vector<string> getCmd();
 	private:

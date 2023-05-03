@@ -30,7 +30,7 @@ string	Command::makeWelcomeMsg()
 	return (msg);
 }
 
-string	Command::makeChangeNickMsg()
+string	Command::makeChangeNickMsg(string cmd)
 {
 	string msg = ":" \
 				+ _client.getNickname() \
@@ -38,30 +38,30 @@ string	Command::makeChangeNickMsg()
 				+ _client.getUsername() \
 				+ "@127.0.0.1 " \
 				+ "NICK :";
-	if (isSameNick())
-		_cmd[1] = _cmd[1] + "_";
-	msg += _cmd[1] + "\n";
-	_client.setNickname(_cmd[1]);
+	if (isSameNick(cmd))
+		cmd = cmd + "_";
+	msg += cmd + "\n";
+	_client.setNickname(cmd);
 	return (msg);
 }
 
-int		Command::isSameNick()
+int		Command::isSameNick(string cmd)
 {
 	vector<Client>::iterator it;
 	for (it = _clntList.begin(); it != _clntList.end(); it++)
-		if (it->getNickname() == _cmd[1])
+		if (it->getNickname() == cmd)
 			return (1);
 	return (0);
 }
 
-void	Command::nick()
+void	Command::nick(string opt)
 {
 	string msg;
 	if (_client.getInit() == false)//최초 생성시
 	{
-		if (isSameNick())
-			_cmd[1] = _cmd[1] + "_";
-		_client.setNickname(_cmd[1]);
+		if (isSameNick(opt))
+			opt = opt + "_";
+		_client.setNickname(opt);
 		if (_client.getUsername() != "")//NICK, USER완성시
 		{
 			msg = makeWelcomeMsg();
@@ -74,9 +74,9 @@ void	Command::nick()
 	}
 	else//이미 생성 이력 있고 NICK바꿀시
 	{
-		if (_cmd[1] != _client.getNickname())//원래 닉네임이랑 같으면 아무 동작 안함
+		if (opt != _client.getNickname())//원래 닉네임이랑 같으면 아무 동작 안함
 		{
-			msg = makeChangeNickMsg(); //이 함수 내부에서 set이랑 중복검사함
+			msg = makeChangeNickMsg(opt); //이 함수 내부에서 set이랑 중복검사함
 			if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
 			cout << "O " << msg;
@@ -84,11 +84,11 @@ void	Command::nick()
 	}
 }
 
-void Command::user()
+void Command::user(string opt)
 {
 	string msg;
 
-	_client.setUsername(_cmd[1]);
+	_client.setUsername(opt);
 	if (_client.getNickname() != "" && _client.getInit() == false)
 	{
 		msg = makeWelcomeMsg();
@@ -146,13 +146,13 @@ void Command::shoutOutToChannel(Channel *channel) {
 	cout << "O " << msg;
 }
 
-void Command::join() {
-	int 	chname_flag = findSharp();
+void Command::join(string opt) {
 	string 	ch_name;
 	Channel *channel;
-	if (chname_flag == -1)
+
+	if (opt[0] != '#')
 		perr("Error: cannot find #ChannelName");
-	ch_name = _cmd[chname_flag];
+	ch_name = opt;
 	if (!(channel = findChannel(ch_name))) {
 		channel = new Channel(ch_name, _client);
 		_chList.push_back(*channel);
@@ -168,19 +168,26 @@ void Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 OUTPUT이 안나감 왜지...??
 	//그리고 JOIN명령어 이후에 클라이언트 접속 끊기면 정상종료가 아니라 recv error가 발생함
-	// for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
-	// {
-	// 	cout << "[" <<*iter << "]";
-	// }
-	if (_cmd[0] == "JOIN") join();
-	else if (_cmd[0] == "KICK") return;
-	else if (_cmd[0] == "MODE") return;
-	else if (_cmd[0] == "PASS") return;
-	else if (_cmd[0] == "PING") return;
-	else if (_cmd[0] == "NICK") nick();
-	else if (_cmd[0] == "USER") user();
-	else if (_cmd[0] == "PRIVMSG") return;
+	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
+	{
+		if (*iter == "JOIN") join(*(iter + 1));
+		else if (*iter == "KICK") return;
+		else if (*iter == "MODE") return;
+		else if (*iter == "PASS") return;
+		else if (*iter == "PING") return;
+		else if (*iter == "NICK") nick(*(iter + 1));
+		else if (*iter == "USER") user(*(iter + 1));
+		else if (*iter == "PRIVMSG") return;
+	}
 	
+	// if (_cmd[0] == "JOIN") join();
+	// else if (_cmd[0] == "KICK") return;
+	// else if (_cmd[0] == "MODE") return;
+	// else if (_cmd[0] == "PASS") return;
+	// else if (_cmd[0] == "PING") return;
+	// else if (_cmd[0] == "NICK") nick();
+	// else if (_cmd[0] == "USER") user();
+	// else if (_cmd[0] == "PRIVMSG") return;
 	// else
 	// 	cout << "Error: command execute\n";
 }
