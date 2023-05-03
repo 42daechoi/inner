@@ -150,8 +150,10 @@ void Command::join() {
 	int 	chname_flag = findSharp();
 	string 	ch_name;
 	Channel *channel;
+	cout << "in join1" << endl;
 	if (chname_flag == -1)
 		perr("Error: cannot find #ChannelName");
+	cout << "in join2" << endl;
 	ch_name = _cmd[chname_flag];
 	if (!(channel = findChannel(ch_name))) {
 		channel = new Channel(ch_name, _client);
@@ -160,11 +162,15 @@ void Command::join() {
 	else 
 		channel->addMember(_client);
 	_client.addChannel(*channel);
+	cout << "in join3" << endl;
 	shoutOutToChannel(channel);
+	cout << "in join4" << endl;
 	delete channel;
 }
 
 void Command::execute() {
+	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
+	//그리고 JOIN명령어에서 OUTPUT이 안나감 왜지...??
 	if (_cmd[0] == "JOIN") join();
 	else if (_cmd[0] == "KICK") return;
 	else if (_cmd[0] == "MODE") return;
