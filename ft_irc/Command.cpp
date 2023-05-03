@@ -82,9 +82,6 @@ void	Command::nick()
 			cout << "O " << msg;
 		}
 	}
-	_cmd.erase(_cmd.begin());
-	_cmd.erase(_cmd.begin());
-	_cmd.erase(_cmd.begin());
 }
 
 void Command::user()
@@ -101,9 +98,6 @@ void Command::user()
 			_client.setInit(true);
 		cout << "O " << msg << endl;
 	}
-	_cmd.erase(_cmd.begin());
-	_cmd.erase(_cmd.begin());
-	_cmd.erase(_cmd.begin());
 }
 
 int Command::findSharp() {
@@ -167,9 +161,6 @@ void Command::join() {
 		channel->addMember(_client);
 	_client.addChannel(*channel);
 	shoutOutToChannel(channel);
-	_cmd.erase(_cmd.begin());
-	_cmd.erase(_cmd.begin());
-	_cmd.erase(_cmd.begin());
 	delete channel;
 }
 
@@ -186,7 +177,10 @@ void Command::execute() {
 		else if (_cmd[0] == "PING") return;
 		else if (_cmd[0] == "NICK") nick();
 		else if (_cmd[0] == "USER") user();
-		else if (_cmd[0] == "PRIVMSG") return ;
+		else if (_cmd[0] == "PRIVMSG") return;
+		_cmd.erase(_cmd.begin());
+		_cmd.erase(_cmd.begin());
+		_cmd.erase(_cmd.begin());
 	}
 	
 	// else
