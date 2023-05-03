@@ -152,6 +152,7 @@ void Command::join(string opt) {
 
 	if (opt[0] != '#')
 		perr("Error: cannot find #ChannelName");
+	
 	ch_name = opt;
 	if (!(channel = findChannel(ch_name))) {
 		channel = new Channel(ch_name, _client);
@@ -161,7 +162,7 @@ void Command::join(string opt) {
 		channel->addMember(_client);
 	_client.addChannel(*channel);
 	shoutOutToChannel(channel);
-	delete channel;
+	// delete channel; 이거 하면 새 유저 추가할때마다 채널 사라짐 따라서 세그폴트남 안하는게 맞음
 }
 
 void Command::execute() {
