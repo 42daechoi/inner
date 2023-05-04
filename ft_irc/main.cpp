@@ -56,6 +56,7 @@ int main(int ac, char **av)
 		for (size_t i = 1; i < vfds.size(); i++) {
 			if (vfds[i].revents & POLLIN) {
 				int clntfd = vfds[i].fd;
+				cout << "POLLIN" << endl;
 				while (1) {
 					string msg = ss.recv(clntfd);
 					if (errno == EWOULDBLOCK)
