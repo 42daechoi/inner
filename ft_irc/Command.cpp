@@ -170,11 +170,11 @@ vector<string>	Command::parseExecute(string com)
 {
 	vector<string>	token;
 
-	char *ptr = strtok((char *)com.c_str(), "\n");
+	char *ptr = strtok((char *)com.c_str(), " \t\n");
 	while (ptr != NULL)
 	{
 		token.push_back(string(ptr));
-		ptr = strtok(NULL, "\n");
+		ptr = strtok(NULL, " \t\n");
 	}
 	return (token);
 }
