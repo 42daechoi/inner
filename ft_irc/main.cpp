@@ -56,7 +56,6 @@ int main(int ac, char **av)
 		for (size_t i = 1; i < vfds.size(); i++) {
 			if (vfds[i].revents & POLLIN) {
 				int clntfd = vfds[i].fd;
-				cout << "POLLIN" << endl;
 				while (1) {
 					string msg = ss.recv(clntfd);
 					if (errno == EWOULDBLOCK)
@@ -69,8 +68,6 @@ int main(int ac, char **av)
 						break;
 					}
 					else {
-						// cout << "[I] " << msg << endl;
-						// cout << "IN ELSE" << endl;
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
 						cout << "I " << msg;
 						cmd.execute();
