@@ -69,8 +69,8 @@ int main(int ac, char **av)
 						break;
 					}
 					else {
-						cout << "IN ELSE" << endl;
 						cout << "[I] " << msg;
+						cout << "IN ELSE" << endl;
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
 						cout << "I " << msg;
 						cmd.execute();
