@@ -30,7 +30,7 @@ void Socket::listen() {
 int Socket::accept() {
 	int					clntfd;
 	struct sockaddr_in	clnt_addr;
-	socklen_t			ca_size;
+	socklen_t			ca_size = sizeof(clnt_addr);
 
 	if ((clntfd = ::accept(_servfd, (struct sockaddr*)&clnt_addr, &ca_size)) == -1)
 		perr("Error: accept error");
