@@ -1,11 +1,12 @@
 #include "Command.hpp"
 
 Command::Command(string data, Client &client, vector<Client> &clntList, vector<Channel> &chList) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local") {
-	char *ptr = strtok((char *)data.c_str(), " \t\n");
+	//생성자에서의 파싱 기준을 \n으로만 하고 execute함수에서 나머지 파싱을 하는거로
+	char *ptr = strtok((char *)data.c_str(), "\n");
 	while (ptr != NULL)
 	{
 		_cmd.push_back(string(ptr));
-		ptr = strtok(NULL, " \t\n");
+		ptr = strtok(NULL, "\n");
 	}
 }
 
@@ -54,14 +55,14 @@ int		Command::isSameNick(string cmd)
 	return (0);
 }
 
-void	Command::nick(string opt)
+void	Command::nick(vector<string> token)
 {
 	string msg;
 	if (_client.getInit() == false)//최초 생성시
 	{
-		if (isSameNick(opt))
-			opt = opt + "_";
-		_client.setNickname(opt);
+		if (isSameNick(token[1]))
+			token[1] = token[1] + "_";
+		_client.setNickname(token[1]);
 		if (_client.getUsername() != "")//NICK, USER완성시
 		{
 			msg = makeWelcomeMsg();
@@ -74,9 +75,9 @@ void	Command::nick(string opt)
 	}
 	else//이미 생성 이력 있고 NICK바꿀시
 	{
-		if (opt != _client.getNickname())//원래 닉네임이랑 같으면 아무 동작 안함
+		if (token[1] != _client.getNickname())//원래 닉네임이랑 같으면 아무 동작 안함
 		{
-			msg = makeChangeNickMsg(opt); //이 함수 내부에서 set이랑 중복검사함
+			msg = makeChangeNickMsg(token[1]); //이 함수 내부에서 set이랑 중복검사함
 			if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
 			cout << "O " << msg;
@@ -84,11 +85,11 @@ void	Command::nick(string opt)
 	}
 }
 
-void Command::user(string opt)
+void Command::user(vector<string> token)
 {
 	string msg;
 
-	_client.setUsername(opt);
+	_client.setUsername(token[1]);
 	if (_client.getNickname() != "" && _client.getInit() == false)
 	{
 		msg = makeWelcomeMsg();
@@ -146,14 +147,14 @@ void Command::shoutOutToChannel(Channel *channel) {
 	cout << "O " << msg;
 }
 
-void Command::join(string opt) {
+void Command::join(vector<string> token) {
 	string 	ch_name;
 	Channel *channel;
 
-	if (opt[0] != '#')
+	if (token[1][0] != '#')
 		perr("Error: cannot find #ChannelName");
 	
-	ch_name = opt;
+	ch_name = token[1];
 	if (!(channel = findChannel(ch_name))) {
 		channel = new Channel(ch_name, _client);
 		_chList.push_back(*channel);
@@ -165,32 +166,36 @@ void Command::join(string opt) {
 	// delete channel; 이거 하면 새 유저 추가할때마다 채널 사라짐 따라서 세그폴트남 안하는게 맞음
 }
 
+vector<string>	Command::parseExecute(string com)
+{
+	vector<string>	token;
+
+	char *ptr = strtok((char *)com.c_str(), "\n");
+	while (ptr != NULL)
+	{
+		token.push_back(string(ptr));
+		ptr = strtok(NULL, "\n");
+	}
+	return (token);
+}
+
 void Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 OUTPUT이 안나감 왜지...??
 	//그리고 JOIN명령어 이후에 클라이언트 접속 끊기면 정상종료가 아니라 recv error가 발생함
+	vector<string>	token;
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
-		if (*iter == "JOIN") join(*(iter + 1));
-		else if (*iter == "KICK") return;
-		else if (*iter == "MODE") return;
-		else if (*iter == "PASS") return;
-		else if (*iter == "PING") return;
-		else if (*iter == "NICK") nick(*(iter + 1));
-		else if (*iter == "USER") user(*(iter + 1));
-		else if (*iter == "PRIVMSG") return;
+		token = parseExecute(*iter);
+		if (token[0] == "JOIN") join(token);
+		else if (token[0] == "KICK") return;
+		else if (token[0] == "MODE") return;
+		else if (token[0] == "PASS") return;
+		else if (token[0] == "PING") return;
+		else if (token[0] == "NICK") nick(token);
+		else if (token[0] == "USER") user(token);
+		else if (token[0] == "PRIVMSG") return;
 	}
-	
-	// if (_cmd[0] == "JOIN") join();
-	// else if (_cmd[0] == "KICK") return;
-	// else if (_cmd[0] == "MODE") return;
-	// else if (_cmd[0] == "PASS") return;
-	// else if (_cmd[0] == "PING") return;
-	// else if (_cmd[0] == "NICK") nick();
-	// else if (_cmd[0] == "USER") user();
-	// else if (_cmd[0] == "PRIVMSG") return;
-	// else
-	// 	cout << "Error: command execute\n";
 }
 
 vector<string> Command::getCmd() {
