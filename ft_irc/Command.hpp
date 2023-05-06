@@ -25,7 +25,7 @@ class Command {
 		Channel* 		findChannel(string ch_name);
 		int 			findSharp();
 		void			join(vector<string> token);
-
+		void 			ping(vector<string> token);
 		vector<string>	getCmd();
 	private:
 		vector<Channel>&	_chList;

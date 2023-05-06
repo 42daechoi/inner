@@ -166,6 +166,22 @@ void Command::join(vector<string> token) {
 	// delete channel; 이거 하면 새 유저 추가할때마다 채널 사라짐 따라서 세그폴트남 안하는게 맞음
 }
 
+void	Command::ping(vector<string> token)
+{
+	string	msg;
+
+	msg = ":" + \
+		token[1] + \
+		" PONG " + \
+		token[1] + \
+		" :" + \
+		token[1] +
+		"\n";
+	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+	cout << "O " << msg;
+}
+
 vector<string>	Command::parseExecute(string com)
 {
 	vector<string>	token;
@@ -191,7 +207,7 @@ void Command::execute() {
 		else if (token[0] == "KICK") return;
 		else if (token[0] == "MODE") return;
 		else if (token[0] == "PASS") return;
-		else if (token[0] == "PING") return;
+		else if (token[0] == "PING") ping(token);
 		else if (token[0] == "NICK") nick(token);
 		else if (token[0] == "USER") user(token);
 		else if (token[0] == "PRIVMSG") return;
