@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <cerrno>
 # include <climits>
+# include <stdio.h>
 
 using namespace std;
 
