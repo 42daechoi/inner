@@ -77,7 +77,7 @@ int main(int ac, char **av)
 						string buffer = cmd.execute();
 						if (buffer != "")
 							logFile << "O " <<buffer;
-						ss.send(msg, clntfd);
+						// ss.send(msg, clntfd);
 						// print_List(clntList);
 						break;
 					}
