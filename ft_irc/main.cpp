@@ -74,7 +74,6 @@ int main(int ac, char **av)
 						cmd.execute();
 						// ss.send(msg, clntfd);
 						// print_List(clntList);
-						fflush((FILE *)1);
 						break;
 					}
 				}
