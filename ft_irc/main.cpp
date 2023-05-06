@@ -75,7 +75,7 @@ int main(int ac, char **av)
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
 						logFile << "I " << msg << endl;
 						string buffer = cmd.execute();
-						cout << "buffer : " << buffer << endl; 
+						// cout << "buffer : " << buffer << endl; 
 						if (buffer != "")
 							logFile << "O " << buffer << endl;
 						// ss.send(msg, clntfd);
