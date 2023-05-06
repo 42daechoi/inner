@@ -18,8 +18,6 @@ int main(int ac, char **av)
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
 	ss.bind(check_port(av));
 	fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
-	fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
-	fcntl(STDOUT_FILENO, F_SETFL, O_NONBLOCK);
 	ss.listen();
 
 	vector<struct pollfd> vfds;
@@ -63,6 +61,7 @@ int main(int ac, char **av)
 					if (errno == EWOULDBLOCK)
 						continue;
 					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
+						//quit할때 속해있던 채널에서도 나가줘야함 그리고 채널이 0명이여서 채널 자체가 사라져야될때 leaks남
 						cout << "client end\n";
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
