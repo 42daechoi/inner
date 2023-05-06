@@ -41,7 +41,7 @@ int main(int ac, char **av)
 			Client 	clnt = Client(clntfd);
 
 			fcntl(clntfd, F_SETFL, O_NONBLOCK);
-			cout << clntfd << "/client connected" << "\n";
+			cout << clntfd << "/client connected\n" << flush;
 			struct pollfd clntpoll;
 			clntpoll.fd = clntfd;
 			clntpoll.events = POLLIN;
@@ -62,7 +62,7 @@ int main(int ac, char **av)
 						continue;
 					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
 						//quit할때 속해있던 채널에서도 나가줘야함 그리고 채널이 0명이여서 채널 자체가 사라져야될때 leaks남
-						cout << "client end" << "\n";
+						cout << "client end" << flush;
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
 						clntList.erase(clntList.begin() + i - 1);
@@ -70,7 +70,7 @@ int main(int ac, char **av)
 					}
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
-						cout << "I " << msg << "\n";
+						cout << "I " << msg << flush;
 						cmd.execute();
 						// ss.send(msg, clntfd);
 						// print_List(clntList);
