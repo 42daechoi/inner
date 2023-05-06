@@ -20,7 +20,7 @@ int main(int ac, char **av)
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
 	
 	ss.bind(check_port(av));
-	fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
+	// fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
 	ss.listen();
 
 	vector<struct pollfd> vfds;
@@ -43,7 +43,7 @@ int main(int ac, char **av)
 			int		clntfd = ss.accept();
 			Client 	clnt = Client(clntfd);
 
-			fcntl(clntfd, F_SETFL, O_NONBLOCK);
+			// fcntl(clntfd, F_SETFL, O_NONBLOCK);
 			logFile << clntfd << "/client connected\n";
 			struct pollfd clntpoll;
 			clntpoll.fd = clntfd;
