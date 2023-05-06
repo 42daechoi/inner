@@ -73,10 +73,11 @@ int main(int ac, char **av)
 					}
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
-						logFile << "I " << msg;
+						logFile << "I " << msg << endl;
 						string buffer = cmd.execute();
+						cout << "buffer : " << buffer << endl; 
 						if (buffer != "")
-							logFile << "O " <<buffer;
+							logFile << "O " << buffer << endl;
 						// ss.send(msg, clntfd);
 						// print_List(clntList);
 						break;
