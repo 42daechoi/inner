@@ -1,10 +1,5 @@
 5/client connected
-I USER root
-I NICK kiyoon
-O :irc.local 001 kiyoon :Welcome to the Localnet IRC Network kiyoon!root127.0.0.1
-
-I JOIN #newCHannel
-O :kiyoon!root@127.0.0.1 JOIN :#newCHannel
-:irc.local 353 kiyoon#newCHannel :@kiyoon
-:irc.local 366 kiyoon #newCHannel :End of /NAMES list.
+I CAP LS
+NICK myName
+USER kiyoon kiyoon localhost :Kiung Yoon
 

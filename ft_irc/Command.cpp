@@ -58,7 +58,7 @@ int		Command::isSameNick(string cmd)
 string	Command::nick(vector<string> token)
 {
 	string msg = "";
-
+	cout << "in nick\n";
 	if (_client.getInit() == false)//최초 생성시
 	{
 		if (isSameNick(token[1]))
@@ -88,11 +88,12 @@ string	Command::nick(vector<string> token)
 string Command::user(vector<string> token)
 {
 	string msg = "";
-
+	cout << "in user" << endl;
 	_client.setUsername(token[1]);
 	if (_client.getNickname() != "" && _client.getInit() == false)
 	{
 		msg = makeWelcomeMsg();
+		cout << "in user msg" << msg << endl;
 		if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 			perr("Error: send error");
 		else
