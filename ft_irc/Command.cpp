@@ -55,9 +55,10 @@ int		Command::isSameNick(string cmd)
 	return (0);
 }
 
-void	Command::nick(vector<string> token)
+string	Command::nick(vector<string> token)
 {
-	string msg;
+	string msg = "";
+
 	if (_client.getInit() == false)//최초 생성시
 	{
 		if (isSameNick(token[1]))
@@ -70,7 +71,6 @@ void	Command::nick(vector<string> token)
 				perr("Error: send error");
 			else
 				_client.setInit(true);
-		 	cout << "O " << msg << flush;
 		}
 	}
 	else//이미 생성 이력 있고 NICK바꿀시
@@ -80,14 +80,14 @@ void	Command::nick(vector<string> token)
 			msg = makeChangeNickMsg(token[1]); //이 함수 내부에서 set이랑 중복검사함
 			if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
-			cout << "O " << msg << flush;
 		}
 	}
+	return (msg);
 }
 
-void Command::user(vector<string> token)
+string Command::user(vector<string> token)
 {
-	string msg;
+	string msg = "";
 
 	_client.setUsername(token[1]);
 	if (_client.getNickname() != "" && _client.getInit() == false)
@@ -97,8 +97,8 @@ void Command::user(vector<string> token)
 			perr("Error: send error");
 		else
 			_client.setInit(true);
-		cout << "O " << msg << flush;
 	}
+	return (msg);
 }
 
 int Command::findSharp() {
@@ -117,8 +117,9 @@ Channel *Command::findChannel(string ch_name) {
 	return NULL;
 }
 
-void Command::shoutOutToChannel(Channel *channel) {
+string	Command::shoutOutToChannel(Channel *channel) {
 	string 			msg;
+	string			ret;
 	vector<Client>	members = channel->getMemberList();
 
 	for (int i = 0; i < (int)members.size(); i++) {
@@ -128,9 +129,8 @@ void Command::shoutOutToChannel(Channel *channel) {
 				+ channel->getChannelName() + "\n";
 			if (send(members[i].getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
-			cout << "O " << msg << flush;
+			ret = msg;
 	}
-
 	msg = ":irc.local 353 " + _client.getNickname()
 		+ channel->getChannelName() + " :@";
 	for (int i = 0; i < (int)members.size() - 1; i++)
@@ -138,16 +138,17 @@ void Command::shoutOutToChannel(Channel *channel) {
 	msg += members[members.size() - 1].getNickname() + "\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	cout << "O " << msg << flush;
+	ret += msg;
 	msg = ":irc.local 366 " + _client.getNickname()
 		+ " " + channel->getChannelName()
 		+ " :End of /NAMES list.\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	cout << "O " << msg << flush;
+	ret += msg;
+	return (ret);
 }
 
-void Command::join(vector<string> token) {
+string Command::join(vector<string> token) {
 	string 	ch_name;
 	Channel *channel;
 
@@ -162,11 +163,11 @@ void Command::join(vector<string> token) {
 	else 
 		channel->addMember(_client);
 	_client.addChannel(*channel);
-	shoutOutToChannel(channel);
+	return (shoutOutToChannel(channel));
 	// delete channel; 이거 하면 새 유저 추가할때마다 채널 사라짐 따라서 세그폴트남 안하는게 맞음
 }
 
-void	Command::ping(vector<string> token)
+string	Command::ping(vector<string> token)
 {
 	string	msg;
 
@@ -179,7 +180,7 @@ void	Command::ping(vector<string> token)
 		"\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	cout << "O " << msg << flush;
+	return (msg);
 }
 
 vector<string>	Command::parseExecute(string com)
@@ -195,7 +196,7 @@ vector<string>	Command::parseExecute(string com)
 	return (token);
 }
 
-void Command::execute() {
+string	Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 서버의 cout << "O " << msg 가 출력이 안됨 그런데 클라이언트 소켓에는 잘 전달 됨 이거 왜이런지 모르곘음
 	//그리고 JOIN명령어 이후에 클라이언트 접속 끊기면 정상종료가 아니라 recv error가 발생함
@@ -203,13 +204,13 @@ void Command::execute() {
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
 		token = parseExecute(*iter);
-		if (token[0] == "JOIN") join(token);
+		if (token[0] == "JOIN") return (join(token));
 		else if (token[0] == "KICK") return;
 		else if (token[0] == "MODE") return;
 		else if (token[0] == "PASS") return;
-		else if (token[0] == "PING") ping(token);
-		else if (token[0] == "NICK") nick(token);
-		else if (token[0] == "USER") user(token);
+		else if (token[0] == "PING") return (ping(token));
+		else if (token[0] == "NICK") return (nick(token));
+		else if (token[0] == "USER") return (user(token));
 		else if (token[0] == "PRIVMSG") return;
 	}
 }

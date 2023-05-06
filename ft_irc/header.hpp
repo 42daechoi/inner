@@ -18,7 +18,7 @@
 # include <limits.h>
 # include <cerrno>
 # include <climits>
-# include <stdio.h>
+# include <fstream>
 
 using namespace std;
 

@@ -14,8 +14,11 @@ int main(int ac, char **av)
 {
 	if (ac != 3) 
 		perr("Usage: ./ircserv <port> <password>");
-
+	std::ofstream logFile("log.txt");
+	if (!logFile.is_open())
+		perr("log.txt open fail\n");
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
+	
 	ss.bind(check_port(av));
 	fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
 	ss.listen();
@@ -71,7 +74,9 @@ int main(int ac, char **av)
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
 						cout << "I " << msg << flush;
-						cmd.execute();
+						string buffer = cmd.execute();
+						if (buffer != "")
+							logFile << buffer;
 						// ss.send(msg, clntfd);
 						// print_List(clntList);
 						break;
