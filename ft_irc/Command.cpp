@@ -70,7 +70,7 @@ void	Command::nick(vector<string> token)
 				perr("Error: send error");
 			else
 				_client.setInit(true);
-		 	cout << "O " << msg << endl;
+		 	cout << "O " << msg << "\n";
 		}
 	}
 	else//이미 생성 이력 있고 NICK바꿀시
@@ -80,7 +80,7 @@ void	Command::nick(vector<string> token)
 			msg = makeChangeNickMsg(token[1]); //이 함수 내부에서 set이랑 중복검사함
 			if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
-			cout << "O " << msg << endl;
+			cout << "O " << msg << "\n";
 		}
 	}
 }
@@ -97,7 +97,7 @@ void Command::user(vector<string> token)
 			perr("Error: send error");
 		else
 			_client.setInit(true);
-		cout << "O " << msg << endl;
+		cout << "O " << msg << "\n";
 	}
 }
 
@@ -128,7 +128,7 @@ void Command::shoutOutToChannel(Channel *channel) {
 				+ channel->getChannelName() + "\n";
 			if (send(members[i].getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
-			cout << "O " << msg << endl;
+			cout << "O " << msg << "\n";
 	}
 
 	msg = ":irc.local 353 " + _client.getNickname()
@@ -138,13 +138,13 @@ void Command::shoutOutToChannel(Channel *channel) {
 	msg += members[members.size() - 1].getNickname() + "\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	cout << "O " << msg << endl;
+	cout << "O " << msg << "\n";
 	msg = ":irc.local 366 " + _client.getNickname()
 		+ " " + channel->getChannelName()
 		+ " :End of /NAMES list.\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	cout << "O " << msg << endl;
+	cout << "O " << msg << "\n";
 }
 
 void Command::join(vector<string> token) {
@@ -179,7 +179,7 @@ void	Command::ping(vector<string> token)
 		"\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	cout << "O " << msg << endl;
+	cout << "O " << msg << "\n";
 }
 
 vector<string>	Command::parseExecute(string com)
