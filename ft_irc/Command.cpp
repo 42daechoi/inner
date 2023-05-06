@@ -205,14 +205,15 @@ string	Command::execute() {
 	{
 		token = parseExecute(*iter);
 		if (token[0] == "JOIN") return (join(token));
-		else if (token[0] == "KICK") return;
-		else if (token[0] == "MODE") return;
-		else if (token[0] == "PASS") return;
+		else if (token[0] == "KICK") return("");
+		else if (token[0] == "MODE") return("");
+		else if (token[0] == "PASS") return("");
 		else if (token[0] == "PING") return (ping(token));
 		else if (token[0] == "NICK") return (nick(token));
 		else if (token[0] == "USER") return (user(token));
-		else if (token[0] == "PRIVMSG") return;
+		else if (token[0] == "PRIVMSG") return("");
 	}
+	return ("");
 }
 
 vector<string> Command::getCmd() {
