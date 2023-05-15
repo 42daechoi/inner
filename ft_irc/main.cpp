@@ -69,7 +69,7 @@ int main(int ac, char **av)
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
 						clntList[i - 1].delChannel();
-						// noMemberChannel(chList);
+						noMemberChannel(chList);
 						clntList.erase(clntList.begin() + i - 1);
 						break;
 					}
