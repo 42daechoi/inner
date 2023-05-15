@@ -284,7 +284,7 @@ string	Command::execute() {
 		else if (token[0] == "PING") return (ping(token));
 		else if (token[0] == "NICK") return (nick(token));
 		else if (token[0] == "USER") return (user(token));
-		else if (token[0] == "PRIVMSG") return("");
+		else if (token[0] == "PRIVMSG") return (privmsg(token));
 	}
 	return ("");
 }
