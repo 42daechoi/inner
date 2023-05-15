@@ -122,6 +122,7 @@ string	Command::shoutOutToChannel(Channel channel) {
 	string				ret;
 	vector<Client *>	members = channel.getMemberList();
 
+	//각 멤버에게 메세지 전달 후 마지막에 입장한 사람에게 for문 아래 메세지를 추가로 전송해주는데 (memeber수 + 2개 전송) ret는 마지막 구문만 전달됨.(수정 필요)
 	for (int i = 0; i < (int)members.size(); i++) {
 			msg = ":" + _client.getNickname() +  
 				+ "!" + members[i]->getUsername() +
@@ -232,6 +233,39 @@ string Command::kick(vector<string> token) {
 		cout << "not OP" << endl;
 	else
 		_chList[ch_idx].delMember(token[2]);
+	return ("");
+}
+
+void Command::msgSendToClient(string rcv_name, string msg) {
+	vector<Client>::iterator it;
+
+	for (it = _clntList.begin(); it != _clntList.end(); it++) {
+		if (it->getNickname() == rcv_name) {
+			if (send(it->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+				perr("Error: send error");
+		}
+	}
+}
+
+void Command::msgSentToChannel(string rcv_channel, string msg) {
+	vector<Channel>::iterator it;
+
+	for (it = _chList.begin(); it != _chList.end(); it++) {
+		if (it->getChannelName() == rcv_channel) {
+			vector<Client *> members = it->getMemberList();
+			for (int i = 0; i < (int)members.size(); i++) {
+				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+					perr("Error: send error");
+			}
+		}
+	}
+}
+
+string Command::privmsg(vector<string> token) {
+	if (token[1][0] == '#')
+		msgSendToClient(token[1], token[2]);
+	else
+		msgSentToChannel(token[1], token[2]);
 	return ("");
 }
 

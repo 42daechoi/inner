@@ -29,6 +29,10 @@ class Command {
 
 		string			kick(vector<string> token);
 		
+		string			privmsg(vector<string> token);
+		void 			msgSendToClient(string rcv_name, string msg);
+		void 			msgSentToChannel(string rcv_channel, string msg);
+
 
 		string			ping(vector<string> token);
 		vector<string>	getCmd();
