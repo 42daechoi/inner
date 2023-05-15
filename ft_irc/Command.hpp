@@ -31,7 +31,7 @@ class Command {
 		
 		string			privmsg(vector<string> token);
 		void 			msgSendToClient(string rcv_name, string msg);
-		void 			msgSentToChannel(string rcv_channel, string msg);
+		void 			msgSendToChannel(string rcv_channel, string msg);
 
 
 		string			ping(vector<string> token);

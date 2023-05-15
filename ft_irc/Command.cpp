@@ -263,9 +263,9 @@ void Command::msgSentToChannel(string rcv_channel, string msg) {
 
 string Command::privmsg(vector<string> token) {
 	if (token[1][0] == '#')
-		msgSendToClient(token[1], token[2]);
+		msgSendToChannel(token[1], token[2]);
 	else
-		msgSentToChannel(token[1], token[2]);
+		msgSendToClient(token[1], token[2]);
 	return ("");
 }
 
