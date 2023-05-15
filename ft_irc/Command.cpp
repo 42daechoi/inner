@@ -58,7 +58,6 @@ int		Command::isSameNick(string cmd)
 string	Command::nick(vector<string> token)
 {
 	string msg = "";
-	cout << "in nick\n";
 	if (_client.getInit() == false)//최초 생성시
 	{
 		if (isSameNick(token[1]))
@@ -110,38 +109,41 @@ int Command::findSharp() {
 	return -1;
 }
 
-Channel *Command::findChannel(string ch_name) {
+int Command::findChannel(string ch_name) {
 	for (int i = 0; i < (int)_chList.size(); i++) {
 		if (ch_name == _chList[i].getChannelName())
-			return &_chList[i];
+			return i;
 	}
-	return NULL;
+	return -1;
 }
 
-string	Command::shoutOutToChannel(Channel *channel) {
-	string 			msg;
-	string			ret;
-	vector<Client>	members = channel->getMemberList();
+string	Command::shoutOutToChannel(Channel channel) {
+	string 				msg;
+	string				ret;
+	vector<Client *>	members = channel.getMemberList();
 
+	cout << "<<" << (int)members.size() << endl;
+	cout << "[" << members[0]->getClntfd() << "]" << endl;
 	for (int i = 0; i < (int)members.size(); i++) {
 			msg = ":" + _client.getNickname() +  
-				+ "!" + members[i].getUsername() +
+				+ "!" + members[i]->getUsername() +
 				+ "@" + "127.0.0.1" + " JOIN :"
-				+ channel->getChannelName() + "\n";
-			if (send(members[i].getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+				+ channel.getChannelName() + "\n";
+			cout << "[" << members[i]->getClntfd() << "]" << endl;
+			if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
 			ret = msg;
 	}
 	msg = ":irc.local 353 " + _client.getNickname()
-		+ channel->getChannelName() + " :@";
+		+ channel.getChannelName() + " :@";
 	for (int i = 0; i < (int)members.size() - 1; i++)
-		msg += members[i].getNickname() + " ";
-	msg += members[members.size() - 1].getNickname() + "\n";
+		msg += members[i]->getNickname() + " ";
+	msg += members[members.size() - 1]->getNickname() + "\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	ret += msg;
 	msg = ":irc.local 366 " + _client.getNickname()
-		+ " " + channel->getChannelName()
+		+ " " + channel.getChannelName()
 		+ " :End of /NAMES list.\n";
 	if (send(_client.getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
@@ -151,21 +153,24 @@ string	Command::shoutOutToChannel(Channel *channel) {
 
 string Command::join(vector<string> token) {
 	string 	ch_name;
-	Channel *channel;
+	int		idx;
 
 	if (token[1][0] != '#')
-		perr("Error: cannot find #ChannelName");
+		perr("Error: tokenized error (#channelname)");
 	
 	ch_name = token[1];
-	if (!(channel = findChannel(ch_name))) {
-		channel = new Channel(ch_name, _client);
-		_chList.push_back(*channel);
+	if ((idx = findChannel(ch_name)) == -1) {
+		Channel channel = Channel(ch_name, &_client);
+		_chList.push_back(channel);
+		idx = _chList.size() - 1;
 	}
 	else 
-		channel->addMember(_client);
-	_client.addChannel(*channel);
-	return (shoutOutToChannel(channel));
-	// delete channel; 이거 하면 새 유저 추가할때마다 채널 사라짐 따라서 세그폴트남 안하는게 맞음
+		_chList[idx].addMember(&_client);
+	cout << "--" << idx << endl;
+	_client.addChannel(&_chList[idx]);
+	for (int i = 0; i < (int)_chList[0].getMemberList().size(); i++)
+		cout << "member fd:" << _chList[0].getMemberList()[i]->getClntfd() << endl;
+	return (shoutOutToChannel(_chList[idx]));
 }
 
 string	Command::ping(vector<string> token)
@@ -197,6 +202,42 @@ vector<string>	Command::parseExecute(string com)
 	return (token);
 }
 
+void kick_member(vector<Client *> &members, string kick_nick) {
+	int i;
+
+	for (i = 0; i < (int)members.size(); i++) {
+		if (members[i]->getNickname() == kick_nick)
+			break;
+	}
+	if (i < (int)members.size())
+		members.erase(members.begin() + i);
+}
+
+void kick_channel(vector<Channel *> &channelList, string kick_channel) {
+	int i;
+
+	for (i = 0; i < (int)channelList.size(); i++) {
+		if (channelList[i]->getChannelName() == kick_channel)
+			break;
+	}
+	if (i < (int)channelList.size())
+		channelList.erase(channelList.begin() + i);
+}
+
+string Command::kick(vector<string> token) {
+	int ch_idx;
+	
+	if (token[1][0] != '#')
+		perr("Error: tokenized error (#channelname)");
+	if ((ch_idx = findChannel(token[1])) == -1)
+		perr("Error: cannot find channel (KICK)");
+	if (_client.getNickname() != _chList[ch_idx].getMemberList()[0]->getNickname())
+		cout << "not OP" << endl;
+	else
+		_chList[ch_idx].delMember(token[2]);
+	return ("");
+}
+
 string	Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 서버의 cout << "O " << msg 가 출력이 안됨 그런데 클라이언트 소켓에는 잘 전달 됨 이거 왜이런지 모르곘음
@@ -206,7 +247,7 @@ string	Command::execute() {
 	{
 		token = parseExecute(*iter);
 		if (token[0] == "JOIN") return (join(token));
-		else if (token[0] == "KICK") return("");
+		else if (token[0] == "KICK") return (kick(token));
 		else if (token[0] == "MODE") return("");
 		else if (token[0] == "PASS") return("");
 		else if (token[0] == "PING") return (ping(token));

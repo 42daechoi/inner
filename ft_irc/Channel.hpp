@@ -8,17 +8,17 @@ class Client;
 
 class Channel {
 	public:
-		Channel(string ch_name, Client op_clnt);
+		Channel(string ch_name, Client *op_clnt);
 
-		void	addMember(Client clnt);
-		// void	quitChannel();
+		void	addMember(Client *clnt);
+		void	delMember(string clnt_nickname);
 
-		string		 	getChannelName();
-		void 			setChannelName(string ch_name);
-		vector<Client> 	getMemberList();
+		string		 		getChannelName();
+		void 				setChannelName(string ch_name);
+		vector<Client *> 	getMemberList();
 	private:
-		string 			_ch_name;
-		vector<Client>	_member;
+		string 				_ch_name;
+		vector<Client *>	_member;
 };
 
 #endif

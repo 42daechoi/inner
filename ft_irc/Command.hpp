@@ -20,11 +20,16 @@ class Command {
 		vector<string>	parseExecute(string com);
 		string			execute();
 
-		void 			sendToClnt();
-		string 			shoutOutToChannel(Channel *channel);
-		Channel* 		findChannel(string ch_name);
-		int 			findSharp();
+
 		string			join(vector<string> token);
+		void 			sendToClnt();
+		string 			shoutOutToChannel(Channel channel);
+		int 			findChannel(string ch_name);
+		int 			findSharp();
+
+		string			kick(vector<string> token);
+		
+
 		string			ping(vector<string> token);
 		vector<string>	getCmd();
 	private:

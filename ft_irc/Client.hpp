@@ -10,20 +10,22 @@ class Client {
 	public:
 		Client(int clntfd);
 
-		void 	addChannel(Channel ch);
+		void 				addChannel(Channel *ch);
+		void 				delChannel();
 
-		void	setInit(bool flag);
-		void	setNickname(string nickname);
-		void	setUsername(string username);
-		bool	getInit();
-		int 	getClntfd();
-		string	getNickname();
-		string 	getUsername();
+		void				setInit(bool flag);
+		void				setNickname(string nickname);
+		void				setUsername(string username);
+		bool				getInit();
+		int 				getClntfd();
+		string				getNickname();
+		string 				getUsername();
+		vector<Channel *>	getJoinList();
 	private:
 		int					_clntfd;
 		string 				_nickname;
 		string 				_username;
-		vector<Channel>		_chList;
+		vector<Channel *>	_joinList;
 		bool				_isInit;
 };
 

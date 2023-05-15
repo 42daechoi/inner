@@ -2,14 +2,21 @@
 
 Client::Client(int clntfd) : _nickname(""), _username(""), _isInit(false) {
 	_clntfd = clntfd;
+	_joinList = vector<Channel *>();
 }
 
-void Client::addChannel(Channel ch) {
-	for (int i = 0; i < (int)_chList.size(); i++) {
-		if (_chList[i].getChannelName() == ch.getChannelName())
+void Client::addChannel(Channel *ch) {
+	for (int i = 0; i < (int)_joinList.size(); i++) {
+		if (_joinList[i]->getChannelName() == ch->getChannelName())
 			return;
 	}
-	_chList.push_back(ch);
+	_joinList.push_back(ch);
+}
+
+void Client::delChannel() {
+	for (int i = 0; i < (int)_joinList.size(); i++) {
+		_joinList[i]->delMember(_nickname);
+	}
 }
 
 void	Client::setInit(bool flag) { _isInit = flag; }
@@ -25,4 +32,6 @@ int Client::getClntfd() { return _clntfd; }
 string Client::getNickname() { return _nickname; }
 
 string Client::getUsername() { return _username; }
+
+vector<Channel *> Client::getJoinList() { return _joinList; }
 

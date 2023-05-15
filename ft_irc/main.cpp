@@ -2,12 +2,12 @@
 #include "Socket.hpp"
 #include "Command.hpp"
 
-void print_List(vector<Client> v) {
-	vector<Client>::iterator it;
-	cout << "{";
-	for (it = v.begin(); it != v.end(); it++)
-		cout << (*it).getNickname() << ",";
-	cout << "}\n";
+void noMemberChannel(vector<Channel> &chList) {
+	vector<Channel>::iterator it;
+	for (it = chList.begin(); it != chList.end() ; it++) {
+		if (it->getMemberList().size() == 0)
+			chList.erase(it);
+	}
 }
 
 int main(int ac, char **av)
@@ -44,7 +44,7 @@ int main(int ac, char **av)
 			Client 	clnt = Client(clntfd);
 
 			// fcntl(clntfd, F_SETFL, O_NONBLOCK);
-			logFile << clntfd << "/client connected\n";
+			cout << clntfd << "/client connected\n";
 			struct pollfd clntpoll;
 			clntpoll.fd = clntfd;
 			clntpoll.events = POLLIN;
@@ -68,6 +68,8 @@ int main(int ac, char **av)
 						logFile << "client end\n";
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
+						clntList[i - 1].delChannel();
+						// noMemberChannel(chList);
 						clntList.erase(clntList.begin() + i - 1);
 						break;
 					}
@@ -77,8 +79,10 @@ int main(int ac, char **av)
 						string buffer = cmd.execute();
 						if (buffer != "")
 							logFile << "O " << buffer << endl;
-						// ss.send(msg, clntfd);
-						// print_List(clntList);
+						ss.send(msg, clntfd);
+						for (int j = 0; j < (int)clntList[i - 1].getJoinList().size(); j++)
+							cout << "new/" << clntList[i - 1].getJoinList()[0]->getMemberList()[j]->getClntfd() << endl;
+						noMemberChannel(chList);
 						break;
 					}
 				}
