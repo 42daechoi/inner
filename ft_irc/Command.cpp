@@ -224,6 +224,7 @@ int Command::findChannelIdx(string ch_name) {
 		if (ch_name == _chList[i]->getChannelName())
 			return i;
 	}
+	cout << "outside[\n";
 	return -1;
 }
 
