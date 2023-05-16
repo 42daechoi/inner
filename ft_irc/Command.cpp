@@ -87,8 +87,8 @@ string	Command::nick(vector<string> token)
 string Command::user(vector<string> token)
 {
 	string msg = "";
-	_client.setUsername(token[1]);
-	if (_client.getNickname() != "" && _client.getInit() == false)
+	_client->setUsername(token[1]);
+	if (_client->getNickname() != "" && _client->getInit() == false)
 	{
 		msg = makeWelcomeMsg();
 		cout << "in user msg" << msg << endl;
