@@ -12,6 +12,7 @@ class Channel {
 
 		void	addMember(Client *clnt);
 		void	delMember(string clnt_nickname);
+		void	kickMsg(string kick_name);
 
 		string		 		getChannelName();
 		void 				setChannelName(string ch_name);

@@ -87,8 +87,8 @@ string	Command::nick(vector<string> token)
 string Command::user(vector<string> token)
 {
 	string msg = "";
-	_client.setUsername(token[1]);
-	if (_client.getNickname() != "" && _client.getInit() == false)
+	_client->setUsername(token[1]);
+	if (_client->getNickname() != "" && _client->getInit() == false)
 	{
 		msg = makeWelcomeMsg();
 		cout << "in user msg" << msg << endl;
@@ -225,6 +225,13 @@ int Command::findChannelIdx(string ch_name) {
 	return -1;
 }
 
+void Command::youAreNotOp(string ch_name) {
+	string msg;
+	msg = ":irc.local 482" + _client->getNickname() + " " + ch_name + " :You must be a channel operator";
+	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+}
+
 string Command::kick(vector<string> token) {
 	int ch_idx;
 	
@@ -233,9 +240,11 @@ string Command::kick(vector<string> token) {
 	if ((ch_idx = findChannelIdx(token[1])) == -1)
 		perr("Error: cannot find channel (KICK)");
 	if (_client->getNickname() != _chList[ch_idx]->getMemberList()[0]->getNickname())
-		cout << "not OP" << endl;
-	else
+		youAreNotOp(token[1]);
+	else {
+		_chList[ch_idx]->kickMsg(token[2]);
 		_chList[ch_idx]->delMember(token[2]);
+	}
 	return ("");
 }
 
