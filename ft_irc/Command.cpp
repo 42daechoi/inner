@@ -219,7 +219,7 @@ void kick_channel(vector<Channel *> &channelList, string kick_channel) {
 
 int Command::findChannelIdx(string ch_name) {
 	for (int i = 0; i < (int)_chList.size(); i++) {
-		if (ch_name.c_str() == _chList[i]->getChannelName())
+		if (ch_name == _chList[i]->getChannelName())
 			return i;
 	}
 	return -1;
