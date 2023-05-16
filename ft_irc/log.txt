@@ -1,12 +1,13 @@
 I NICK daechoi
-I NICK kiyoon
 I JOIN #new
 O :daechoi!@127.0.0.1 JOIN :#new
 :irc.local 353 daechoi#new :@daechoi
-:irc.local 366 daechoi #new :End of /NAMES list.
+:irc.local 366 daechoi #new :End of /NAMES list. 
 
+I NICK kiyoon
 I JOIN #new
 O :kiyoon!@127.0.0.1 JOIN :#new
 :irc.local 353 kiyoon#new :@daechoi kiyoon
-:irc.local 366 kiyoon #new :End of /NAMES list.
+:irc.local 366 kiyoon #new :End of /NAMES list. 
 
+I KICK kiyoon

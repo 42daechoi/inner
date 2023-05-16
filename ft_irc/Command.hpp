@@ -9,7 +9,7 @@
 
 class Command {
 	public:
-		Command(string data, Client &client, vector<Client> &clntList, vector<Channel> &chList);
+		Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList);
 
 		void			printCommand();
 		string			makeWelcomeMsg();
@@ -23,11 +23,12 @@ class Command {
 
 		string			join(vector<string> token);
 		void 			sendToClnt();
-		string 			shoutOutToChannel(Channel channel);
-		int 			findChannel(string ch_name);
+		string 			shoutOutToChannel(Channel *channel);
+		Channel 		*findChannel(string ch_name);
 		int 			findSharp();
 
 		string			kick(vector<string> token);
+		int 			findChannelIdx(string ch_name);
 		
 		string			privmsg(vector<string> token);
 		void 			msgSendToClient(string rcv_name, string msg);
@@ -37,9 +38,9 @@ class Command {
 		string			ping(vector<string> token);
 		vector<string>	getCmd();
 	private:
-		vector<Channel>&	_chList;
-		vector<Client>&		_clntList;
-		Client& 			_client;
+		vector<Channel *>&	_chList;
+		vector<Client *>&	_clntList;
+		Client* 			_client;
 		vector<string>		_cmd;
 		const string		_server;
 };

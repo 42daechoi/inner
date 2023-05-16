@@ -2,10 +2,10 @@
 #include "Socket.hpp"
 #include "Command.hpp"
 
-void noMemberChannel(vector<Channel> &chList) {
-	vector<Channel>::iterator it;
+void noMemberChannel(vector<Channel *> &chList) {
+	vector<Channel *>::iterator it;
 	for (it = chList.begin(); it != chList.end() ; it++) {
-		if (it->getMemberList().size() == 0)
+		if ((*it)->getMemberList().size() == 0)
 			chList.erase(it);
 	}
 }
@@ -20,7 +20,7 @@ int main(int ac, char **av)
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
 	
 	ss.bind(check_port(av));
-	// fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
+	fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
 	ss.listen();
 
 	vector<struct pollfd> vfds;
@@ -29,9 +29,9 @@ int main(int ac, char **av)
 	servpoll.events = POLLIN;
 	vfds.push_back(servpoll);
 
-	vector<Client>		clntList;
+	vector<Client *>		clntList;
 
-	vector<Channel>		chList;
+	vector<Channel *>		chList;
 
 	while (1) {
 
@@ -41,9 +41,9 @@ int main(int ac, char **av)
 		if (vfds[0].revents & POLLIN) {
 			string 	msg;
 			int		clntfd = ss.accept();
-			Client 	clnt = Client(clntfd);
+			Client 	*clnt = new Client(clntfd);
 
-			// fcntl(clntfd, F_SETFL, O_NONBLOCK);
+			fcntl(clntfd, F_SETFL, O_NONBLOCK);
 			cout << clntfd << "/client connected\n";
 			struct pollfd clntpoll;
 			clntpoll.fd = clntfd;
@@ -68,8 +68,9 @@ int main(int ac, char **av)
 						logFile << "client end\n";
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
-						clntList[i - 1].delChannel();
+						clntList[i - 1]->delChannel();
 						noMemberChannel(chList);
+						delete clntList[i - 1];
 						clntList.erase(clntList.begin() + i - 1);
 						break;
 					}
@@ -80,8 +81,6 @@ int main(int ac, char **av)
 						if (buffer != "")
 							logFile << "O " << buffer << endl;
 						ss.send(msg, clntfd);
-						for (int j = 0; j < (int)clntList[i - 1].getJoinList().size(); j++)
-							cout << "new/" << clntList[i - 1].getJoinList()[0]->getMemberList()[j]->getClntfd() << endl;
 						noMemberChannel(chList);
 						break;
 					}
