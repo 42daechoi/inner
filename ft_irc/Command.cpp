@@ -87,9 +87,8 @@ string	Command::nick(vector<string> token)
 string Command::user(vector<string> token)
 {
 	string msg = "";
-	cout << "in user" << endl;
-	_client->setUsername(token[1]);
-	if (_client->getNickname() != "" && _client->getInit() == false)
+	_client.setUsername(token[1]);
+	if (_client.getNickname() != "" && _client.getInit() == false)
 	{
 		msg = makeWelcomeMsg();
 		cout << "in user msg" << msg << endl;
@@ -281,14 +280,15 @@ string	Command::execute() {
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
 		token = parseExecute(*iter);
-		if (token[0] == "JOIN") return (join(token));
-		else if (token[0] == "KICK") return (kick(token));
-		else if (token[0] == "MODE") return("");
-		else if (token[0] == "PASS") return("");
-		else if (token[0] == "PING") return (ping(token));
-		else if (token[0] == "NICK") return (nick(token));
-		else if (token[0] == "USER") return (user(token));
-		else if (token[0] == "PRIVMSG") return (privmsg(token));
+		
+		if (token[0] == "JOIN") join(token);
+		else if (token[0] == "KICK") kick(token);
+		else if (token[0] == "MODE") ;
+		else if (token[0] == "PASS") ;
+		else if (token[0] == "PING") ping(token);
+		else if (token[0] == "NICK") nick(token);
+		else if (token[0] == "USER") user(token);
+		else if (token[0] == "PRIVMSG") privmsg(token);
 	}
 	return ("");
 }

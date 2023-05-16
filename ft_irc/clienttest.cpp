@@ -82,13 +82,13 @@ int main() {
         send(sockfd, message.c_str(), message.length(), 0);
 
         // 데이터 수신
-        // char buffer[1024] = {0};
-        // int recv_bytes = recv(sockfd, buffer, sizeof(buffer), 0);
-        // if (recv_bytes <= 0) {
-        //     std::cerr << "서버와의 연결이 끊어졌습니다." << std::endl;
-        //     break;
-        // }
-        // std::cout << "받은 메시지: " << buffer << std::endl;
+        char buffer[1024] = {0};
+        int recv_bytes = recv(sockfd, buffer, sizeof(buffer), 0);
+        if (recv_bytes <= 0) {
+            std::cerr << "서버와의 연결이 끊어졌습니다." << std::endl;
+            break;
+        }
+        std::cout << "받은 메시지: " << buffer << std::endl;
     }
 
     // 소켓 닫기

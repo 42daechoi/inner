@@ -1,13 +1,30 @@
+
+I USER root
+I NICK kiyoon
+O :irc.local 001 kiyoon :Welcome to the Localnet IRC Network kiyoon!root127.0.0.1
+
+I USER root
 I NICK daechoi
+O :irc.local 001 daechoi :Welcome to the Localnet IRC Network daechoi!root127.0.0.1
+
+I USER root
+I NICK kim
+O :irc.local 001 kim :Welcome to the Localnet IRC Network kim!root127.0.0.1
+
 I JOIN #new
-O :daechoi!@127.0.0.1 JOIN :#new
-:irc.local 353 daechoi#new :@daechoi
-:irc.local 366 daechoi #new :End of /NAMES list. 
+O :kiyoon!root@127.0.0.1 JOIN :#new
+:irc.local 353 kiyoon#new :@kiyoon
+:irc.local 366 kiyoon #new :End of /NAMES list.
+
+I JOIN #new
+O :daechoi!root@127.0.0.1 JOIN :#new
+:irc.local 353 daechoi#new :@kiyoon daechoi
+:irc.local 366 daechoi #new :End of /NAMES list.
 
 I NICK kiyoon
 I JOIN #new
-O :kiyoon!@127.0.0.1 JOIN :#new
-:irc.local 353 kiyoon#new :@daechoi kiyoon
-:irc.local 366 kiyoon #new :End of /NAMES list. 
+O :kim!root@127.0.0.1 JOIN :#new
+:irc.local 353 kim#new :@kiyoon daechoi kim
+:irc.local 366 kim #new :End of /NAMES list.
 
 I KICK kiyoon

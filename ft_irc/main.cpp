@@ -30,7 +30,6 @@ int main(int ac, char **av)
 	vfds.push_back(servpoll);
 
 	vector<Client *>		clntList;
-
 	vector<Channel *>		chList;
 
 	while (1) {
@@ -80,7 +79,7 @@ int main(int ac, char **av)
 						string buffer = cmd.execute();
 						if (buffer != "")
 							logFile << "O " << buffer << endl;
-						ss.send(msg, clntfd);
+						// ss.send(msg, clntfd);
 						noMemberChannel(chList);
 						break;
 					}
