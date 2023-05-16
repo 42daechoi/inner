@@ -273,6 +273,9 @@ string	Command::execute() {
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
 		token = parseExecute(*iter);
+		cout << "token\n";
+		for (vector<string>::iterator a = token.begin(); a != token.end(); a++)
+			cout << *a << endl;
 		if (token[0] == "JOIN") return (join(token));
 		else if (token[0] == "KICK") return (kick(token));
 		else if (token[0] == "MODE") return("");
