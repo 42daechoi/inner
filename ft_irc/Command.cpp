@@ -272,18 +272,16 @@ string	Command::execute() {
 	vector<string>	token;
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
-		token = parseExecute(*iter);
-		cout << "token\n";
 		for (vector<string>::iterator a = token.begin(); a != token.end(); a++)
 			cout << *a << endl;
-		if (token[0] == "JOIN") return (join(token));
-		else if (token[0] == "KICK") return (kick(token));
-		else if (token[0] == "MODE") return("");
-		else if (token[0] == "PASS") return("");
-		else if (token[0] == "PING") return (ping(token));
-		else if (token[0] == "NICK") return (nick(token));
-		else if (token[0] == "USER") return (user(token));
-		else if (token[0] == "PRIVMSG") return (privmsg(token));
+		if (token[0] == "JOIN") join(token);
+		else if (token[0] == "KICK") kick(token);
+		else if (token[0] == "MODE") ;
+		else if (token[0] == "PASS") ;
+		else if (token[0] == "PING") ping(token);
+		else if (token[0] == "NICK") nick(token);
+		else if (token[0] == "USER") user(token);
+		else if (token[0] == "PRIVMSG") privmsg(token);
 	}
 	return ("");
 }
