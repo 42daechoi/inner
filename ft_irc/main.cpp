@@ -30,7 +30,6 @@ int main(int ac, char **av)
 	vfds.push_back(servpoll);
 
 	vector<Client>		clntList;
-
 	vector<Channel>		chList;
 
 	while (1) {
@@ -43,7 +42,7 @@ int main(int ac, char **av)
 			int		clntfd = ss.accept();
 			Client 	clnt = Client(clntfd);
 
-			// fcntl(clntfd, F_SETFL, O_NONBLOCK);
+			fcntl(clntfd, F_SETFL, O_NONBLOCK);
 			cout << clntfd << "/client connected\n";
 			struct pollfd clntpoll;
 			clntpoll.fd = clntfd;
@@ -79,9 +78,7 @@ int main(int ac, char **av)
 						string buffer = cmd.execute();
 						if (buffer != "")
 							logFile << "O " << buffer << endl;
-						ss.send(msg, clntfd);
-						for (int j = 0; j < (int)clntList[i - 1].getJoinList().size(); j++)
-							cout << "new/" << clntList[i - 1].getJoinList()[0]->getMemberList()[j]->getClntfd() << endl;
+						// ss.send(msg, clntfd);
 						noMemberChannel(chList);
 						break;
 					}

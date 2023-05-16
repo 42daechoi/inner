@@ -87,7 +87,6 @@ string	Command::nick(vector<string> token)
 string Command::user(vector<string> token)
 {
 	string msg = "";
-	cout << "in user" << endl;
 	_client.setUsername(token[1]);
 	if (_client.getNickname() != "" && _client.getInit() == false)
 	{
@@ -164,10 +163,7 @@ string Command::join(vector<string> token) {
 	}
 	else 
 		_chList[idx].addMember(&_client);
-	cout << "--" << idx << endl;
 	_client.addChannel(&_chList[idx]);
-	for (int i = 0; i < (int)_chList[0].getMemberList().size(); i++)
-		cout << "member fd:" << _chList[0].getMemberList()[i]->getClntfd() << endl;
 	return (shoutOutToChannel(_chList[idx]));
 }
 
@@ -247,7 +243,7 @@ void Command::msgSendToClient(string rcv_name, string msg) {
 	}
 }
 
-void Command::msgSentToChannel(string rcv_channel, string msg) {
+void Command::msgSendToChannel(string rcv_channel, string msg) {
 	vector<Channel>::iterator it;
 
 	for (it = _chList.begin(); it != _chList.end(); it++) {
