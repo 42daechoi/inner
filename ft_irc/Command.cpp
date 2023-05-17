@@ -243,10 +243,14 @@ int Command::findChannelIdx(string ch_name) {
         origin.erase(std::remove(origin.begin(), origin.end(), ' '), origin.end());
         compare.erase(std::remove(compare.begin(), compare.end(), ' '), compare.end());
 
+        // 소문자로 변환
+        std::transform(origin.begin(), origin.end(), origin.begin(), [](unsigned char c) { return std::tolower(c); });
+        std::transform(compare.begin(), compare.end(), compare.begin(), [](unsigned char c) { return std::tolower(c); });
+
         cout << "ch_name: " << ch_name << endl;
         cout << "compare: " << compare << endl;
         cout << "origin: " << origin << endl;
-        
+
         if (origin == compare) {
             cout << "Match found!" << endl;
             return i;
@@ -256,6 +260,7 @@ int Command::findChannelIdx(string ch_name) {
     cout << "No match found!" << endl;
     return -1;
 }
+
 
 
 
