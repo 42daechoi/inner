@@ -231,6 +231,10 @@ void kick_channel(vector<Channel *> &channelList, string kick_channel) {
 // 	}
 // 	return -1;
 // }
+char toLower(char c) {
+    return std::tolower(static_cast<unsigned char>(c));
+}
+
 int Command::findChannelIdx(string ch_name) {
     string origin;
     string compare;
@@ -244,8 +248,8 @@ int Command::findChannelIdx(string ch_name) {
         compare.erase(std::remove(compare.begin(), compare.end(), ' '), compare.end());
 
         // 소문자로 변환
-        std::transform(origin.begin(), origin.end(), origin.begin(), [](unsigned char c) { return std::tolower(c); });
-        std::transform(compare.begin(), compare.end(), compare.begin(), [](unsigned char c) { return std::tolower(c); });
+        std::transform(origin.begin(), origin.end(), origin.begin(), toLower);
+        std::transform(compare.begin(), compare.end(), compare.begin(), toLower);
 
         cout << "ch_name: " << ch_name << endl;
         cout << "compare: " << compare << endl;
