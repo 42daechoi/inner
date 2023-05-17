@@ -1,30 +1,145 @@
+I CAP LS
+NICK kiyoon
+USER kiyoon kiyoon localhost :Kiung Yoon
 
-I USER root
-I NICK kiyoon
-O :irc.local 001 kiyoon :Welcome to the Localnet IRC Network kiyoon!root127.0.0.1
+I MODE kiyoon +i
 
-I USER root
-I NICK daechoi
-O :irc.local 001 daechoi :Welcome to the Localnet IRC Network daechoi!root127.0.0.1
+I WHOIS kiyoon
 
-I USER root
-I NICK kim
-O :irc.local 001 kim :Welcome to the Localnet IRC Network kim!root127.0.0.1
+I CAP LS
+NICK daechoi
+USER kiyoon kiyoon localhost :Kiung Yoon
+
+I MODE daechoi +i
+
+I WHOIS daechoi
+
+I CAP LS
+NICK kim
+USER kiyoon kiyoon localhost :Kiung Yoon
+
+I MODE kim +i
+WHOIS kim
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
 
 I JOIN #new
-O :kiyoon!root@127.0.0.1 JOIN :#new
-:irc.local 353 kiyoon#new :@kiyoon
-:irc.local 366 kiyoon #new :End of /NAMES list.
 
 I JOIN #new
-O :daechoi!root@127.0.0.1 JOIN :#new
-:irc.local 353 daechoi#new :@kiyoon daechoi
-:irc.local 366 daechoi #new :End of /NAMES list.
 
-I NICK kiyoon
 I JOIN #new
-O :kim!root@127.0.0.1 JOIN :#new
-:irc.local 353 kim#new :@kiyoon daechoi kim
-:irc.local 366 kim #new :End of /NAMES list.
 
-I KICK kiyoon
+I PRIVMSG #new :aefeaf
+
+I PRIVMSG #new :zxcv
+
+I PRIVMSG #new :aef
+
+I PRIVMSG #new :zcv
+
+I PRIVMSG #new :awef
+
+I PRIVMSG #new :zcv
+
+I PRIVMSG #new :aef
+
+I PRIVMSG #new :aef
+
+I PRIVMSG #new :zcv
+
+I PRIVMSG #new :aef
+
+I PRIVMSG #new :zcv
+
+I PRIVMSG #new :aef
+
+I PRIVMSG #new :aefw
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+
+I PING irc.local
+

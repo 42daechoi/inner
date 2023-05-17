@@ -14,7 +14,7 @@ int main(int ac, char **av)
 {
 	if (ac != 3) 
 		perr("Usage: ./ircserv <port> <password>");
-	std::ofstream logFile("log.txt");
+	ofstream logFile("log.txt");
 	if (!logFile.is_open())
 		perr("log.txt open fail\n");
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
