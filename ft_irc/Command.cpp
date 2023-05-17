@@ -224,7 +224,7 @@ int Command::findChannelIdx(string ch_name) {
 	origin = ch_name;
 	for (int i = 0; i < (int)_chList.size(); i++) {
 		compare = _chList[i]->getChannelName();
-		if (origin == compare)
+		if (origin.compare(compare) == 0)
 			return i;
 	}
 	return -1;
