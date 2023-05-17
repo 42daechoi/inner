@@ -226,7 +226,7 @@ int Command::findChannelIdx(string ch_name) {
 		compare = _chList[i]->getChannelName();
 		cout << "[" << origin << "]"<< endl;
 		cout << "[" << compare << "]" << endl;
-		if (origin.compare(compare) == 0)
+		if (strcmp(origin.c_str(), compare.c_str()) == 0)
 			return i;
 	}
 	return -1;
