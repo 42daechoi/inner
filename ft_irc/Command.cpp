@@ -1,6 +1,6 @@
 #include "Command.hpp"
 
-Command::Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local") {
+Command::Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList, string cpass) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local"), _cpass(cpass) {
 	//생성자에서의 파싱 기준을 \n으로만 하고 execute함수에서 나머지 파싱을 하는거로
 	char *ptr = strtok((char *)data.c_str(), "\n");
 	while (ptr != NULL)
@@ -91,13 +91,12 @@ string Command::user(vector<string> token)
 	if (_client->getNickname() != "" && _client->getInit() == false)
 	{
 		msg = makeWelcomeMsg();
-		cout << "in user msg" << msg << endl;
 		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 			perr("Error: send error");
 		else
 			_client->setInit(true);
 	}
-	return (msg);
+	return msg;
 }
 
 int Command::findSharp() {
@@ -219,7 +218,7 @@ void kick_channel(vector<Channel *> &channelList, string kick_channel) {
 
 int Command::findChannelIdx(string ch_name) {
 	for (int i = 0; i < (int)_chList.size(); i++) {
-		if (ch_name.c_str() == _chList[i]->getChannelName())
+		if (ch_name == _chList[i]->getChannelName())
 			return i;
 	}
 	return -1;
@@ -232,7 +231,7 @@ void Command::youAreNotOp(string ch_name) {
 		perr("Error: send error");
 }
 
-string Command::kick(vector<string> token) {
+void Command::kick(vector<string> token) {
 	int ch_idx;
 	
 	if (token[1][0] != '#')
@@ -243,9 +242,8 @@ string Command::kick(vector<string> token) {
 		youAreNotOp(token[1]);
 	else {
 		_chList[ch_idx]->kickMsg(token[2]);
-		_chList[ch_idx]->delMember(token[2]);
+		_chList[ch_idx]->delMember(token[2], false);
 	}
-	return ("");
 }
 
 void Command::msgSendToClient(string rcv_name, string msg) {
@@ -281,7 +279,36 @@ string Command::privmsg(vector<string> token) {
 	return ("");
 }
 
-string	Command::execute() {
+
+int Command::pass(vector<string> token) {
+	if (_cpass != token[1]) {
+		string msg = "wrong password\n";
+		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+			perr("Error: send error");
+		return -1;
+	}
+	_client->setPassword(token[1]);
+	return 0;
+}
+
+void Command::part(vector<string> token) {
+	vector<Channel *>::iterator it;
+
+	_client->delChannel(token[1], false);
+	for (it = _chList.begin(); it != _chList.end(); it++) {
+		if ((*it)->getChannelName() == token[1]) {
+			vector<Client *> members = (*it)->getMemberList();
+			for (int i = 0; i < (int)members.size(); i++) {
+				string msg = ":" + _client->getNickname() + "!" 
+					+ members[i]->getUsername() + "@127.0.0.1 PART :" + token[1] + "\n"; 
+				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+					perr("Error: send error");
+			}
+		}
+	}
+}
+
+int	Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 서버의 cout << "O " << msg 가 출력이 안됨 그런데 클라이언트 소켓에는 잘 전달 됨 이거 왜이런지 모르곘음
 	//그리고 JOIN명령어 이후에 클라이언트 접속 끊기면 정상종료가 아니라 recv error가 발생함
@@ -292,14 +319,23 @@ string	Command::execute() {
 		
 		if (token[0] == "JOIN") join(token);
 		else if (token[0] == "KICK") kick(token);
-		else if (token[0] == "MODE") ;
-		else if (token[0] == "PASS") ;
+		else if (token[0] == "PART") part(token);
+		else if (token[0] == "PASS") {
+			if (pass(token) == -1) return -1;
+		}
 		else if (token[0] == "PING") ping(token);
 		else if (token[0] == "NICK") nick(token);
 		else if (token[0] == "USER") user(token);
 		else if (token[0] == "PRIVMSG") privmsg(token);
 	}
-	return ("");
+	if (_client->getNickname() != "" && _client->getUsername() != "" && _client->getPassword() == "") {
+		string msg = "please type password\n";
+		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1) {
+			perr("Error: send error");
+		}
+		return -1;
+	}
+	return 0;
 }
 
 vector<string> Command::getCmd() {

@@ -11,7 +11,7 @@ class Channel {
 		Channel(string ch_name, Client *op_clnt);
 
 		void	addMember(Client *clnt);
-		void	delMember(string clnt_nickname);
+		void	delMember(string clnt_nickname, bool isrec);
 		void	kickMsg(string kick_name);
 
 		string		 		getChannelName();
