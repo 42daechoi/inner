@@ -217,57 +217,20 @@ void kick_channel(vector<Channel *> &channelList, string kick_channel) {
 		channelList.erase(channelList.begin() + i);
 }
 
-// int Command::findChannelIdx(string ch_name) {
-// 	string	origin;
-// 	string	compare;
-
-// 	origin = ch_name;
-// 	for (int i = 0; i < (int)_chList.size(); i++) {
-// 		compare = _chList[i]->getChannelName();
-// 		cout << ch_name << endl;
-// 		cout << compare << endl;
-// 		if (origin.compare(compare) == 0)
-// 			return i;
-// 	}
-// 	return -1;
-// }
-char toLower(char c) {
-    return std::tolower(static_cast<unsigned char>(c));
-}
-
 int Command::findChannelIdx(string ch_name) {
-    string origin;
-    string compare;
+	string	origin;
+	string	compare;
 
-    origin = ch_name;
-    for (int i = 0; i < (int)_chList.size(); i++) {
-        compare = _chList[i]->getChannelName();
-
-        // 공백 제거
-        origin.erase(std::remove(origin.begin(), origin.end(), ' '), origin.end());
-        compare.erase(std::remove(compare.begin(), compare.end(), ' '), compare.end());
-
-        // 소문자로 변환
-        std::transform(origin.begin(), origin.end(), origin.begin(), toLower);
-        std::transform(compare.begin(), compare.end(), compare.begin(), toLower);
-
-        cout << "ch_name: " << ch_name << endl;
-        cout << "compare: " << compare << endl;
-        cout << "origin: " << origin << endl;
-
-        if (origin == compare) {
-            cout << "Match found!" << endl;
-            return i;
-        }
-    }
-
-    cout << "No match found!" << endl;
-    return -1;
+	origin = ch_name;
+	for (int i = 0; i < (int)_chList.size(); i++) {
+		compare = _chList[i]->getChannelName();
+		cout << "[" + origin + "]"<< endl;
+		cout << "[" + compare + "]" << endl;
+		if (origin.compare(compare) == 0)
+			return i;
+	}
+	return -1;
 }
-
-
-
-
 
 void Command::youAreNotOp(string ch_name) {
 	string msg;
