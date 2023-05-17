@@ -243,13 +243,20 @@ int Command::findChannelIdx(string ch_name) {
         origin.erase(std::remove(origin.begin(), origin.end(), ' '), origin.end());
         compare.erase(std::remove(compare.begin(), compare.end(), ' '), compare.end());
 
-        cout << ch_name << endl;
-        cout << compare << endl;
-        if (origin == compare)
+        cout << "ch_name: " << ch_name << endl;
+        cout << "compare: " << compare << endl;
+        cout << "origin: " << origin << endl;
+        
+        if (origin == compare) {
+            cout << "Match found!" << endl;
             return i;
+        }
     }
+
+    cout << "No match found!" << endl;
     return -1;
 }
+
 
 
 
