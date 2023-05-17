@@ -217,20 +217,41 @@ void kick_channel(vector<Channel *> &channelList, string kick_channel) {
 		channelList.erase(channelList.begin() + i);
 }
 
-int Command::findChannelIdx(string ch_name) {
-	string	origin;
-	string	compare;
+// int Command::findChannelIdx(string ch_name) {
+// 	string	origin;
+// 	string	compare;
 
-	origin = ch_name;
-	for (int i = 0; i < (int)_chList.size(); i++) {
-		compare = _chList[i]->getChannelName();
-		cout << ch_name << endl;
-		cout << compare << endl;
-		if (origin.compare(compare) == 0)
-			return i;
-	}
-	return -1;
+// 	origin = ch_name;
+// 	for (int i = 0; i < (int)_chList.size(); i++) {
+// 		compare = _chList[i]->getChannelName();
+// 		cout << ch_name << endl;
+// 		cout << compare << endl;
+// 		if (origin.compare(compare) == 0)
+// 			return i;
+// 	}
+// 	return -1;
+// }
+int Command::findChannelIdx(string ch_name) {
+    string origin;
+    string compare;
+
+    origin = ch_name;
+    for (int i = 0; i < (int)_chList.size(); i++) {
+        compare = _chList[i]->getChannelName();
+
+        // 공백 제거
+        origin.erase(std::remove(origin.begin(), origin.end(), ' '), origin.end());
+        compare.erase(std::remove(compare.begin(), compare.end(), ' '), compare.end());
+
+        cout << ch_name << endl;
+        cout << compare << endl;
+        if (origin == compare)
+            return i;
+    }
+    return -1;
 }
+
+
 
 void Command::youAreNotOp(string ch_name) {
 	string msg;

@@ -9,6 +9,7 @@
         "__config": "cpp",
         "__string": "cpp",
         "fstream": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "algorithm": "cpp"
     }
 }
