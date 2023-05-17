@@ -219,11 +219,10 @@ void kick_channel(vector<Channel *> &channelList, string kick_channel) {
 
 int Command::findChannelIdx(string ch_name) {
 	for (int i = 0; i < (int)_chList.size(); i++) {
-		cout << "ch_name : " << ch_name << endl;
-		cout << "_chList[i]->getChannelName() : " << _chList[i]->getChannelName() << endl;
 		if (ch_name == _chList[i]->getChannelName())
 			return i;
 	}
+	cout << "outsid {}" << endl;
 	return -1;
 }
 
