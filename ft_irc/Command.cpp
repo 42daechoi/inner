@@ -240,7 +240,11 @@ string Command::kick(vector<string> token) {
 	if (token[1][0] != '#')
 		perr("Error: tokenized error (#channelname)");
 	if ((ch_idx = findChannelIdx(token[1])) == -1)
+	{
+		cout << "ch_idx : " << ch_idx << endl;
 		perr("Error: cannot find channel (KICK)");
+	}
+		
 	if (_client->getNickname() != _chList[ch_idx]->getMemberList()[0]->getNickname())
 		youAreNotOp(token[1]);
 	else {
