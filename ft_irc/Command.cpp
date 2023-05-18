@@ -233,7 +233,7 @@ int Command::findChannelIdx(string ch_name) {
 
 void Command::youAreNotOp(string ch_name) {
 	string msg;
-	msg = ":irc.local 482" + _client->getNickname() + " " + ch_name + " :You must be a channel operator";
+	msg = ":irc.local 482" + _client->getNickname() + " " + ch_name + " :You must be a channel operator\n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	_logfile << "O " << msg;
