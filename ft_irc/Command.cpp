@@ -260,7 +260,7 @@ void Command::msgSendToClient(vector<string> token) {
 
 	for (it = _clntList.begin(); it != _clntList.end(); it++) {
 		if ((*it)->getNickname() == rcv_name) {
-			msg = ":" + _client->getNickname() + "! " + (*it)->getUsername()
+			msg = ":" + _client->getNickname() + "!" + (*it)->getUsername()
 				+ "@127.0.0.1 PRIVMSG " + rcv_name + " ";
 			for (int i = 2; i < (int)token.size() - 1; i++)
 				msg += (token[i] + " ");
@@ -280,7 +280,7 @@ void Command::msgSendToChannel(vector<string> token) {
 		if ((*it)->getChannelName() == rcv_channel) {
 			vector<Client *> members = (*it)->getMemberList();
 			for (int i = 0; i < (int)members.size(); i++) {
-				msg = ":" + _client->getNickname() + "! " + members[i]->getUsername()
+				msg = ":" + _client->getNickname() + "!" + members[i]->getUsername()
 					+ "@127.0.0.1 PRIVMSG " + rcv_channel + " ";
 				for (int i = 2; i < (int)token.size() - 1; i++)
 					msg += (token[i] + " ");
