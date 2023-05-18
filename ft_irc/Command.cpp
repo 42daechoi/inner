@@ -181,19 +181,6 @@ string	Command::ping(vector<string> token)
 	return (msg);
 }
 
-// vector<string>	Command::parseExecute(string com)
-// {
-// 	vector<string>	token;
-
-// 	char *ptr = strtok((char *)com.c_str(), " \t\n");
-// 	while (ptr != NULL)
-// 	{
-// 		token.push_back(string(ptr));
-// 		ptr = strtok(NULL, " \t\n");
-// 	}
-// 	return (token);
-// }
-
 vector<string> Command::parseExecute(const string& com) {
     vector<string> token;
     std::istringstream iss(com);
@@ -301,10 +288,6 @@ string Command::privmsg(vector<string> token) {
 
 
 int Command::pass(vector<string> token) {
-	cout << "_cpass: [" << _cpass << "]" << endl;
-	cout << "_cpass.length(): " << _cpass.length() << endl;
-	cout << "token[1]: [" << token[1] << "]" << endl;
-	cout << "token[1].length(): " << token[1].length() << endl;
 	if (_cpass != token[1]) {
 		string msg = "wrong password\n";
 		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
