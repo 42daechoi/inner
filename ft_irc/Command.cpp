@@ -224,9 +224,7 @@ int Command::findChannelIdx(string ch_name) {
 	origin = ch_name;
 	for (int i = 0; i < (int)_chList.size(); i++) {
 		compare = _chList[i]->getChannelName();
-		cout << "1111" << compare << "2222"<< endl;
-		cout << "3333" << origin << "4444" << endl;
-		if (strcmp(origin.c_str(), compare.c_str()) == 0)
+		if (origin == compare)
 			return i;
 	}
 	return -1;
@@ -245,11 +243,7 @@ string Command::kick(vector<string> token) {
 	if (token[1][0] != '#')
 		perr("Error: tokenized error (#channelname)");
 	if ((ch_idx = findChannelIdx(token[1])) == -1)
-	{
-		cout << "ch_idx : " << ch_idx << endl;
 		perr("Error: cannot find channel (KICK)");
-	}
-		
 	if (_client->getNickname() != _chList[ch_idx]->getMemberList()[0]->getNickname())
 		youAreNotOp(token[1]);
 	else {
