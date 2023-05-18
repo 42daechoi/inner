@@ -9,22 +9,22 @@
 
 class Command {
 	public:
-		Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList, string cpass);
+		Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList, string cpass, ostream &logfile);
 
 		void			printCommand();
 		string			makeWelcomeMsg();
 		string			makeChangeNickMsg(string cmd);
 		int				isSameNick(string cmd);
-		string			user(vector<string> token);
-		string			nick(vector<string> token);
+		void			user(vector<string> token);
+		void			nick(vector<string> token);
 		// vector<string>	parseExecute(string com);
 		vector<string>	parseExecute(const string& com);
 		int 			execute();
 
 
-		string			join(vector<string> token);
+		void			join(vector<string> token);
 		void 			sendToClnt();
-		string 			shoutOutToChannel(Channel *channel);
+		void 			shoutOutToChannel(Channel *channel);
 		Channel 		*findChannel(string ch_name);
 		int 			findSharp();
 
@@ -32,7 +32,7 @@ class Command {
 		int 			findChannelIdx(string ch_name);
 		void 			youAreNotOp(string ch_name);
 		
-		string			privmsg(vector<string> token);
+		void			privmsg(vector<string> token);
 		void 			msgSendToClient(string rcv_name, string msg);
 		void 			msgSendToChannel(string rcv_channel, string msg);
 
@@ -40,7 +40,7 @@ class Command {
 
 		void 			part(vector<string> token);
 
-		string			ping(vector<string> token);
+		void			ping(vector<string> token);
 		vector<string>	getCmd();
 	private:
 		vector<Channel *>&	_chList;
@@ -49,6 +49,7 @@ class Command {
 		vector<string>		_cmd;
 		const string		_server;
 		string 				_cpass;
+		ostream&			_logfile;
 };
 
 #endif

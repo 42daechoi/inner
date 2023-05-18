@@ -1,6 +1,6 @@
 #include "Command.hpp"
 
-Command::Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList, string cpass) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local"), _cpass(cpass) {
+Command::Command(string data, Client *client, vector<Client *> &clntList, vector<Channel *> &chList, string cpass, ostream& logfile) : _chList(chList), _clntList(clntList), _client(client), _server("irc.local"), _cpass(cpass), _logfile(logfile) {
 	//생성자에서의 파싱 기준을 \n으로만 하고 execute함수에서 나머지 파싱을 하는거로
 	char *ptr = strtok((char *)data.c_str(), "\n");
 	while (ptr != NULL)
@@ -55,9 +55,10 @@ int		Command::isSameNick(string cmd)
 	return (0);
 }
 
-string	Command::nick(vector<string> token)
+void	Command::nick(vector<string> token)
 {
 	string msg = "";
+
 	if (_client->getInit() == false)//최초 생성시
 	{
 		if (isSameNick(token[1]))
@@ -70,6 +71,7 @@ string	Command::nick(vector<string> token)
 				perr("Error: send error");
 			else
 				_client->setInit(true);
+			_logfile << "O " << msg;
 		}
 	}
 	else//이미 생성 이력 있고 NICK바꿀시
@@ -79,12 +81,12 @@ string	Command::nick(vector<string> token)
 			msg = makeChangeNickMsg(token[1]); //이 함수 내부에서 set이랑 중복검사함
 			if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
+			_logfile << "O " << msg;
 		}
 	}
-	return (msg);
 }
 
-string Command::user(vector<string> token)
+void	Command::user(vector<string> token)
 {
 	string msg = "";
 	_client->setUsername(token[1]);
@@ -95,8 +97,8 @@ string Command::user(vector<string> token)
 			perr("Error: send error");
 		else
 			_client->setInit(true);
+		_logfile << "O " << msg;
 	}
-	return msg;
 }
 
 int Command::findSharp() {
@@ -115,9 +117,8 @@ Channel *Command::findChannel(string ch_name) {
 	return NULL;
 }
 
-string	Command::shoutOutToChannel(Channel *channel) {
+void	Command::shoutOutToChannel(Channel *channel) {
 	string 				msg;
-	string				ret;
 	vector<Client *>	members = channel->getMemberList();
 
 	//각 멤버에게 메세지 전달 후 마지막에 입장한 사람에게 for문 아래 메세지를 추가로 전송해주는데 (memeber수 + 2개 전송) ret는 마지막 구문만 전달됨.(수정 필요)
@@ -128,7 +129,7 @@ string	Command::shoutOutToChannel(Channel *channel) {
 				+ channel->getChannelName() + "\n";
 			if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
-			ret = msg;
+			_logfile << "O " << msg;
 	}
 	msg = ":irc.local 353 " + _client->getNickname()
 		+ channel->getChannelName() + " :@";
@@ -137,17 +138,16 @@ string	Command::shoutOutToChannel(Channel *channel) {
 	msg += members[members.size() - 1]->getNickname() + "\n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	ret += msg;
+	_logfile << "O " << msg;
 	msg = ":irc.local 366 " + _client->getNickname()
 		+ " " + channel->getChannelName()
 		+ " :End of /NAMES list. \n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	ret += msg;
-	return (ret);
+	_logfile << "O " << msg;
 }
 
-string Command::join(vector<string> token) {
+void Command::join(vector<string> token) {
 	string 	ch_name;
 	Channel *channel;
 
@@ -162,10 +162,10 @@ string Command::join(vector<string> token) {
 	else
 		channel->addMember(_client);
 	_client->addChannel(channel);
-	return (shoutOutToChannel(channel));
+	shoutOutToChannel(channel);
 }
 
-string	Command::ping(vector<string> token)
+void	Command::ping(vector<string> token)
 {
 	string	msg;
 
@@ -178,7 +178,7 @@ string	Command::ping(vector<string> token)
 		"\n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	return (msg);
+	_logfile << "O " << msg;
 }
 
 vector<string> Command::parseExecute(const string& com) {
@@ -236,6 +236,7 @@ void Command::youAreNotOp(string ch_name) {
 	msg = ":irc.local 482" + _client->getNickname() + " " + ch_name + " :You must be a channel operator";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
+	_logfile << "O " << msg;
 }
 
 void Command::kick(vector<string> token) {
@@ -260,6 +261,7 @@ void Command::msgSendToClient(string rcv_name, string msg) {
 		if ((*it)->getNickname() == rcv_name) {
 			if (send((*it)->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
+			_logfile << "O " << msg;
 		}
 	}
 }
@@ -273,17 +275,17 @@ void Command::msgSendToChannel(string rcv_channel, string msg) {
 			for (int i = 0; i < (int)members.size(); i++) {
 				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 					perr("Error: send error");
+				_logfile << "O " << msg;
 			}
 		}
 	}
 }
 
-string Command::privmsg(vector<string> token) {
+void	Command::privmsg(vector<string> token) {
 	if (token[1][0] == '#')
 		msgSendToChannel(token[1], token[2]);
 	else
 		msgSendToClient(token[1], token[2]);
-	return ("");
 }
 
 
@@ -292,6 +294,7 @@ int Command::pass(vector<string> token) {
 		string msg = "wrong password\n";
 		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 			perr("Error: send error");
+		_logfile << "O " << msg;
 		return -1;
 	}
 	_client->setPassword(token[1]);
@@ -310,6 +313,7 @@ void Command::part(vector<string> token) {
 					+ members[i]->getUsername() + "@127.0.0.1 PART :" + token[1] + "\n"; 
 				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 					perr("Error: send error");
+				_logfile << "O " << msg;
 			}
 		}
 	}
@@ -320,6 +324,8 @@ int	Command::execute() {
 	//그리고 JOIN명령어에서 서버의 cout << "O " << msg 가 출력이 안됨 그런데 클라이언트 소켓에는 잘 전달 됨 이거 왜이런지 모르곘음
 	//그리고 JOIN명령어 이후에 클라이언트 접속 끊기면 정상종료가 아니라 recv error가 발생함
 	vector<string>	token;
+	string	msg;
+
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
 		token = parseExecute(*iter);
@@ -336,9 +342,10 @@ int	Command::execute() {
 		else if (token[0] == "PRIVMSG") privmsg(token);
 	}
 	if (_client->getNickname() != "" && _client->getUsername() != "" && _client->getPassword() == "") {
-		string msg = "please type password\n";
+		msg = "please type password\n";
 		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1) {
 			perr("Error: send error");
+		_logfile << "O " << msg;
 		}
 		return -1;
 	}
