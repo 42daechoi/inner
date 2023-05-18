@@ -5,9 +5,10 @@
 void noMemberChannel(vector<Channel *> &chList) {
 	vector<Channel *>::iterator it;
 	for (it = chList.begin(); it != chList.end() ; it++) {
-		cout << "*it" << *it << endl;
+
 		if ((*it)->getMemberList().size() == 0)
 		{
+			cout << "in if\n";
 			delete *it;
 			chList.erase(it);
 		}
