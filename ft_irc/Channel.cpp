@@ -1,13 +1,15 @@
 #include "Channel.hpp"
 
-Channel::Channel(string ch_name, Client *op_clnt) {
+Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
 	_ch_name = ch_name;
 	_member = vector<Client *>();
+	_inviteList = vector<Client *>();
 	_member.push_back(op_clnt);
 }
 
 void Channel::addMember(Client *clnt) {
-	_member.push_back(clnt);
+	if (!_invite_only)
+		_member.push_back(clnt);
 }
 
 void Channel::delMember(string clnt_nickname, bool isrec) {
@@ -22,6 +24,21 @@ void Channel::delMember(string clnt_nickname, bool isrec) {
 			_member[i]->delChannel(_ch_name, true);
 		_member.erase(_member.begin() + i);
 	}
+}
+
+void Channel::inviteChannel(Client *clnt) {
+	_inviteList.push_back(clnt);
+}
+
+void Channel::delInviteList(string clnt_nickname) {
+	int i, memcnt = _inviteList.size();
+
+	for (i = 0; i < memcnt; i++) {
+		if (_inviteList[i]->getNickname() == clnt_nickname)
+			break;
+	}
+	if (i < memcnt)
+		_inviteList.erase(_inviteList.begin() + i);
 }
 
 void Channel::kickMsg(string kick_name) {

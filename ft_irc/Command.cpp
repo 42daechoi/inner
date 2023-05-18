@@ -349,6 +349,28 @@ void Command::who(vector<string> token) {
 		perr("Error: send error");
 }
 
+void Command::invite(vector<string> token) {
+	string 	nickname = token[1], ch_name = token[2], msg;
+	Client 	*invite_clnt;
+
+	for (int i = 0; i < (int)_clntList.size(); i++) {
+		if (nickname == _clntList[i]->getNickname())
+			invite_clnt = _clntList[i];
+	}
+	for (int i = 0; i < (int)_chList.size(); i++) {
+		if (ch_name == _chList[i]->getChannelName())
+			_chList[i]->inviteChannel(invite_clnt);
+	}
+	msg = ":" + _client->getNickname() + "!" + _client->getUsername()
+		+ "@127.0.0.1 INVITE " + nickname + " :" + ch_name + "\n";
+	if (send(invite_clnt->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+	msg = ":irc.local 341 " + _client->getNickname() + " " + invite_clnt->getNickname()
+		+ " :" + ch_name + "\n";
+	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+}
+
 int	Command::execute() {
 	//여기서 while문을 돌려주면 _cmd[0]이 명령어면 실행하게 해줘야 할듯
 	//그리고 JOIN명령어에서 서버의 cout << "O " << msg 가 출력이 안됨 그런데 클라이언트 소켓에는 잘 전달 됨 이거 왜이런지 모르곘음
@@ -371,6 +393,7 @@ int	Command::execute() {
 		else if (token[0] == "USER") user(token);
 		else if (token[0] == "PRIVMSG") privmsg(token);
 		else if (token[0] == "WHO") who(token);
+		else if (token[0] == "INVITE") invite(token);
 	}
 	if (_client->getNickname() != "" && _client->getUsername() != "" && _client->getPassword() == "") {
 		msg = "please type password\n";

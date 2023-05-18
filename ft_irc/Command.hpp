@@ -42,6 +42,8 @@ class Command {
 
 		void 			who(vector<string> token);
 
+		void 			invite(vector<string> token);
+
 		void			ping(vector<string> token);
 		vector<string>	getCmd();
 	private:

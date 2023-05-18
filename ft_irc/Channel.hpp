@@ -13,6 +13,9 @@ class Channel {
 		void	addMember(Client *clnt);
 		void	delMember(string clnt_nickname, bool isrec);
 		void	kickMsg(string kick_name);
+		void 	inviteChannel(Client *clnt);
+		void 	delInviteList(string clnt_nickname);
+
 
 		string		 		getChannelName();
 		void 				setChannelName(string ch_name);
@@ -20,6 +23,8 @@ class Channel {
 	private:
 		string 				_ch_name;
 		vector<Client *>	_member;
+		bool 				_invite_only;
+		vector<Client *>	_inviteList;
 };
 
 #endif

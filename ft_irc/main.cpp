@@ -14,6 +14,12 @@ void noMemberChannel(vector<Channel *> &chList) {
 	}
 }
 
+void quitInviteList(vector<Channel *> &chList, string clnt_nickname) {
+	vector<Channel *>::iterator it;
+	for (it = chList.begin(); it != chList.end(); it++)
+		(*it)->delInviteList(clnt_nickname);
+}
+
 int main(int ac, char **av)
 {
 	if (ac != 3) 
