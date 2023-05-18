@@ -39,6 +39,8 @@ class Command {
 
 		void 			part(vector<string> token);
 
+		void 			who(vector<string> token);
+
 		string			ping(vector<string> token);
 		vector<string>	getCmd();
 	private:

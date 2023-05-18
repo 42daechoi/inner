@@ -3,11 +3,14 @@
 #include "Command.hpp"
 
 void noMemberChannel(vector<Channel *> &chList) {
-	vector<Channel *>::iterator it;
-	for (it = chList.begin(); it != chList.end() ; it++) {
-		if ((*it)->getMemberList().size() == 0)
+	vector<Channel *>::iterator it = chList.begin();
+	while (it != chList.end()) {
+		if ((*it)->getMemberList().size() == 0) {
 			delete *it;
-			chList.erase(it);
+			it = chList.erase(it);
+		}
+		else
+			it++;
 	}
 }
 
