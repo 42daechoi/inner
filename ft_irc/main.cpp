@@ -6,6 +6,7 @@ void noMemberChannel(vector<Channel *> &chList) {
 	vector<Channel *>::iterator it;
 	for (it = chList.begin(); it != chList.end() ; it++) {
 		if ((*it)->getMemberList().size() == 0)
+			delete *it;
 			chList.erase(it);
 	}
 }
@@ -14,7 +15,8 @@ int main(int ac, char **av)
 {
 	if (ac != 3) 
 		perr("Usage: ./ircserv <port> <password>");
-	ofstream logFile("log.txt");
+	string password = av[2];
+	std::ofstream logFile("log.txt");
 	if (!logFile.is_open())
 		perr("log.txt open fail\n");
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
@@ -67,19 +69,24 @@ int main(int ac, char **av)
 						logFile << "client end\n";
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
-						clntList[i - 1]->delChannel();
+						clntList[i - 1]->delAllChannel();
 						noMemberChannel(chList);
 						delete clntList[i - 1];
 						clntList.erase(clntList.begin() + i - 1);
 						break;
 					}
 					else {
-						Command cmd = Command(msg, clntList[i - 1], clntList, chList);
+						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password);
 						logFile << "I " << msg << endl;
-						string buffer = cmd.execute();
-						if (buffer != "")
-							logFile << "O " << buffer << endl;
-						// ss.send(msg, clntfd);
+						if (cmd.execute() == -1) {
+							close(clntfd);
+							vfds.erase(vfds.begin() + i);
+							delete clntList[i - 1];
+							clntList.erase(clntList.begin() + i - 1);
+						}
+						// if (buffer != "")
+						// 	logFile << "O " << buffer << endl;
+						ss.send(msg, clntfd);
 						noMemberChannel(chList);
 						break;
 					}

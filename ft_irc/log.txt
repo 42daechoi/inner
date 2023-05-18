@@ -1,8 +1,10 @@
+
 I CAP LS
 NICK kiyoon
 USER kiyoon kiyoon localhost :Kiung Yoon
 
-I MODE kiyoon +i
+I MODE kiyoon
+ +i
 
 I WHOIS kiyoon
 
@@ -10,7 +12,8 @@ I CAP LS
 NICK daechoi
 USER kiyoon kiyoon localhost :Kiung Yoon
 
-I MODE daechoi +i
+I MODE daechoi
+ +i
 
 I WHOIS daechoi
 
@@ -18,7 +21,8 @@ I CAP LS
 NICK kim
 USER kiyoon kiyoon localhost :Kiung Yoon
 
-I MODE kim +i
+I MODE kim
+ +i
 WHOIS kim
 
 I PING irc.local
@@ -143,3 +147,4 @@ I PING irc.local
 
 I PING irc.local
 
+>>>>>>> fb956353dfb264961fda335520e7f7f592cdd6cb

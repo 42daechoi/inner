@@ -10,15 +10,18 @@ void Channel::addMember(Client *clnt) {
 	_member.push_back(clnt);
 }
 
-void Channel::delMember(string clnt_nickname) {
+void Channel::delMember(string clnt_nickname, bool isrec) {
 	int i, memcnt = _member.size();
 
 	for (i = 0; i < memcnt; i++) {
 		if (_member[i]->getNickname() == clnt_nickname)
 			break;
 	}
-	if (i < memcnt)
+	if (i < memcnt) {
+		if (!isrec)
+			_member[i]->delChannel(_ch_name, true);
 		_member.erase(_member.begin() + i);
+	}
 }
 
 void Channel::kickMsg(string kick_name) {
