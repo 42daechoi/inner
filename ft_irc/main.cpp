@@ -86,7 +86,7 @@ int main(int ac, char **av)
 						}
 						// if (buffer != "")
 						// 	logFile << "O " << buffer << endl;
-						ss.send(msg, clntfd);
+						// ss.send(msg, clntfd);
 						noMemberChannel(chList);
 						break;
 					}
