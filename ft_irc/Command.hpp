@@ -33,8 +33,8 @@ class Command {
 		void 			youAreNotOp(string ch_name);
 		
 		void			privmsg(vector<string> token);
-		void 			msgSendToClient(string rcv_name, string msg);
-		void 			msgSendToChannel(string rcv_channel, string msg);
+		void 			msgSendToClient(vector<string> token);
+		void 			msgSendToChannel(vector<string> token);
 
 		int 			pass(vector<string> token);
 

@@ -254,11 +254,17 @@ void Command::kick(vector<string> token) {
 	}
 }
 
-void Command::msgSendToClient(string rcv_name, string msg) {
-	vector<Client *>::iterator it;
+void Command::msgSendToClient(vector<string> token) {
+	vector<Client *>::iterator 	it;
+	string 						msg, rcv_name = token[1];
 
 	for (it = _clntList.begin(); it != _clntList.end(); it++) {
 		if ((*it)->getNickname() == rcv_name) {
+			msg = ":" + _client->getNickname() + "! " + (*it)->getUsername()
+				+ "@127.0.0.1 PRIVMSG " + rcv_name + " :";
+			for (int i = 2; i < (int)token.size() - 1; i++)
+				msg += (token[i] + " ");
+			msg += (token[token.size() - 1] + "\n");
 			if (send((*it)->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
 			_logfile << "O " << msg;
@@ -266,13 +272,19 @@ void Command::msgSendToClient(string rcv_name, string msg) {
 	}
 }
 
-void Command::msgSendToChannel(string rcv_channel, string msg) {
-	vector<Channel *>::iterator it;
+void Command::msgSendToChannel(vector<string> token) {
+	vector<Channel *>::iterator	it;
+	string 						msg, rcv_channel = token[1];
 
 	for (it = _chList.begin(); it != _chList.end(); it++) {
 		if ((*it)->getChannelName() == rcv_channel) {
 			vector<Client *> members = (*it)->getMemberList();
 			for (int i = 0; i < (int)members.size(); i++) {
+				msg = ":" + _client->getNickname() + "! " + members[i]->getUsername()
+					+ "@127.0.0.1 PRIVMSG " + rcv_channel + " :";
+				for (int i = 2; i < (int)token.size() - 1; i++)
+					msg += (token[i] + " ");
+				msg += (token[token.size() - 1] + "\n");
 				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 					perr("Error: send error");
 				_logfile << "O " << msg;
@@ -283,9 +295,9 @@ void Command::msgSendToChannel(string rcv_channel, string msg) {
 
 void	Command::privmsg(vector<string> token) {
 	if (token[1][0] == '#')
-		msgSendToChannel(token[1], token[2] + "\n");
+		msgSendToChannel(token);
 	else
-		msgSendToClient(token[1], token[2] + "\n");
+		msgSendToClient(token);
 }
 
 
@@ -304,7 +316,6 @@ int Command::pass(vector<string> token) {
 void Command::part(vector<string> token) {
 	vector<Channel *>::iterator it;
 
-	_client->delChannel(token[1], false);
 	for (it = _chList.begin(); it != _chList.end(); it++) {
 		if ((*it)->getChannelName() == token[1]) {
 			vector<Client *> members = (*it)->getMemberList();
@@ -317,6 +328,7 @@ void Command::part(vector<string> token) {
 			}
 		}
 	}
+	_client->delChannel(token[1], false);
 }
 
 void Command::who(vector<string> token) {
