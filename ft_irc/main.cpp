@@ -6,8 +6,10 @@ void noMemberChannel(vector<Channel *> &chList) {
 	vector<Channel *>::iterator it;
 	for (it = chList.begin(); it != chList.end() ; it++) {
 		if ((*it)->getMemberList().size() == 0)
+		{
 			delete *it;
 			chList.erase(it);
+		}
 	}
 }
 

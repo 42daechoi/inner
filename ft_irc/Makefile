@@ -12,7 +12,7 @@
 
 NAME = ircserv
 CC = c++
-CFLAGS = --std=c++98 -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = --std=c++98 -Wall -Wextra -Werror #-fsanitize=address -g3
 SRCS = main.cpp init.cpp error.cpp Socket.cpp Command.cpp Client.cpp Channel.cpp
 OBJS = $(SRCS:.cpp=.o)
 
