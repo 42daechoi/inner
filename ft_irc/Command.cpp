@@ -286,8 +286,8 @@ string Command::privmsg(vector<string> token) {
 
 
 int Command::pass(vector<string> token) {
-	cout << "_cpass : " << _cpass << endl;
-	cout << "token[1] : " << token[1] << endl;
+	cout << "_cpass :[" + _cpass + "]" << endl;
+	cout << "token[1] : [" + token[1] + "]" << endl;
 	if (_cpass != token[1]) {
 		string msg = "wrong password\n";
 		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
