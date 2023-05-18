@@ -181,17 +181,27 @@ string	Command::ping(vector<string> token)
 	return (msg);
 }
 
-vector<string>	Command::parseExecute(string com)
-{
-	vector<string>	token;
+// vector<string>	Command::parseExecute(string com)
+// {
+// 	vector<string>	token;
 
-	char *ptr = strtok((char *)com.c_str(), " \t\n");
-	while (ptr != NULL)
-	{
-		token.push_back(string(ptr));
-		ptr = strtok(NULL, " \t\n");
-	}
-	return (token);
+// 	char *ptr = strtok((char *)com.c_str(), " \t\n");
+// 	while (ptr != NULL)
+// 	{
+// 		token.push_back(string(ptr));
+// 		ptr = strtok(NULL, " \t\n");
+// 	}
+// 	return (token);
+// }
+
+vector<string>	Command::parseExecute(const string& com) {
+    vector<string> token;
+    std::istringstream iss(com);
+    string tokenStr;
+    while (getline(iss, tokenStr, ' ')) {
+        token.push_back(tokenStr);
+    }
+    return token;
 }
 
 void kick_member(vector<Client *> &members, string kick_nick) {

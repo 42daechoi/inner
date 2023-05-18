@@ -17,7 +17,8 @@ class Command {
 		int				isSameNick(string cmd);
 		string			user(vector<string> token);
 		string			nick(vector<string> token);
-		vector<string>	parseExecute(string com);
+		// vector<string>	parseExecute(string com);
+		vector<string>	parseExecute(const string& com);
 		int 			execute();
 
 
