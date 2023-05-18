@@ -194,15 +194,20 @@ string	Command::ping(vector<string> token)
 // 	return (token);
 // }
 
-vector<string>	Command::parseExecute(const string& com) {
+vector<string> Command::parseExecute(const string& com) {
     vector<string> token;
     std::istringstream iss(com);
     string tokenStr;
-    while (getline(iss, tokenStr, ' ')) {
+    while (iss >> tokenStr) {
+        // 토큰의 앞뒤에 있는 공백 문자 제거
+        tokenStr.erase(0, tokenStr.find_first_not_of(" \t\n"));
+        tokenStr.erase(tokenStr.find_last_not_of(" \t\n") + 1);
+
         token.push_back(tokenStr);
     }
     return token;
 }
+
 
 void kick_member(vector<Client *> &members, string kick_nick) {
 	int i;
