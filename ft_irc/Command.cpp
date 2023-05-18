@@ -304,7 +304,6 @@ int Command::pass(vector<string> token) {
 void Command::part(vector<string> token) {
 	vector<Channel *>::iterator it;
 
-	_client->delChannel(token[1], false);
 	for (it = _chList.begin(); it != _chList.end(); it++) {
 		if ((*it)->getChannelName() == token[1]) {
 			vector<Client *> members = (*it)->getMemberList();
@@ -317,6 +316,7 @@ void Command::part(vector<string> token) {
 			}
 		}
 	}
+	_client->delChannel(token[1], false);
 }
 
 void Command::who(vector<string> token) {
