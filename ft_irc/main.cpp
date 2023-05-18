@@ -19,7 +19,7 @@ int main(int ac, char **av)
 	if (ac != 3) 
 		perr("Usage: ./ircserv <port> <password>");
 	string password = av[2];
-	std::ofstream logFile("log.txt");
+	ofstream logFile("log.txt");
 	if (!logFile.is_open())
 		perr("log.txt open fail\n");
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
@@ -79,7 +79,7 @@ int main(int ac, char **av)
 						break;
 					}
 					else {
-						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password);
+						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password, logFile);
 						logFile << "I " << msg << endl;
 						if (cmd.execute() == -1) {
 							close(clntfd);
@@ -89,7 +89,7 @@ int main(int ac, char **av)
 						}
 						// if (buffer != "")
 						// 	logFile << "O " << buffer << endl;
-						ss.send(msg, clntfd);
+						// ss.send(msg, clntfd);
 						noMemberChannel(chList);
 						break;
 					}
