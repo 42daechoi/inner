@@ -11,6 +11,7 @@ Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
 bool Channel::addMember(Client *clnt) {
 	bool flag = false;
 
+	cout << "invite_only:" << _invite_only << endl;
 	if (_invite_only) {
 		for (int i = 0; i < (int)_inviteList.size(); i++) {
 			if (clnt == _inviteList[i]) {
