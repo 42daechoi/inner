@@ -7,12 +7,12 @@ void Command::optionI(Channel *channel, char op_flag) {
 	if (op_flag == '+') {
 		channel->setInviteOnly(true);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), _client->getUsername(), "127.0.0.1", "MODE", "", "+i");
+			sendOptionMsg(members[i]->getClntfd(), _client->getUsername(), "127.0.0.1", "MODE", channel->getChannelName(), "+i");
 	}
 	else if (op_flag == '-') {
 		channel->setInviteOnly(false);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), _client->getUsername(), "127.0.0.1", "MODE", "", "-i");
+			sendOptionMsg(members[i]->getClntfd(), _client->getUsername(), "127.0.0.1", "MODE", channel->getChannelName(), "-i");
 	}
 }
 
