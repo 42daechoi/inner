@@ -1,7 +1,10 @@
 #include "Command.hpp"
 
 void Command::sendOptionMsg(int fd, string user, string ip, string option, string target, string info) {
-	string msg = ":" + _client->getNickname() + "!" + user + "@" + ip + " " + option + " " + target + " :" + info + "\n";
+	string msg = ":" + _client->getNickname() + "!" + user + "@" + ip + " " + option;
+	if (target != "")
+		msg += " ";
+	msg += target + " :" + info + "\n";
 	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 }
