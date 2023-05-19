@@ -45,6 +45,7 @@ void Command::join(vector<string> token) {
 	else {
 		if (channel->addMember(_client))
 			_client->addChannel(channel);
+		cout << channel->addMember(_client) << endl;
 	}
 
 	shoutOutToChannel(channel);
