@@ -5,6 +5,7 @@ Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
 	_member = vector<Client *>();
 	_inviteList = vector<Client *>();
 	_member.push_back(op_clnt);
+	_operList.push_back(op_clnt);
 }
 
 void Channel::addMember(Client *clnt) {
