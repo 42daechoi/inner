@@ -8,19 +8,26 @@ Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
 	_operList.push_back(op_clnt);
 }
 
-void Channel::addMember(Client *clnt) {
+bool Channel::addMember(Client *clnt) {
+	bool flag = false;
+
 	if (_invite_only) {
 		for (int i = 0; i < (int)_inviteList.size(); i++) {
-			if (clnt == _inviteList[i])
+			if (clnt == _inviteList[i]) {
 				_member.push_back(clnt);
+				flag = true;
+			}
 		}
 	}
-	else
+	else {
 		_member.push_back(clnt);
+		flag = true;
+	}
 	for (int i = 0; i < (int)_inviteList.size(); i++) {
 		if (clnt == _inviteList[i])
 			_member.erase(_member.begin() + i);
 	}
+	return flag;
 }
 
 void Channel::delMember(string clnt_nickname, bool isrec) {

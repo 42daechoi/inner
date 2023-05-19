@@ -40,9 +40,12 @@ void Command::join(vector<string> token) {
 	if (!(channel = findChannel(ch_name))) {
 		channel = new Channel(ch_name, _client);
 		_chList.push_back(channel);
+		_client->addChannel(channel);
 	}
-	else
-		channel->addMember(_client);
-	_client->addChannel(channel);
+	else {
+		if (channel->addMember(_client))
+			_client->addChannel(channel);
+	}
+
 	shoutOutToChannel(channel);
 }

@@ -8,7 +8,7 @@ void Command::sendOptionMsg(int fd, string user, string ip, string option, strin
 }
 
 void Command::sendCodeMsg(int fd, string code, string target, string info) {
-	string msg = ":irc.local " + code + " " + _client->getNickname() + " " + target + " :" + info+ "\n";
+	string msg = ":irc.local " + code + " " + _client->getNickname() + " " + target + " :" + info + "\n";
 	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	_logfile << "O " << msg;
