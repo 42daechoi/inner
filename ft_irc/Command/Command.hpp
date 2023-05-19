@@ -1,9 +1,9 @@
 #ifndef COMMAND_HPP
 # define COMMAND_HPP
 
-# include "header.hpp"
-# include "Client.hpp"
-# include "Channel.hpp"
+# include "../header.hpp"
+# include "../Client/Client.hpp"
+# include "../Channel/Channel.hpp"
 
 # define SERVERNEMA irc.local
 
@@ -20,12 +20,16 @@ class Command {
 		// vector<string>	parseExecute(string com);
 		vector<string>	parseExecute(const string& com);
 		int 			execute();
-
+		void			sendOptionMsg(int fd, string user, string ip, string option, string target, string msg);
+		void 			sendCodeMsg(int fd, string code, string target, string msg);
+		bool 			isOperator(Client *client, Channel *channel);
+		Client 			*findClient(string nickname);
+		Channel 		*findChannel(string ch_name);
 
 		void			join(vector<string> token);
 		void 			sendToClnt();
 		void 			shoutOutToChannel(Channel *channel);
-		Channel 		*findChannel(string ch_name);
+
 		int 			findSharp();
 
 		void			kick(vector<string> token);
@@ -43,6 +47,9 @@ class Command {
 		void 			who(vector<string> token);
 
 		void 			invite(vector<string> token);
+
+		void 			optionI(Channel *channel, char op_flag);
+		void 			mode(vector<string> token);
 
 		void			ping(vector<string> token);
 		vector<string>	getCmd();

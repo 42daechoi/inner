@@ -1,8 +1,8 @@
 #ifndef CLIENT_HPP
 # define CLIENT_HPP
 
-# include "header.hpp"
-# include "Channel.hpp"
+# include "../header.hpp"
+# include "../Channel/Channel.hpp"
 
 class Channel;
 

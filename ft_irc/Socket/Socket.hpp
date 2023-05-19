@@ -1,7 +1,7 @@
 #ifndef SOCKET_HPP
 # define SOCKET_HPP
 
-# include "header.hpp"
+# include "../header.hpp"
 
 class Socket {
 	public:

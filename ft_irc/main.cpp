@@ -1,6 +1,6 @@
 #include "header.hpp"
-#include "Socket.hpp"
-#include "Command.hpp"
+#include "Socket/Socket.hpp"
+#include "Command/Command.hpp"
 
 void noMemberChannel(vector<Channel *> &chList) {
 	vector<Channel *>::iterator it = chList.begin();
@@ -14,10 +14,12 @@ void noMemberChannel(vector<Channel *> &chList) {
 	}
 }
 
-void quitInviteList(vector<Channel *> &chList, string clnt_nickname) {
+void delChannelList(vector<Channel *> &chList, string clnt_nickname) {
 	vector<Channel *>::iterator it;
-	for (it = chList.begin(); it != chList.end(); it++)
+	for (it = chList.begin(); it != chList.end(); it++) {
 		(*it)->delInviteList(clnt_nickname);
+		(*it)->delOperList(clnt_nickname);
+	}
 }
 
 int main(int ac, char **av)
@@ -80,6 +82,7 @@ int main(int ac, char **av)
 						vfds.erase(vfds.begin() + i);
 						clntList[i - 1]->delAllChannel();
 						noMemberChannel(chList);
+						delChannelList(chList, clntList[i - 1]->getNickname());
 						delete clntList[i - 1];
 						clntList.erase(clntList.begin() + i - 1);
 						break;

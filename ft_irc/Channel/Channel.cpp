@@ -8,7 +8,13 @@ Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
 }
 
 void Channel::addMember(Client *clnt) {
-	if (!_invite_only)
+	if (_invite_only) {
+		for (int i = 0; i < (int)_inviteList.size(); i++) {
+			if (clnt == _inviteList[i])
+				_member.push_back(clnt);
+		}
+	}
+	else
 		_member.push_back(clnt);
 }
 
@@ -26,8 +32,13 @@ void Channel::delMember(string clnt_nickname, bool isrec) {
 	}
 }
 
-void Channel::inviteChannel(Client *clnt) {
+bool Channel::inviteChannel(Client *clnt) {
+	for (int i = 0; i < (int)_member.size(); i++) {
+		if (clnt == _member[i])
+			return false;
+	}
 	_inviteList.push_back(clnt);
+	return true;
 }
 
 void Channel::delInviteList(string clnt_nickname) {
@@ -41,6 +52,17 @@ void Channel::delInviteList(string clnt_nickname) {
 		_inviteList.erase(_inviteList.begin() + i);
 }
 
+void Channel::delOperList(string clnt_nickname) {
+	int i, memcnt = _operList.size();
+
+	for (i = 0; i < memcnt; i++) {
+		if (_operList[i]->getNickname() == clnt_nickname)
+			break;
+	}
+	if (i < memcnt)
+		_operList.erase(_operList.begin() + i);
+}
+
 void Channel::kickMsg(string kick_name) {
 
 	for (int i = 0; i < (int)_member.size(); i++) {
@@ -51,8 +73,29 @@ void Channel::kickMsg(string kick_name) {
 	}
 }
 
+bool Channel::isOperator(string clnt_nickname) {
+	for (int i = 0; i < (int)_operList.size(); i++) {
+		if (clnt_nickname == _operList[i]->getNickname())
+			return true;
+	}
+	return false;
+}
+
+bool Channel::isMember(string clnt_nickname) {
+	for (int i = 0; i < (int)_member.size(); i++) {
+		if (clnt_nickname == _member[i]->getNickname())
+			return true;
+	}
+	return false;
+}
+
+
 string Channel::getChannelName() { return _ch_name; }
 
 void Channel::setChannelName(string ch_name) { _ch_name = ch_name; }
+
+void Channel::setInviteOnly(bool flag) { _invite_only = flag; }
+
+vector<Client *> Channel::getOperList() { return _operList; }
 
 vector<Client *> Channel::getMemberList() { return _member; }
