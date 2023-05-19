@@ -96,8 +96,6 @@ int main(int ac, char **av)
 							delete clntList[i - 1];
 							clntList.erase(clntList.begin() + i - 1);
 						}
-						// if (buffer != "")
-						// 	logFile << "O " << buffer << endl;
 						// ss.send(msg, clntfd);
 						noMemberChannel(chList);
 						break;

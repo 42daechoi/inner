@@ -17,6 +17,10 @@ void Channel::addMember(Client *clnt) {
 	}
 	else
 		_member.push_back(clnt);
+	for (int i = 0; i < (int)_inviteList.size(); i++) {
+		if (clnt == _inviteList[i])
+			_member.erase(_member.begin() + i);
+	}
 }
 
 void Channel::delMember(string clnt_nickname, bool isrec) {

@@ -1,0 +1,15 @@
+I NICK daechoi
+I PASS 1
+I USER root
+O :irc.local 001 daechoi :Welcome to the Localnet IRC Network daechoi!root127.0.0.1
+I JOIN #new
+O :daechoi!root@127.0.0.1 JOIN :#new
+O :irc.local 353 daechoi#new :@daechoi
+O :irc.local 366 daechoi #new :End of /NAMES list. 
+I a
+I a
+I MODE #new +i
+I a
+I a
+I a
+I a
