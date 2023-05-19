@@ -20,7 +20,7 @@ void Command::mode(vector<string> token) {
 	string ch_name = token[1], option = token[2];
 	Channel *channel;
 	
-	if (ch_name[0] != '#' || !token[2])
+	if (ch_name[0] != '#' || option == "")
 		return;
 	if (!(channel = findChannel(ch_name)) || !channel->isMember(_client->getNickname())) {
 		sendCodeMsg(_client->getClntfd(), "403", _client->getNickname(), "No such channel");
