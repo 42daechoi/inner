@@ -32,10 +32,14 @@ bool Channel::addMember(Client *clnt, string password) {
 	if (_invite_only)
 		joinflag = isInvitee(clnt);
 	else {
-		if (_password != "" && _password != password)
+		if (_password != "" && _password != password) {
+			joinflag = false;
 			sendCodeMsg(clnt->getClntfd(), "475", clnt->getNickname(), _ch_name, "Cannot join channel (incorrect channel key)");
-		_member.push_back(clnt);
-		joinflag = true;
+		}
+		else {
+			_member.push_back(clnt);
+			joinflag = true;
+		}
 	}
 	if (joinflag) {
 		sendTopic(clnt);
