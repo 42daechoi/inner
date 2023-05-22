@@ -38,7 +38,7 @@ void Command::join(vector<string> token) {
 		perr("Error: tokenized error (#channelname)");
 	ch_name = token[1];
 	if (!(channel = findChannel(ch_name))) {
-		channel = new Channel(ch_name, _client);
+		channel = new Channel(ch_name, _client, _logfile);
 		_chList.push_back(channel);
 		_client->addChannel(channel);
 	}

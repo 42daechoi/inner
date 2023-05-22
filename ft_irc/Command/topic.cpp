@@ -1,0 +1,27 @@
+#include "Command.hpp"
+
+void Command::sendtoChannelTopic(Channel *channel, string msg) {
+	vector<Client *> members = channel->getMemberList();
+
+	for (int i = 0; i < (int)members.size(); i++) {
+		sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "TOPIC", channel->getChannelName(), msg);
+	}
+}
+
+void Command::topic(vector<string> token) {
+	Channel *channel;
+	string	msg;
+	int 	i;
+
+	for (i = 2; i < (int)token.size() - 1; i++)
+		msg += (token[i] + " ");
+	msg += token[i];
+	if (!(channel = findChannel(token[1]))) {
+		sendCodeMsg(_client->getClntfd(), "403", _client->getNickname(), "No such channel");
+		return ;
+	}
+	if ((channel->getTopicFlag() && channel->isOperator(_client->getNickname())) || !channel->getTopicFlag())
+		sendtoChannelTopic(channel, msg);
+	else
+		sendCodeMsg(_client->getClntfd(), "482", _client->getNickname() + " " + channel->getChannelName(), "You do not have access to change the topic on this channel");
+}

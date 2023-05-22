@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
+Channel::Channel(string ch_name, Client *op_clnt, ostream& logfile) : _invite_only(false), _topic_flag(true), _topic(""), _logfile(logfile) {
 	_ch_name = ch_name;
 	_member = vector<Client *>();
 	_inviteList = vector<Client *>();
@@ -8,10 +8,14 @@ Channel::Channel(string ch_name, Client *op_clnt) : _invite_only(false) {
 	_operList.push_back(op_clnt);
 }
 
+void Channel::sendTopic(Client *clnt) {
+	if (_topic != "")
+		sendCodeMsg(clnt->getClntfd(), "332", clnt->getNickname(), _ch_name, _topic);
+}
+
 bool Channel::addMember(Client *clnt) {
 	bool flag = false;
 
-	cout << "invite_only:" << _invite_only << endl;
 	if (_invite_only) {
 		for (int i = 0; i < (int)_inviteList.size(); i++) {
 			if (clnt == _inviteList[i]) {
@@ -24,10 +28,8 @@ bool Channel::addMember(Client *clnt) {
 		_member.push_back(clnt);
 		flag = true;
 	}
-	for (int i = 0; i < (int)_inviteList.size(); i++) {
-		if (clnt == _inviteList[i])
-			_member.erase(_member.begin() + i);
-	}
+	sendTopic(clnt);
+	delInviteList(clnt->getNickname());
 	return flag;
 }
 
@@ -102,13 +104,32 @@ bool Channel::isMember(string clnt_nickname) {
 	return false;
 }
 
-
 string Channel::getChannelName() { return _ch_name; }
 
 void Channel::setChannelName(string ch_name) { _ch_name = ch_name; }
 
 void Channel::setInviteOnly(bool flag) { _invite_only = flag; }
 
+void Channel::setTopicFlag(bool flag) { _topic_flag = flag; }
+
 vector<Client *> Channel::getOperList() { return _operList; }
 
 vector<Client *> Channel::getMemberList() { return _member; }
+
+bool Channel::getInviteOnly() { return _invite_only; }
+
+bool Channel::getTopicFlag() { return _topic_flag; }
+
+void Channel::sendOptionMsg(int fd, string nickname, string user, string ip, string option, string target, string info) {
+	string msg = ":" + nickname + "!" + user + "@" + ip + " " + option + " " + target + " :" + info + "\n";;
+	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+	_logfile << "O " << msg;
+}
+
+void Channel::sendCodeMsg(int fd, string code, string nickname, string target, string info) {
+	string msg = ":irc.local " + code + " " + nickname + " " + target + " :" + info + "\n";
+	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
+		perr("Error: send error");
+	_logfile << "O " << msg;
+}

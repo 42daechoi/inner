@@ -25,6 +25,7 @@ void Command::msgSendToChannel(vector<string> token) {
 	for (it = _chList.begin(); it != _chList.end(); it++) {
 		if ((*it)->getChannelName() == rcv_channel) {
 			vector<Client *> members = (*it)->getMemberList();
+			if(!((*it)->isMember(_client->getNickname()))) return;
 			for (int i = 0; i < (int)members.size(); i++) {
 				if (members[i] == _client)
 					continue;

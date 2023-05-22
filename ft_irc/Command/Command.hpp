@@ -48,10 +48,15 @@ class Command {
 
 		void 			invite(vector<string> token);
 
+		void 			optionT(Channel *channel, char op_flag);
 		void 			optionI(Channel *channel, char op_flag);
 		void 			mode(vector<string> token);
 
 		void			ping(vector<string> token);
+
+		void 			sendtoChannelTopic(Channel *channel, string msg);
+		void 			topic(vector<string> token);
+
 		vector<string>	getCmd();
 	private:
 		vector<Channel *>&	_chList;
