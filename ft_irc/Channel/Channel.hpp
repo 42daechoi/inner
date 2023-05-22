@@ -23,6 +23,7 @@ class Channel {
 		void 	sendDenyJoin(Client *clnt);
 		void 	sendWrongPass(Client *clnt);
 		bool 	isInvitee(Client *clnt);
+		bool 	isPassMode();
 
 		void	sendOptionMsg(int fd, string nickname, string user, string ip, string option, string target, string msg);
 		void 	sendCodeMsg(int fd, string code, string nickname, string target, string msg);

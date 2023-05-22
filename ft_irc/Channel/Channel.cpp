@@ -115,6 +115,12 @@ bool Channel::isMember(string clnt_nickname) {
 	return false;
 }
 
+bool Channel::isPassMode() {
+	if (_password == "")
+		return false;
+	return true;
+}
+
 string Channel::getChannelName() { return _ch_name; }
 
 void Channel::setChannelName(string ch_name) { _ch_name = ch_name; }

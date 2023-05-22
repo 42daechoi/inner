@@ -37,12 +37,12 @@ void Command::optionK(Channel *channel, char op_flag, string password) {
 	vector<Client *> 	members = channel->getMemberList();
 	string 				msg;
 
-	if (op_flag == '+' && !channel->getTopicFlag()) {
+	if (op_flag == '+' && !channel->isPassMode()) {
 		channel->setPassword(password);
 		for (int i = 0; i < (int)members.size(); i++)
 			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName() + " +k", password);
 	}
-	else if (op_flag == '-' && channel->getTopicFlag()) {
+	else if (op_flag == '-' && channel->isPassMode()) {
 		channel->unsetPassword();
 		for (int i = 0; i < (int)members.size(); i++)
 			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName() + " -k", password);
