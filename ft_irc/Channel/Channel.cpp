@@ -13,6 +13,10 @@ void Channel::sendTopic(Client *clnt) {
 		sendCodeMsg(clnt->getClntfd(), "332", clnt->getNickname(), _ch_name, _topic);
 }
 
+void Channel::sendDenyJoin(Client *clnt) {
+	sendCodeMsg(clnt->getClntfd(), "473", clnt->getNickname(), _ch_name, "Cannot join channel (invite only)");
+}
+
 bool Channel::addMember(Client *clnt) {
 	bool flag = false;
 
@@ -23,6 +27,8 @@ bool Channel::addMember(Client *clnt) {
 				flag = true;
 			}
 		}
+		if (!flag)
+			sendDenyJoin(clnt);
 	}
 	else {
 		_member.push_back(clnt);
