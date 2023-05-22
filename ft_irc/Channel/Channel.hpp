@@ -10,7 +10,7 @@ class Channel {
 	public:
 		Channel(string ch_name, Client *op_clnt, ostream& logfile);
 
-		bool	addMember(Client *clnt);
+		bool	addMember(Client *clnt, string password);
 		void	delMember(string clnt_nickname, bool isrec);
 		void	kickMsg(string kick_name);
 		bool 	inviteChannel(Client *clnt);
@@ -21,14 +21,18 @@ class Channel {
 		bool 	isMember(string clnt_nickname);
 		void 	sendTopic(Client *clnt);
 		void 	sendDenyJoin(Client *clnt);
+		void 	sendWrongPass(Client *clnt);
+		bool 	isInvitee(Client *clnt);
 
 		void	sendOptionMsg(int fd, string nickname, string user, string ip, string option, string target, string msg);
 		void 	sendCodeMsg(int fd, string code, string nickname, string target, string msg);
 
 		string		 		getChannelName();
+		void 				unsetPassword();
 		void 				setChannelName(string ch_name);
 		void 				setInviteOnly(bool flag);
 		void 				setTopicFlag(bool flag);
+		void 				setPassword(string password);
 		bool 				getTopicFlag();
 		void 				setTopic(string topic);
 		bool 				getInviteOnly();
@@ -41,6 +45,7 @@ class Channel {
 		bool 				_invite_only;
 		bool 				_topic_flag;
 		string 				_topic;
+		string 				_password;
 		vector<Client *>	_inviteList;
 		vector<Client *>	_operList;
 		ostream&			_logfile;

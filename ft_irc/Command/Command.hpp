@@ -48,6 +48,7 @@ class Command {
 
 		void 			invite(vector<string> token);
 
+		void 			optionK(Channel *channel, char op_flag, string password);
 		void 			optionT(Channel *channel, char op_flag);
 		void 			optionI(Channel *channel, char op_flag);
 		void 			mode(vector<string> token);

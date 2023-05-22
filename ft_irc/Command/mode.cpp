@@ -32,6 +32,24 @@ void Command::optionT(Channel *channel, char op_flag) {
 	}
 }
 
+
+void Command::optionK(Channel *channel, char op_flag, string password) {
+	vector<Client *> 	members = channel->getMemberList();
+	string 				msg;
+
+	if (op_flag == '+' && !channel->getTopicFlag()) {
+		channel->setPassword(password);
+		for (int i = 0; i < (int)members.size(); i++)
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName() + " +k", password);
+	}
+	else if (op_flag == '-' && channel->getTopicFlag()) {
+		channel->unsetPassword();
+		for (int i = 0; i < (int)members.size(); i++)
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName() + " -k", password);
+	}
+}
+
+
 void Command::mode(vector<string> token) {
 	string ch_name = token[1], option = token[2];
 	Channel *channel;
@@ -49,7 +67,7 @@ void Command::mode(vector<string> token) {
 	}
 	if (option[1] == 'i') optionI(channel, option[0]);
 	else if (option[1] == 't') return optionT(channel, option[0]);
-	else if (option[1] == 'k') return ;
+	else if (option[1] == 'k') return optionK(channel, option[0], token[3]);
 	else if (option[1] == 'o') return ;
 	else if (option[1] == 'l') return ;
 }

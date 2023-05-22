@@ -44,7 +44,9 @@ void Command::join(vector<string> token) {
 		_client->addChannel(channel);
 	}
 	else {
-		if ((joinflag = channel->addMember(_client)))
+		string password = "";
+		if (token.size() == 3) password = token[2]; 
+		if ((joinflag = channel->addMember(_client, password)))
 			_client->addChannel(channel);
 	}
 	if (joinflag)

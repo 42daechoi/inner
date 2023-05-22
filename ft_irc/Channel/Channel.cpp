@@ -13,32 +13,35 @@ void Channel::sendTopic(Client *clnt) {
 		sendCodeMsg(clnt->getClntfd(), "332", clnt->getNickname(), _ch_name, _topic);
 }
 
-void Channel::sendDenyJoin(Client *clnt) {
-	sendCodeMsg(clnt->getClntfd(), "473", clnt->getNickname(), _ch_name, "Cannot join channel (invite only)");
+bool Channel::isInvitee(Client *clnt) {
+	bool joinflag = false;
+	for (int i = 0; i < (int)_inviteList.size(); i++) {
+		if (clnt == _inviteList[i]) {
+			_member.push_back(clnt);
+			joinflag = true;
+		}
+	}
+	if (!joinflag)
+		sendCodeMsg(clnt->getClntfd(), "473", clnt->getNickname(), _ch_name, "Cannot join channel (invite only)");
+	return joinflag;
 }
 
-bool Channel::addMember(Client *clnt) {
-	bool flag = false;
+bool Channel::addMember(Client *clnt, string password) {
+	bool joinflag = false;
 
-	if (_invite_only) {
-		for (int i = 0; i < (int)_inviteList.size(); i++) {
-			if (clnt == _inviteList[i]) {
-				_member.push_back(clnt);
-				flag = true;
-			}
-		}
-		if (!flag)
-			sendDenyJoin(clnt);
-	}
+	if (_invite_only)
+		joinflag = isInvitee(clnt);
 	else {
+		if (_password != "" && _password != password)
+			sendCodeMsg(clnt->getClntfd(), "475", clnt->getNickname(), _ch_name, "Cannot join channel (incorrect channel key)");
 		_member.push_back(clnt);
-		flag = true;
+		joinflag = true;
 	}
-	if (flag) {
+	if (joinflag) {
 		sendTopic(clnt);
 		delInviteList(clnt->getNickname());
 	}
-	return flag;
+	return joinflag;
 }
 
 void Channel::delMember(string clnt_nickname, bool isrec) {
@@ -121,6 +124,10 @@ void Channel::setInviteOnly(bool flag) { _invite_only = flag; }
 void Channel::setTopicFlag(bool flag) { _topic_flag = flag; }
 
 void Channel::setTopic(string topic) { _topic = topic; }
+
+void Channel::setPassword(string password) { _password = password; }
+
+void Channel::unsetPassword() { _password = ""; }
 
 vector<Client *> Channel::getOperList() { return _operList; }
 
