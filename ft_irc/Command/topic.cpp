@@ -16,7 +16,7 @@ void Command::topic(vector<string> token) {
 	for (i = 2; i < (int)token.size() - 1; i++)
 		msg += (token[i] + " ");
 	msg += token[i];
-	msg.erase(0);
+	msg.erase(0, 1);
 	if (!(channel = findChannel(token[1]))) {
 		sendCodeMsg(_client->getClntfd(), "403", _client->getNickname(), "No such channel");
 		return ;
