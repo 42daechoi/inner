@@ -30,6 +30,7 @@ class Channel {
 		void 				setInviteOnly(bool flag);
 		void 				setTopicFlag(bool flag);
 		bool 				getTopicFlag();
+		void 				setTopic(string topic);
 		bool 				getInviteOnly();
 		vector<Client *>  	getOperList();
 		vector<Client *> 	getMemberList();

@@ -118,6 +118,8 @@ void Channel::setInviteOnly(bool flag) { _invite_only = flag; }
 
 void Channel::setTopicFlag(bool flag) { _topic_flag = flag; }
 
+void Channel::setTopic(string topic) { _topic = topic; }
+
 vector<Client *> Channel::getOperList() { return _operList; }
 
 vector<Client *> Channel::getMemberList() { return _member; }

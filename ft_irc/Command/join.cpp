@@ -33,6 +33,7 @@ void	Command::shoutOutToChannel(Channel *channel) {
 void Command::join(vector<string> token) {
 	string 	ch_name;
 	Channel *channel;
+	bool 	joinflag = true;
 
 	if (token[1][0] != '#')
 		perr("Error: tokenized error (#channelname)");
@@ -43,9 +44,9 @@ void Command::join(vector<string> token) {
 		_client->addChannel(channel);
 	}
 	else {
-		if (channel->addMember(_client))
+		if ((joinflag = channel->addMember(_client)))
 			_client->addChannel(channel);
 	}
-
-	shoutOutToChannel(channel);
+	if (joinflag)
+		shoutOutToChannel(channel);
 }
