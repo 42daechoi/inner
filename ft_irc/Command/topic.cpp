@@ -20,8 +20,9 @@ void Command::topic(vector<string> token) {
 		sendCodeMsg(_client->getClntfd(), "403", _client->getNickname(), "No such channel");
 		return ;
 	}
-	if ((channel->getTopicFlag() && channel->isOperator(_client->getNickname())) || !channel->getTopicFlag())
+	if ((channel->getTopicFlag() && channel->isOperator(_client->getNickname())) || !channel->getTopicFlag()) {
 		sendtoChannelTopic(channel, msg);
-	else
-		sendCodeMsg(_client->getClntfd(), "482", _client->getNickname() + " " + channel->getChannelName(), "You do not have access to change the topic on this channel");
+		return ;
+	}
+	sendCodeMsg(_client->getClntfd(), "482", _client->getNickname() + " " + channel->getChannelName(), "You do not have access to change the topic on this channel");
 }
