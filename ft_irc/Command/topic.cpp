@@ -24,5 +24,5 @@ void Command::topic(vector<string> token) {
 		sendtoChannelTopic(channel, msg);
 		return ;
 	}
-	sendCodeMsg(_client->getClntfd(), "482", _client->getNickname() + " " + channel->getChannelName(), "You do not have access to change the topic on this channel");
+	sendCodeMsg(_client->getClntfd(), "482", channel->getChannelName(), "You do not have access to change the topic on this channel");
 }

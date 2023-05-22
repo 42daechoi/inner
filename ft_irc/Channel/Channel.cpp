@@ -34,8 +34,10 @@ bool Channel::addMember(Client *clnt) {
 		_member.push_back(clnt);
 		flag = true;
 	}
-	sendTopic(clnt);
-	delInviteList(clnt->getNickname());
+	if (flag) {
+		sendTopic(clnt);
+		delInviteList(clnt->getNickname());
+	}
 	return flag;
 }
 
