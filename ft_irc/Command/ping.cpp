@@ -13,5 +13,5 @@ void	Command::ping(vector<string> token)
 		"\n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	_logfile << "O " << msg;
+	printLog(msg);
 }

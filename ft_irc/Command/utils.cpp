@@ -4,14 +4,14 @@ void Command::sendOptionMsg(int fd, string user, string ip, string option, strin
 	string msg = ":" + _client->getNickname() + "!" + user + "@" + ip + " " + option + " " + target + " :" + info + "\n";;
 	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	_logfile << "O " << msg;
+	printLog(msg);
 }
 
 void Command::sendCodeMsg(int fd, string code, string target, string info) {
 	string msg = ":irc.local " + code + " " + _client->getNickname() + " " + target + " :" + info + "\n";
 	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	_logfile << "O " << msg;
+	printLog(msg);
 }
 
 Channel *Command::findChannel(string ch_name) {
@@ -57,5 +57,11 @@ void Command::youAreNotOp(string ch_name) {
 	msg = ":irc.local 482" + _client->getNickname() + " " + ch_name + " :You must be a channel operator\n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
+	printLog(msg);
+}
+
+void	Command::printLog(string msg)
+{
 	_logfile << "O " << msg;
+	_logfile.flush();
 }

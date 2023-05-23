@@ -35,7 +35,8 @@ class Command {
 		void			kick(vector<string> token);
 		int 			findChannelIdx(string ch_name);
 		void 			youAreNotOp(string ch_name);
-		
+		void			printLog(string msg);
+
 		void			privmsg(vector<string> token);
 		void 			msgSendToClient(vector<string> token);
 		void 			msgSendToChannel(vector<string> token);

@@ -11,6 +11,6 @@ void	Command::user(vector<string> token)
 			perr("Error: send error");
 		else
 			_client->setInit(true);
-		_logfile << "O " << msg;
+		printLog(msg);
 	}
 }

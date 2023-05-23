@@ -12,7 +12,7 @@ void	Command::shoutOutToChannel(Channel *channel) {
 				+ channel->getChannelName() + "\n";
 			if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
-			_logfile << "O " << msg;
+			printLog(msg);
 	}
 	msg = ":irc.local 353 " + _client->getNickname()
 		+ channel->getChannelName() + " :@";
@@ -21,13 +21,13 @@ void	Command::shoutOutToChannel(Channel *channel) {
 	msg += members[members.size() - 1]->getNickname() + "\n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	_logfile << "O " << msg;
+	printLog(msg);
 	msg = ":irc.local 366 " + _client->getNickname()
 		+ " " + channel->getChannelName()
 		+ " :End of /NAMES list. \n";
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
-	_logfile << "O " << msg;
+	printLog(msg);
 }
 
 void Command::join(vector<string> token) {

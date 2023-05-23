@@ -11,7 +11,7 @@ void Command::part(vector<string> token) {
 					+ members[i]->getUsername() + "@" + members[i]->getIp() + " PART :" + token[1] + "\n"; 
 				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 					perr("Error: send error");
-				_logfile << "O " << msg;
+				printLog(msg);
 			}
 		}
 	}
