@@ -36,7 +36,9 @@ int Socket::accept() {
 		perr("Error: accept error");
 	if (getsockname(clntfd, (struct sockaddr*)&clnt_addr, &ca_size) == -1)
 		cout << "Failed to get local socket address" << endl;
-	cout << "IP : " << inet_ntoa(clnt_addr.sin_addr) << endl;
+	char *temp = inet_ntoa(clnt_addr.sin_addr);
+	cout << "IP : " << temp << endl;
+	free(temp);
 	return clntfd;
 }
 
