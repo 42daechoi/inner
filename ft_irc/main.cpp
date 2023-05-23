@@ -28,6 +28,12 @@ void printInput( ostream& logFile, string msg)
 	logFile.flush();
 }
 
+void printOutput( ostream& logFile, string msg)
+{
+	logFile << "O " << msg;
+	logFile.flush();
+}
+
 int main(int ac, char **av)
 {
 	if (ac != 3) 
@@ -82,7 +88,7 @@ int main(int ac, char **av)
 						continue;
 					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
 						//quit할때 속해있던 채널에서도 나가줘야함 그리고 채널이 0명이여서 채널 자체가 사라져야될때 leaks남
-						logFile << "client end\n";
+						printOutput(logFile, "client end\n");
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
 						clntList[i - 1]->delAllChannel();
