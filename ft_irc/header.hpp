@@ -22,6 +22,8 @@
 # include <cctype>
 # include <sstream>
 
+# define MAX_SOCKET 255
+
 using namespace std;
 
 int		check_port(char **av);

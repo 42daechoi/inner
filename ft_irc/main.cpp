@@ -62,8 +62,7 @@ int main(int ac, char **av)
 			clntpoll.events = POLLIN;
 			vfds.push_back(clntpoll);
 			clntList.push_back(clnt);
-			// if (clntList.size() + 1 > OPEN_MAX) 왠진 모르겠지만 OPEN_MAX 우분투에서 안먹음..ㅜ
-			if (clntList.size() + 1 > 32)
+			if (clntList.size() + 1 > MAX_SOCKET)
 				perr("Error: out of range descriptor");
 			continue;
 		}
