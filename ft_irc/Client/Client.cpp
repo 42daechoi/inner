@@ -1,6 +1,13 @@
 #include "Client.hpp"
 
 Client::Client(int clntfd) : _nickname(""), _username(""), _isInit(false), _password("") {
+	struct sockaddr_in	clnt_addr;
+	socklen_t			ca_size = sizeof(clnt_addr);
+	
+	if (getsockname(clntfd, (struct sockaddr*)&clnt_addr, &ca_size) == -1)
+		cout << "Failed to get local socket address" << endl;
+	_ip = inet_ntoa(clnt_addr.sin_addr);
+	cout << "IP set : " << _ip << endl;
 	_clntfd = clntfd;
 	_joinList = vector<Channel *>();
 }

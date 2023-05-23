@@ -31,6 +31,7 @@ class Client {
 		vector<Channel *>	_joinList;
 		bool				_isInit;
 		string 				_password;
+		char*				_ip;
 };
 
 #endif
