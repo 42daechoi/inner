@@ -48,7 +48,7 @@ string	Command::makeWelcomeMsg()
 				+ _client->getNickname() \
 				+ "!" \
 				+ _client->getUsername() \
-				+ "127.0.0.1\n";
+				+ _client->getIp() + "\n";
 	return (msg);
 }
 

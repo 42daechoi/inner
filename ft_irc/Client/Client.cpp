@@ -7,7 +7,6 @@ Client::Client(int clntfd) : _nickname(""), _username(""), _isInit(false), _pass
 	if (getsockname(clntfd, (struct sockaddr*)&clnt_addr, &ca_size) == -1)
 		cout << "Failed to get local socket address" << endl;
 	_ip = inet_ntoa(clnt_addr.sin_addr);
-	cout << "IP set : " << _ip << endl;
 	_clntfd = clntfd;
 	_joinList = vector<Channel *>();
 }
@@ -55,3 +54,4 @@ vector<Channel *> Client::getJoinList() { return _joinList; }
 
 string Client::getPassword() { return _password; }
 
+string	Client::getIp() { return _ip; }

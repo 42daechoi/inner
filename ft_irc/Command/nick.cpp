@@ -6,8 +6,9 @@ string	Command::makeChangeNickMsg(string cmd)
 				+ _client->getNickname() \
 				+ "!" \
 				+ _client->getUsername() \
-				+ "@127.0.0.1 " \
-				+ "NICK :";
+				+ "@" \
+				+ _client->getIp() \
+				+ " NICK :";
 	if (isSameNick(cmd))
 		cmd = cmd + "_";
 	msg += cmd + "\n";

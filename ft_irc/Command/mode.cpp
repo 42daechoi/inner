@@ -7,12 +7,12 @@ void Command::optionI(Channel *channel, char op_flag) {
 	if (op_flag == '+' && !channel->getInviteOnly()) {
 		channel->setInviteOnly(true);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName(), "+i");
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "+i");
 	}
 	else if (op_flag == '-' && channel->getInviteOnly()) {
 		channel->setInviteOnly(false);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName(), "-i");
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "-i");
 	}
 }
 
@@ -23,12 +23,12 @@ void Command::optionT(Channel *channel, char op_flag) {
 	if (op_flag == '+' && !channel->getTopicFlag()) {
 		channel->setTopicFlag(true);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName(), "+t");
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "+t");
 	}
 	else if (op_flag == '-' && channel->getTopicFlag()) {
 		channel->setTopicFlag(false);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName(), "-t");
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "-t");
 	}
 }
 
@@ -40,12 +40,12 @@ void Command::optionK(Channel *channel, char op_flag, string password) {
 	if (op_flag == '+' && !channel->isPassMode()) {
 		channel->setPassword(password);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName() + " +k", password);
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " +k", password);
 	}
 	else if (op_flag == '-' && channel->isPassMode()) {
 		channel->unsetPassword();
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "MODE", channel->getChannelName() + " -k", password);
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " -k", password);
 	}
 }
 

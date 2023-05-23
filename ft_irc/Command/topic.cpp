@@ -5,7 +5,7 @@ void Command::sendtoChannelTopic(Channel *channel, string msg) {
 
 	channel->setTopic(msg);
 	for (int i = 0; i < (int)members.size(); i++)
-		sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), "127.0.0.1", "TOPIC", channel->getChannelName(), msg);
+		sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "TOPIC", channel->getChannelName(), msg);
 }
 
 void Command::topic(vector<string> token) {
