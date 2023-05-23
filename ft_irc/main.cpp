@@ -34,6 +34,8 @@ int main(int ac, char **av)
 	
 	ss.bind(check_port(av));
 	fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
+	fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
+	fcntl(STDOUT_FILENO, F_SETFL, O_NONBLOCK);
 	ss.listen();
 
 	vector<struct pollfd> vfds;
