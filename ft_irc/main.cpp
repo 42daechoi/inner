@@ -90,7 +90,7 @@ int main(int ac, char **av)
 					}
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password, logFile);
-						logFile << "I " << msg << endl;
+						logFile << "I " << msg;
 						if (cmd.execute() == -1) {
 							close(clntfd);
 							vfds.erase(vfds.begin() + i);
