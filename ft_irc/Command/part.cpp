@@ -8,7 +8,7 @@ void Command::part(vector<string> token) {
 			vector<Client *> members = (*it)->getMemberList();
 			for (int i = 0; i < (int)members.size(); i++) {
 				string msg = ":" + _client->getNickname() + "!" 
-					+ members[i]->getUsername() + "@" + _client->getIp() + " PART :" + token[1] + "\n"; 
+					+ members[i]->getUsername() + "@" + members[i]->getIp() + " PART :" + token[1] + "\n"; 
 				if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 					perr("Error: send error");
 				_logfile << "O " << msg;
