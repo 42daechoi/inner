@@ -38,7 +38,6 @@ int Socket::accept() {
 		cout << "Failed to get local socket address" << endl;
 	char *temp = inet_ntoa(clnt_addr.sin_addr);
 	cout << "IP : " << temp << endl;
-	free(temp);
 	return clntfd;
 }
 
