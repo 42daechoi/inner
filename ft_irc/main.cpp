@@ -22,6 +22,12 @@ void delChannelList(vector<Channel *> &chList, string clnt_nickname) {
 	}
 }
 
+void printInput( ostream& logFile, string msg)
+{
+	logFile << "I " << msg;
+	logFile.flush();
+}
+
 int main(int ac, char **av)
 {
 	if (ac != 3) 
@@ -76,7 +82,6 @@ int main(int ac, char **av)
 						continue;
 					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
 						//quit할때 속해있던 채널에서도 나가줘야함 그리고 채널이 0명이여서 채널 자체가 사라져야될때 leaks남
-						cout << "client end\n";;
 						logFile << "client end\n";
 						close(clntfd);
 						vfds.erase(vfds.begin() + i);
@@ -89,7 +94,7 @@ int main(int ac, char **av)
 					}
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password, logFile);
-						logFile << "I " << msg;
+						printInput(logFile, msg);
 						if (cmd.execute() == -1) {
 							close(clntfd);
 							vfds.erase(vfds.begin() + i);
