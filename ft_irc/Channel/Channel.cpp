@@ -109,6 +109,8 @@ void Channel::kickMsg(Client *clnt, string kick_name) {
 					+ "@" + _member[i]->getIp() + " KICK " + _ch_name + " " + kick_name + "\n";
 		if (send(_member[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 			perr("Error: send error");
+		_logfile << "O " << msg;
+		_logfile.flush();
 	}
 }
 
@@ -169,6 +171,7 @@ void Channel::sendOptionMsg(int fd, string nickname, string user, string ip, str
 	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	_logfile << "O " << msg;
+	_logfile.flush();
 }
 
 void Channel::sendCodeMsg(int fd, string code, string nickname, string target, string info) {
@@ -176,4 +179,6 @@ void Channel::sendCodeMsg(int fd, string code, string nickname, string target, s
 	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	_logfile << "O " << msg;
+	_logfile.flush();
 }
+
