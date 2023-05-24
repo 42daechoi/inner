@@ -1,15 +1,78 @@
-I NICK daechoi
-I PASS 1
-I USER root
-O :irc.local 001 daechoi :Welcome to the Localnet IRC Network daechoi!root127.0.0.1
-I JOIN #new
-O :daechoi!root@127.0.0.1 JOIN :#new
-O :irc.local 353 daechoi#new :@daechoi
-O :irc.local 366 daechoi #new :End of /NAMES list. 
-I a
-I a
-I MODE #new +i
-I a
-I a
-I a
-I a
+I CAP LS
+PASS 8
+NICK kim
+USER kiyoon kiyoon localhost :Kiung Yoon
+O :irc.local 001 kim :Welcome to the Localnet IRC Network kim!kiyoon127.0.0.1
+I MODE kim +i
+I CAP LS
+I PASS 8
+NICK lee
+I USER kiyoon kiyoon localhost :Kiung Yoon
+O :irc.local 001 lee :Welcome to the Localnet IRC Network lee!kiyoon127.0.0.1
+I MODE lee +i
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PRIVMSG kim :DCC CHAT CHAT 2130706433 59971
+O :lee!kiyoon@127.0.0.1 PRIVMSG kim :DCC CHAT CHAT 2130706433 59971
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+O client end
+O client end
+I CAP LS
+I PASS 8
+NICK kim
+USER kiyoon kiyoon localhost :Kiung Yoon
+O :irc.local 001 kim :Welcome to the Localnet IRC Network kim!kiyoon127.0.0.1
+I MODE kim +i
+I CAP LS
+PASS 8
+NICK lee
+USER kiyoon kiyoon localhost :Kiung Yoon
+O :irc.local 001 lee :Welcome to the Localnet IRC Network lee!kiyoon127.0.0.1
+I MODE lee +i
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PRIVMSG lee :DCC CHAT CHAT 2130706433 59999
+O :kim!kiyoon@127.0.0.1 PRIVMSG lee :DCC CHAT CHAT 2130706433 59999
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PRIVMSG lee :DCC SEND kimFile 2130706433 60008 0
+O :kim!kiyoon@127.0.0.1 PRIVMSG lee :DCC SEND kimFile 2130706433 60008 0
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PRIVMSG lee :DCC SEND kimFile 2130706433 60015 0
+O :kim!kiyoon@127.0.0.1 PRIVMSG lee :DCC SEND kimFile 2130706433 60015 0
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
