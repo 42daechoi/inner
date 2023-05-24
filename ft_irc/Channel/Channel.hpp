@@ -2,8 +2,8 @@
 # define CHANNEL_HPP
 
 # include "../header.hpp"
-# include "../Client/Client.hpp"
-# include <sstream>
+
+using namespace std;
 
 class Client;
 

@@ -2,8 +2,6 @@
 # define COMMAND_HPP
 
 # include "../header.hpp"
-# include "../Client/Client.hpp"
-# include "../Channel/Channel.hpp"
 
 # define SERVERNEMA irc.local
 

@@ -21,6 +21,8 @@
 # include <fstream>
 # include <cctype>
 # include <sstream>
+# include "Client/Client.hpp"
+# include "Channel/Channel.hpp"
 
 # define MAX_SOCKET 255
 
@@ -28,5 +30,11 @@ using namespace std;
 
 int		check_port(char **av);
 void	perr(string str);
-
+void 	noMemberChannel(vector<Channel *> &chList);
+void	delChannelList(vector<Channel *> &chList, string clnt_nickname);
+void 	printInput( ostream& logFile, string msg);
+void 	printOutput( ostream& logFile, string msg);
+void 	incorrectPassword(int clntfd, vector<struct pollfd> &vfds, vector<Client *> &clntList, int i);
+void 	quitClient(int clntfd,  vector<struct pollfd> &vfds, vector<Client *> &clntList, int i, vector<Channel *> &chList);
+pollfd 	makePollfd(int fd);
 #endif

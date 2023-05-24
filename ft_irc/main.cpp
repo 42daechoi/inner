@@ -2,45 +2,6 @@
 #include "Socket/Socket.hpp"
 #include "Command/Command.hpp"
 
-void noMemberChannel(vector<Channel *> &chList) {
-	vector<Channel *>::iterator it = chList.begin();
-	while (it != chList.end()) {
-		if ((*it)->getMemberList().size() == 0) {
-			delete *it;
-			it = chList.erase(it);
-		}
-		else
-			it++;
-	}
-}
-
-void delChannelList(vector<Channel *> &chList, string clnt_nickname) {
-	vector<Channel *>::iterator it;
-	for (it = chList.begin(); it != chList.end(); it++) {
-		(*it)->delInviteList(clnt_nickname);
-		(*it)->delOperList(clnt_nickname);
-	}
-}
-
-void printInput( ostream& logFile, string msg)
-{
-	logFile << "I " << msg;
-	logFile.flush();
-}
-
-void printOutput( ostream& logFile, string msg)
-{
-	logFile << "O " << msg;
-	logFile.flush();
-}
-
-void incorrectPassword(int clntfd, vector<struct pollfd> &vfds, vector<Client *> &clntList, int i) {
-	close(clntfd);
-	vfds.erase(vfds.begin() + i);
-	delete clntList[i - 1];
-	clntList.erase(clntList.begin() + i - 1);
-}
-
 int main(int ac, char **av)
 {
 	if (ac != 3) 
@@ -50,16 +11,12 @@ int main(int ac, char **av)
 	if (!logFile.is_open())
 		perr("log.txt open fail\n");
 	Socket ss = Socket(PF_INET, SOCK_STREAM, 0);
-	
 	ss.bind(check_port(av));
 	fcntl(ss.getSock(), F_SETFL, O_NONBLOCK);
 	ss.listen();
 
 	vector<struct pollfd> vfds;
-	struct pollfd servpoll;
-	servpoll.fd = ss.getSock();
-	servpoll.events = POLLIN;
-	vfds.push_back(servpoll);
+	vfds.push_back(makePollfd(ss.getSock()));
 
 	vector<Client *>		clntList;
 	vector<Channel *>		chList;
@@ -75,11 +32,8 @@ int main(int ac, char **av)
 			Client 	*clnt = new Client(clntfd);
 
 			fcntl(clntfd, F_SETFL, O_NONBLOCK);
-			cout << clntfd << "/client connected\n";
-			struct pollfd clntpoll;
-			clntpoll.fd = clntfd;
-			clntpoll.events = POLLIN;
-			vfds.push_back(clntpoll);
+			printOutput(logFile, "client connected\n");
+			vfds.push_back(makePollfd(clntfd));
 			clntList.push_back(clnt);
 			if (clntList.size() + 1 > MAX_SOCKET)
 				perr("Error: out of range descriptor");
@@ -95,13 +49,7 @@ int main(int ac, char **av)
 						continue;
 					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
 						printOutput(logFile, "client end\n");
-						close(clntfd);
-						vfds.erase(vfds.begin() + i);
-						clntList[i - 1]->delAllChannel();
-						noMemberChannel(chList);
-						delChannelList(chList, clntList[i - 1]->getNickname());
-						delete clntList[i - 1];
-						clntList.erase(clntList.begin() + i - 1);
+						quitClient(clntfd, vfds, clntList, i, chList);
 						break;
 					}
 					else {
