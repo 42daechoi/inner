@@ -34,6 +34,13 @@ void printOutput( ostream& logFile, string msg)
 	logFile.flush();
 }
 
+void incorrectPassword(int clntfd, vector<struct pollfd> &vfds, vector<Client *> &clntList, int i) {
+	close(clntfd);
+	vfds.erase(vfds.begin() + i);
+	delete clntList[i - 1];
+	clntList.erase(clntList.begin() + i - 1);
+}
+
 int main(int ac, char **av)
 {
 	if (ac != 3) 
@@ -100,13 +107,8 @@ int main(int ac, char **av)
 					else {
 						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password, logFile);
 						printInput(logFile, msg);
-						if (cmd.execute() == -1) {
-							close(clntfd);
-							vfds.erase(vfds.begin() + i);
-							delete clntList[i - 1];
-							clntList.erase(clntList.begin() + i - 1);
-						}
-						// ss.send(msg, clntfd);
+						if (cmd.execute() == -1)
+							incorrectPassword(clntfd, vfds, clntList, i);
 						noMemberChannel(chList);
 						break;
 					}

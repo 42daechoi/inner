@@ -87,14 +87,15 @@ void Command::optionL(Channel *channel, char op_flag, vector<string> token) {
 }
 
 void Command::mode(vector<string> token) {
-	string ch_name = token[1], option = token[2];
+	string ch_name = token[1], option;
 	Channel *channel;
 	
-	if (ch_name[0] != '#' || option == "")
+	if (ch_name[0] != '#' || token.size() == 2)
 		return;
+	option = token[2];
 	if (!(channel = findChannel(ch_name)) || !channel->isMember(_client->getNickname())) {
 		sendCodeMsg(_client->getClntfd(), "403", _client->getNickname(), "No such channel");
-		return ;
+		return;
 	}
 	if (!channel->isOperator(_client->getNickname())) {
 		string opt(1, option[1]);
