@@ -5,12 +5,7 @@ void	Command::shoutOutToChannel(Channel *channel) {
 	vector<Client *>	members = channel->getMemberList();
 
 	for (int i = 0; i < (int)members.size(); i++) {
-			msg = ":" + _client->getNickname() +  
-				+ "!" + members[i]->getUsername() +
-				+ "@" + members[i]->getIp() + " JOIN :"
-				+ channel->getChannelName() + "\n";
-			if (send(members[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
-				perr("Error: send error");
+			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), members[i]->getIp(), "JOIN", "", channel->getChannelName());
 			printLog(msg);
 	}
 	msg = ":irc.local 353 " + _client->getNickname()
@@ -21,11 +16,7 @@ void	Command::shoutOutToChannel(Channel *channel) {
 	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 		perr("Error: send error");
 	printLog(msg);
-	msg = ":irc.local 366 " + _client->getNickname()
-		+ " " + channel->getChannelName()
-		+ " :End of /NAMES list. \n";
-	if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
-		perr("Error: send error");
+	sendCodeMsg(_client->getClntfd(), "366", channel->getChannelName(), "End of /NAMES list.\n")
 	printLog(msg);
 }
 

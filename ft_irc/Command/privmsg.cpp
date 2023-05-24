@@ -20,7 +20,7 @@ void Command::msgSendToClient(vector<string> token) {
 
 void Command::msgSendToChannel(vector<string> token) {
 	vector<Channel *>::iterator	it;
-	string 						msg, rcv_channel = token[1];
+	string 						msg = "", rcv_channel = token[1];
 
 	for (it = _chList.begin(); it != _chList.end(); it++) {
 		if ((*it)->getChannelName() == rcv_channel) {

@@ -58,8 +58,8 @@ int	Command::execute() {
 		msg = "please type password\n";
 		if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1) {
 			perr("Error: send error");
-			printLog(msg);
 		}
+		printLog(msg);
 		return -1;
 	}
 	return 0;

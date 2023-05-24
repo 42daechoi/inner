@@ -6,7 +6,7 @@ void Command::who(vector<string> token) {
 	
 	for (int i = 0; i < (int)channel->getMemberList().size(); i++) {
 		msg = ":irc.local 352 " + _client->getNickname() + " "
-			+ token[1] + " " + _client->getUsername() + " 127.0.0.1 irc.local "
+			+ token[1] + " " + _client->getUsername() + " " + _client->getIp() + " irc.local "
 			+ channel->getMemberList()[i]->getNickname() + " H";
 		if (i == 0) msg += "@";
 		msg += (" :0 " + channel->getMemberList()[i]->getNickname()) + "\n";
