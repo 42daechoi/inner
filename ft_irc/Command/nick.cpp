@@ -29,12 +29,12 @@ void	Command::nick(vector<string> token)
 {
 	string msg = "";
 
-	if (_client->getInit() == false)//최초 생성시
+	if (_client->getInit() == false)
 	{
 		if (isSameNick(token[1]))
 			token[1] = token[1] + "_";
 		_client->setNickname(token[1]);
-		if (_client->getUsername() != "")//NICK, USER완성시
+		if (_client->getUsername() != "")
 		{
 			msg = makeWelcomeMsg();
 			if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
@@ -44,11 +44,11 @@ void	Command::nick(vector<string> token)
 			printLog(msg);
 		}
 	}
-	else//이미 생성 이력 있고 NICK바꿀시
+	else
 	{
-		if (token[1] != _client->getNickname())//원래 닉네임이랑 같으면 아무 동작 안함
+		if (token[1] != _client->getNickname())
 		{
-			msg = makeChangeNickMsg(token[1]); //이 함수 내부에서 set이랑 중복검사함
+			msg = makeChangeNickMsg(token[1]);
 			if (send(_client->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 				perr("Error: send error");
 			printLog(msg);

@@ -3,6 +3,7 @@
 
 # include "../header.hpp"
 # include "../Client/Client.hpp"
+# include <sstream>
 
 class Client;
 
@@ -12,8 +13,9 @@ class Channel {
 
 		bool	addMember(Client *clnt, string password);
 		void	delMember(string clnt_nickname, bool isrec);
-		void	kickMsg(string kick_name);
+		void	kickMsg(Client *client, string kick_name);
 		bool 	inviteChannel(Client *clnt);
+		void 	addOperList(string clnt_nickname);
 		void 	delInviteList(string clnt_nickname);
 		void 	delOperList(string clnt_nickname);
 		void 	addOperList(Client *client);
@@ -34,6 +36,7 @@ class Channel {
 		void 				setInviteOnly(bool flag);
 		void 				setTopicFlag(bool flag);
 		void 				setPassword(string password);
+		void 				setLimitNum(string limit_str);
 		bool 				getTopicFlag();
 		void 				setTopic(string topic);
 		bool 				getInviteOnly();
@@ -47,6 +50,7 @@ class Channel {
 		bool 				_topic_flag;
 		string 				_topic;
 		string 				_password;
+		int 				_limit_number;
 		vector<Client *>	_inviteList;
 		vector<Client *>	_operList;
 		ostream&			_logfile;

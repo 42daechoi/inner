@@ -1,6 +1,6 @@
 #include "Channel.hpp"
 
-Channel::Channel(string ch_name, Client *op_clnt, ostream& logfile) : _invite_only(false), _topic_flag(true), _topic(""), _logfile(logfile) {
+Channel::Channel(string ch_name, Client *op_clnt, ostream& logfile) : _invite_only(false), _topic_flag(true), _topic(""), _limit_number(0), _logfile(logfile) {
 	_ch_name = ch_name;
 	_member = vector<Client *>();
 	_inviteList = vector<Client *>();
@@ -29,6 +29,12 @@ bool Channel::isInvitee(Client *clnt) {
 bool Channel::addMember(Client *clnt, string password) {
 	bool joinflag = false;
 
+	if (_limit_number != 0) {
+		if ((int)_member.size() >= _limit_number) {
+			sendCodeMsg(clnt->getClntfd(), "471", clnt->getNickname(), _ch_name, "Cannot join channel (channel is full)");
+			return false;
+		}
+	}
 	if (_invite_only)
 		joinflag = isInvitee(clnt);
 	else {
@@ -82,6 +88,10 @@ void Channel::delInviteList(string clnt_nickname) {
 		_inviteList.erase(_inviteList.begin() + i);
 }
 
+void Channel::addOperList(Client *clnt) {
+	_operList.push_back(clnt);
+}
+
 void Channel::delOperList(string clnt_nickname) {
 	int i, memcnt = _operList.size();
 
@@ -93,11 +103,10 @@ void Channel::delOperList(string clnt_nickname) {
 		_operList.erase(_operList.begin() + i);
 }
 
-void Channel::kickMsg(string kick_name) {
-
+void Channel::kickMsg(Client *clnt, string kick_name) {
 	for (int i = 0; i < (int)_member.size(); i++) {
-		string msg = ":" + _member[0]->getNickname() + "!" + _member[i]->getUsername()
-					+ "@127.0.0.1 KICK " + _ch_name + " " + kick_name + "\n";
+		string msg = ":" + clnt->getNickname() + "!" + _member[i]->getUsername()
+					+ "@" + _member[i]->getIp() + " KICK " + _ch_name + " " + kick_name + "\n";
 		if (send(_member[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 			perr("Error: send error");
 	}
@@ -136,6 +145,14 @@ void Channel::setTopicFlag(bool flag) { _topic_flag = flag; }
 void Channel::setTopic(string topic) { _topic = topic; }
 
 void Channel::setPassword(string password) { _password = password; }
+
+void Channel::setLimitNum(string limit_str) { 
+	istringstream iss(limit_str);
+	int ln;
+
+	iss >> ln;
+	_limit_number = ln;
+}
 
 void Channel::unsetPassword() { _password = ""; }
 

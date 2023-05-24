@@ -4,7 +4,6 @@ void	Command::shoutOutToChannel(Channel *channel) {
 	string 				msg;
 	vector<Client *>	members = channel->getMemberList();
 
-	//각 멤버에게 메세지 전달 후 마지막에 입장한 사람에게 for문 아래 메세지를 추가로 전송해주는데 (memeber수 + 2개 전송) ret는 마지막 구문만 전달됨.(수정 필요)
 	for (int i = 0; i < (int)members.size(); i++) {
 			msg = ":" + _client->getNickname() +  
 				+ "!" + members[i]->getUsername() +
