@@ -20,7 +20,7 @@ void Command::invite(vector<string> token) {
 	if (!channel->inviteChannel(invite_clnt))
 		sendCodeMsg(_client->getClntfd(), "443", invite_clnt->getNickname() + " " + ch_name, "is already on channel");
 	else {
-		sendOptionMsg(invite_clnt->getClntfd(), _client->getUsername(), _client->getIp(), "INVITE", nickname, ch_name);
+		sendOptionMsg(invite_clnt->getClntfd(), "INVITE", nickname, ch_name);
 		sendCodeMsg(_client->getClntfd(), "341", invite_clnt->getNickname(), ch_name);
 		vector<Client *> members = channel->getMemberList();
 		for (int i = 0; i < (int)members.size(); i++) {

@@ -7,12 +7,12 @@ void Command::optionI(Channel *channel, char op_flag) {
 	if (op_flag == '+' && !channel->getInviteOnly()) {
 		channel->setInviteOnly(true);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "+i");
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName(), "+i");
 	}
 	else if (op_flag == '-' && channel->getInviteOnly()) {
 		channel->setInviteOnly(false);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "-i");
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName(), "-i");
 	}
 }
 
@@ -23,12 +23,12 @@ void Command::optionT(Channel *channel, char op_flag) {
 	if (op_flag == '+' && !channel->getTopicFlag()) {
 		channel->setTopicFlag(true);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "+t");
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName(), "+t");
 	}
 	else if (op_flag == '-' && channel->getTopicFlag()) {
 		channel->setTopicFlag(false);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "-t");
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName(), "-t");
 	}
 }
 
@@ -40,12 +40,12 @@ void Command::optionK(Channel *channel, char op_flag, string password) {
 	if (op_flag == '+' && !channel->isPassMode()) {
 		channel->setPassword(password);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " +k", password);
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName() + " +k", password);
 	}
 	else if (op_flag == '-' && channel->isPassMode()) {
 		channel->unsetPassword();
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " -k", password);
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName() + " -k", password);
 	}
 }
 
@@ -59,12 +59,12 @@ void Command::optionO(Channel *channel, char op_flag, string nickname) {
 	if (op_flag == '+' && !channel->isOperator(nickname)) {
 		channel->addOperList(client);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " +o", nickname);
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName() + " +o", nickname);
 	}
 	else if (op_flag == '-' && channel->isOperator(nickname)) {
 		channel->delOperList(nickname);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " -o", nickname);
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName() + " -o", nickname);
 	}
 }
 
@@ -77,12 +77,12 @@ void Command::optionL(Channel *channel, char op_flag, vector<string> token) {
 	if (op_flag == '+') {
 		channel->setLimitNum(limit_str);
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName() + " +l", limit_str);
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName() + " +l", limit_str);
 	}
 	else if (op_flag == '-') {
 		channel->setLimitNum("0");
 		for (int i = 0; i < (int)members.size(); i++)
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), _client->getIp(), "MODE", channel->getChannelName(), "-l");
+			sendOptionMsg(members[i]->getClntfd(), "MODE", channel->getChannelName(), "-l");
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "Command.hpp"
 
-void Command::sendOptionMsg(int fd, string user, string ip, string option, string target, string info) {
-	string msg = ":" + _client->getNickname() + "!" + user + "@" + ip + " " + option;
+void Command::sendOptionMsg(int fd, string option, string target, string info) {
+	string msg = ":" + _client->getNickname() + "!" + _client->getUsername() + "@" + _client->getIp() + " " + option;
 	if (target != "")
 		msg += (" " + target);
 	msg += + " :" + info + "\n";

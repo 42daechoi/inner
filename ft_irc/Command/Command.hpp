@@ -18,7 +18,7 @@ class Command {
 		// vector<string>	parseExecute(string com);
 		vector<string>	parseExecute(const string& com);
 		int 			execute();
-		void			sendOptionMsg(int fd, string user, string ip, string option, string target, string msg);
+		void			sendOptionMsg(int fd, string option, string target, string msg);
 		void 			sendCodeMsg(int fd, string code, string target, string msg);
 		bool 			isOperator(Client *client, Channel *channel);
 		Client 			*findClient(string nickname);

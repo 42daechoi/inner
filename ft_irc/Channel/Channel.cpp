@@ -105,8 +105,8 @@ void Channel::delOperList(string clnt_nickname) {
 
 void Channel::kickMsg(Client *clnt, string kick_name) {
 	for (int i = 0; i < (int)_member.size(); i++) {
-		string msg = ":" + clnt->getNickname() + "!" + _member[i]->getUsername()
-					+ "@" + _member[i]->getIp() + " KICK " + _ch_name + " " + kick_name + "\n";
+		string msg = ":" + clnt->getNickname() + "!" + clnt->getUsername()
+					+ "@" + clnt->getIp() + " KICK " + _ch_name + " " + kick_name + "\n";
 		if (send(_member[i]->getClntfd(), msg.c_str(), msg.length(), 0) == -1)
 			perr("Error: send error");
 		_logfile << "O " << msg;
@@ -165,14 +165,6 @@ vector<Client *> Channel::getMemberList() { return _member; }
 bool Channel::getInviteOnly() { return _invite_only; }
 
 bool Channel::getTopicFlag() { return _topic_flag; }
-
-void Channel::sendOptionMsg(int fd, string nickname, string user, string ip, string option, string target, string info) {
-	string msg = ":" + nickname + "!" + user + "@" + ip + " " + option + " " + target + " :" + info + "\n";;
-	if (send(fd, msg.c_str(), msg.length(), 0) == -1)
-		perr("Error: send error");
-	_logfile << "O " << msg;
-	_logfile.flush();
-}
 
 void Channel::sendCodeMsg(int fd, string code, string nickname, string target, string info) {
 	string msg = ":irc.local " + code + " " + nickname + " " + target + " :" + info + "\n";

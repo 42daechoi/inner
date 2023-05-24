@@ -5,7 +5,7 @@ void	Command::shoutOutToChannel(Channel *channel) {
 	vector<Client *>	members = channel->getMemberList();
 
 	for (int i = 0; i < (int)members.size(); i++) {
-			sendOptionMsg(members[i]->getClntfd(), members[i]->getUsername(), members[i]->getIp(), "JOIN", "", channel->getChannelName());
+			sendOptionMsg(members[i]->getClntfd(), "JOIN", "", channel->getChannelName());
 			printLog(msg);
 	}
 	msg = ":irc.local 353 " + _client->getNickname()
