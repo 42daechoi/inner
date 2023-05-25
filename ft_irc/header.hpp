@@ -24,7 +24,7 @@
 # include "Client/Client.hpp"
 # include "Channel/Channel.hpp"
 
-# define MAX_SOCKET 255
+# define MAX_SOCKET OPEN_MAX
 
 using namespace std;
 
