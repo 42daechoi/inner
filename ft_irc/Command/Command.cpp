@@ -29,7 +29,6 @@ vector<string> Command::parseExecute(const string& com) {
     return token;
 }
 
-
 int	Command::execute() {
 	vector<string>	token;
 	string	msg;
@@ -37,7 +36,6 @@ int	Command::execute() {
 	for (vector<string>::iterator iter = _cmd.begin(); iter != _cmd.end(); iter++)
 	{
 		token = parseExecute(*iter);
-		
 		if (token[0] == "JOIN") join(token);
 		else if (token[0] == "KICK") kick(token);
 		else if (token[0] == "PART") part(token);

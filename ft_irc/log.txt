@@ -1,3 +1,0 @@
-O client connected
-I NICK bot
-O client end

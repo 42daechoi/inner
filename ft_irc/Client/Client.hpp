@@ -14,11 +14,13 @@ class Client {
 		void 				addChannel(Channel *ch);
 		void 				delChannel(string ch_name, bool isrec);
 		void 				delAllChannel();
+		void				addMsg(string msg);
 
 		void				setInit(bool flag);
 		void				setNickname(string nickname);
 		void				setUsername(string username);
 		void 				setPassword(string password);
+		void				setMsg(string msg);
 		bool				getInit();
 		int 				getClntfd();
 		string				getNickname();
@@ -26,6 +28,7 @@ class Client {
 		vector<Channel *>	getJoinList();
 		string 				getPassword();
 		string				getIp();
+		string				getMsg();
 	private:
 		int					_clntfd;
 		string 				_nickname;
@@ -34,6 +37,7 @@ class Client {
 		bool				_isInit;
 		string 				_password;
 		string				_ip;
+		string				_msg;
 };
 
 #endif

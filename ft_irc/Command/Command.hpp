@@ -15,7 +15,7 @@ class Command {
 		int				isSameNick(string cmd);
 		void			user(vector<string> token);
 		void			nick(vector<string> token);
-		// vector<string>	parseExecute(string com);
+
 		vector<string>	parseExecute(const string& com);
 		int 			execute();
 		void			sendOptionMsg(int fd, string option, string target, string msg);
@@ -23,7 +23,6 @@ class Command {
 		bool 			isOperator(Client *client, Channel *channel);
 		Client 			*findClient(string nickname);
 		Channel 		*findChannel(string ch_name);
-
 		void			join(vector<string> token);
 		void 			sendToClnt();
 		void 			shoutOutToChannel(Channel *channel);
