@@ -4,10 +4,8 @@ void	Command::shoutOutToChannel(Channel *channel) {
 	string 				msg;
 	vector<Client *>	members = channel->getMemberList();
 
-	for (int i = 0; i < (int)members.size(); i++) {
+	for (int i = 0; i < (int)members.size(); i++)
 			sendOptionMsg(members[i]->getClntfd(), "JOIN", "", channel->getChannelName());
-			printLog(msg);
-	}
 	msg = ":irc.local 353 " + _client->getNickname() + " "
 		+ channel->getChannelName() + " :@";
 	for (int i = 0; i < (int)members.size() - 1; i++)
@@ -17,7 +15,6 @@ void	Command::shoutOutToChannel(Channel *channel) {
 		perr("Error: send error");
 	printLog(msg);
 	sendCodeMsg(_client->getClntfd(), "366", channel->getChannelName(), "End of /NAMES list.\n");
-	printLog(msg);
 }
 
 void Command::join(vector<string> token) {
