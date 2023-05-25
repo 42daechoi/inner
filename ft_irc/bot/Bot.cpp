@@ -35,7 +35,7 @@ string Bot::makeMsg() {
 	if (_msg == "help")
 		msg = "PRIVMSG " + _nickname + " :<COMMAND LIST>\nSUPERJOIN\n";
 	else if (_msg == "superjoin")
-		msg = "SUPERJOIN " + _nickname;
+		msg = "SUPERJOIN " + _nickname + "\n";
 	else
 		msg = "PRIVMSG " + _nickname + " :There is no matching command. Please send me a help message\n";
 	return msg;
