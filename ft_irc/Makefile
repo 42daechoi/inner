@@ -37,7 +37,7 @@ $(BOT): $(OBJS_BONUS)
 
 clean:
 	rm -f $(OBJS)
-
+	rm -f $(OBJS_BONUS)
 fclean: clean
 	rm -f $(NAME) $(BOT)
 
