@@ -10,7 +10,7 @@ Bot::Bot(string msg) {
 	i = msg.find(" ");
 	_ip = msg.substr(j + 1, i - j);
 	i = msg.find(":", 2);
-	_msg = msg.substr(i + 1, msg.length() - i + 1);
+	_msg = msg.substr(i + 1, msg.length() - i);
 
 	cout << "nickname: " << _nickname << endl;
 	cout << "username: " << _username << endl;

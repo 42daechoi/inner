@@ -32,7 +32,7 @@ void	Command::nick(vector<string> token)
 
 	if (_client->getInit() == false)
 	{
-		if (isSameNick(token[1]) || token[1] == "bot")
+		if (isSameNick(token[1]))
 			token[1] = token[1] + "_";
 		_client->setNickname(token[1]);
 		if (_client->getUsername() != "")
