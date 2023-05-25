@@ -48,16 +48,14 @@ int main(int ac, char **av) {
     serv_addr.sin_port = htons(port);
 
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
-        cerr << "유효하지 않은 서버 주소" << endl;
         return 1;
     }
 
     if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        cerr << "서버 연결 실패" << endl;
         return 1;
     }
 
-    cout << "서버에 연결되었습니다." <<endl;
+    cout << "server connected" <<endl;
 	init_send(sockfd, av[2]);
     while (true) {
         char buffer[1024] = {0};
@@ -66,7 +64,6 @@ int main(int ac, char **av) {
             cerr << "server down\n";
             break;
         }
-        cout << "받은 메시지: " << buffer << endl;
 		string str(buffer);
 		if (buffer[0] != ':' || str.substr(0, 10) == ":irc.local")
 			continue;

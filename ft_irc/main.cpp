@@ -72,5 +72,9 @@ int main(int ac, char **av)
 			}
 		}
 	}
+	for (int i = 0; i < (int)chList.size(); i++)
+		delete chList[i];
+	for (int i = 0; i < (int)clntList.size(); i++)
+		delete clntList[i];
 	return 0;
 }
