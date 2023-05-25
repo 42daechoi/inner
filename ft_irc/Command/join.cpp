@@ -8,7 +8,7 @@ void	Command::shoutOutToChannel(Channel *channel) {
 			sendOptionMsg(members[i]->getClntfd(), "JOIN", "", channel->getChannelName());
 			printLog(msg);
 	}
-	msg = ":irc.local 353 " + _client->getNickname()
+	msg = ":irc.local 353 " + _client->getNickname() + " "
 		+ channel->getChannelName() + " :@";
 	for (int i = 0; i < (int)members.size() - 1; i++)
 		msg += members[i]->getNickname() + " ";
