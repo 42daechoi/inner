@@ -30,14 +30,17 @@ $(NAME) : $(OBJS)
 %.o : %.cpp
 	$(CC) $(CFLAGS) -c -o $@ $^
 
-bonus: $(OBJS_BONUS)
-	$(CC) $(CFLAGS) -o $(BOT) $^
+bonus: $(BOT)
 
-clean :
+$(BOT): $(OBJS_BONUS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+clean:
 	rm -f $(OBJS)
-
-fclean :
-	rm -f $(OBJS) $(OBJS_BONUS)
+	rm -f $(OBJS_BONUS)
+fclean: clean
 	rm -f $(NAME) $(BOT)
 
-re : fclean all
+re: fclean all
+
+.PHONY: all bonus clean fclean re
