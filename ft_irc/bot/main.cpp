@@ -17,19 +17,16 @@ void init_send(int serverfd, string password) {
 		cout << "Error: send error\n";
 		exit(1);
 	}
-	recv(serverfd, buffer, sizeof(buffer), 0);
 	msg = "PASS " + password + "\n";
 	if (send(serverfd, msg.c_str(), msg.length(), 0) == -1) {
 		cout << "Error: send error\n";
 		exit(1);
 	}
-	recv(serverfd, buffer, sizeof(buffer), 0);
 	msg = "USER bot\n";
 	if (send(serverfd, msg.c_str(), msg.length(), 0) == -1) {
 		cout << "Error: send error\n";
 		exit(1);
 	}
-	recv(serverfd, buffer, sizeof(buffer), 0);
 }
 
 int main(int ac, char **av) {
@@ -71,6 +68,8 @@ int main(int ac, char **av) {
             break;
         }
         cout << "받은 메시지: " << buffer << endl;
+		if (buffer[0] != ':')
+			continue;
 		Bot bot(buffer);
 		bot.sendToServer(sockfd);
     }

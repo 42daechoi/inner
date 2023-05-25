@@ -19,8 +19,9 @@ string	Command::makeChangeNickMsg(string cmd)
 int		Command::isSameNick(string cmd)
 {
 	vector<Client *>::iterator it;
+
 	for (it = _clntList.begin(); it != _clntList.end(); it++)
-		if ((*it)->getNickname() == cmd)
+		if ((*it)->getNickname() == cmd || (*it)->getNickname() == "bot")
 			return (1);
 	return (0);
 }
