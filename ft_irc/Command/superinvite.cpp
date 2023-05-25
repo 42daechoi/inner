@@ -17,6 +17,7 @@ void Command::superinvite(vector<string> token) {
 				temp.push_back("INVITE");
 				temp.push_back(_clntList[j]->getNickname());
 				temp.push_back(joinList[i]->getChannelName());
+				_client = client;
 				invite(temp);
 			}
 		}
