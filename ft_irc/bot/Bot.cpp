@@ -27,7 +27,6 @@ void Bot::sendToServer(int serverfd) {
 string Bot::makeMsg() {
 	string msg;
 
-	cout << "_msg len : " << _msg.length() << endl;
 	if (_msg == "help")
 		msg = "PRIVMSG " + _nickname + " :<COMMAND LIST> SUPERINVITE\n";
 	else if (_msg == "superinvite")
