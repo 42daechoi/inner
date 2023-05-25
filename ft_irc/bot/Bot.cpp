@@ -6,7 +6,7 @@ Bot::Bot(string msg) {
 	i = msg.find("!");
 	_nickname = msg.substr(1, i - 2);
 	j = msg.find("@");
-	_username = msg.substr(i + 1, j - i);
+	_username = msg.substr(i + 1, j - i - 1);
 	i = msg.find(" ");
 	_ip = msg.substr(j + 1, i - j);
 	i = msg.find(":", 2);
@@ -29,6 +29,7 @@ void Bot::sendToServer(int serverfd) {
 string Bot::makeMsg() {
 	string msg;
 
+	cout << "_msg len : " << _msg.length() << endl;
 	if (_msg == "help")
 		msg = "PRIVMSG " + _nickname + " :<COMMAND LIST>\nSUPERJOIN\n";
 	else if (_msg == "superjoin")

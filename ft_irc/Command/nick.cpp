@@ -21,7 +21,7 @@ int		Command::isSameNick(string cmd)
 	vector<Client *>::iterator it;
 
 	for (it = _clntList.begin(); it != _clntList.end(); it++)
-		if ((*it)->getNickname() == cmd || (*it)->getNickname() == "bot")
+		if ((*it)->getNickname() == cmd)
 			return (1);
 	return (0);
 }
@@ -32,7 +32,7 @@ void	Command::nick(vector<string> token)
 
 	if (_client->getInit() == false)
 	{
-		if (isSameNick(token[1]))
+		if (isSameNick(token[1]) || token[1] == "bot")
 			token[1] = token[1] + "_";
 		_client->setNickname(token[1]);
 		if (_client->getUsername() != "")
