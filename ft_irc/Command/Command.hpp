@@ -53,6 +53,9 @@ class Command {
 		void 			optionT(Channel *channel, char op_flag);
 		void 			optionI(Channel *channel, char op_flag);
 		void 			mode(vector<string> token);
+		
+		void 			superjoin(vector<string> token);
+		Channel 		*findSuperChannel();
 
 		void			ping(vector<string> token);
 

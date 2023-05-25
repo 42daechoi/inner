@@ -30,7 +30,6 @@ vector<string> Command::parseExecute(const string& com) {
 }
 
 
-
 int	Command::execute() {
 	vector<string>	token;
 	string	msg;
@@ -53,6 +52,7 @@ int	Command::execute() {
 		else if (token[0] == "INVITE") invite(token);
 		else if (token[0] == "MODE") mode(token);
 		else if (token[0] == "TOPIC") topic(token);
+		else if (token[0] == "SUPERJOIN") superjoin(token);
 	}
 	if (_client->getNickname() != "" && _client->getUsername() != "" && _client->getPassword() == "") {
 		msg = "please type password\n";
