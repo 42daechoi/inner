@@ -67,7 +67,8 @@ int main(int ac, char **av) {
             break;
         }
         cout << "받은 메시지: " << buffer << endl;
-		if (buffer[0] != ':')
+		string str(buffer);
+		if (buffer[0] != ':' || str.substr(0, 10) == ":irc.local")
 			continue;
 		Bot bot(buffer);
 		bot.sendToServer(sockfd);
