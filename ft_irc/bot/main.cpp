@@ -11,7 +11,6 @@ using namespace std;
 
 void init_send(int serverfd, string password) {
 	string msg = "NICK bot\n";
-	char buffer[1024] = {0};
 
 	if (send(serverfd, msg.c_str(), msg.length(), 0) == -1) {
 		cout << "Error: send error\n";
