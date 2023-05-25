@@ -53,8 +53,7 @@ class Command {
 		void 			optionI(Channel *channel, char op_flag);
 		void 			mode(vector<string> token);
 		
-		void 			superjoin(vector<string> token);
-		Channel 		*findSuperChannel();
+		void 			superinvite(vector<string> token);
 
 		void			ping(vector<string> token);
 
