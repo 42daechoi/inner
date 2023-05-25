@@ -4,7 +4,7 @@ Bot::Bot(string msg) {
 	int i, j;
 
 	i = msg.find("!");
-	_nickname = msg.substr(1, i - 2);
+	_nickname = msg.substr(1, i - 1);
 	j = msg.find("@");
 	_username = msg.substr(i + 1, j - i - 1);
 	i = msg.find(" ");
