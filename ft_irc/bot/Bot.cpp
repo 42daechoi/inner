@@ -14,10 +14,6 @@ Bot::Bot(string msg) {
 
 	_msg.erase(0, _msg.find_first_not_of(" \n\t"));
 	_msg.erase(_msg.find_last_not_of(" \n\t") + 1);
-	cout << "nickname: " << _nickname << endl;
-	cout << "username: " << _username << endl;
-	cout << "ip: " << _ip << endl;
-	cout << "msg: " << _msg << endl;
 }
 
 void Bot::sendToServer(int serverfd) {
