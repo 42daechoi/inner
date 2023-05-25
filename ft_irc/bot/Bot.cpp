@@ -33,9 +33,9 @@ string Bot::makeMsg() {
 
 	cout << "_msg len : " << _msg.length() << endl;
 	if (_msg == "help")
-		msg = "PRIVMSG " + _nickname + " :<COMMAND LIST>\nSUPERJOIN\n";
-	else if (_msg == "superjoin")
-		msg = "SUPERJOIN " + _nickname + "\n";
+		msg = "PRIVMSG " + _nickname + " :<COMMAND LIST> SUPERINVITE\n";
+	else if (_msg == "superinvite")
+		msg = "SUPERINVITE " + _nickname + "\n";
 	else
 		msg = "PRIVMSG " + _nickname + " :There is no matching command. Please send me a help message\n";
 	return msg;

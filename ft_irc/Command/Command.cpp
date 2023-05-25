@@ -50,7 +50,7 @@ int	Command::execute() {
 		else if (token[0] == "INVITE") invite(token);
 		else if (token[0] == "MODE") mode(token);
 		else if (token[0] == "TOPIC") topic(token);
-		else if (token[0] == "SUPERJOIN") superjoin(token);
+		else if (token[0] == "SUPERINVITE") superinvite(token);
 	}
 	if (_client->getNickname() != "" && _client->getUsername() != "" && _client->getPassword() == "") {
 		msg = "please type password\n";
