@@ -1,0 +1,40 @@
+O client connected
+O client connected
+I CAP LS
+I PASS 8
+NICK kim
+USER kiyoon kiyoon localhost :Kiung Yoon
+O :irc.local 001 kim :Welcome to the Localnet IRC Network kim!kiyoon127.0.0.1
+I MODE kim +i
+O client connected
+I CAP LS
+PASS 8
+NICK lee
+USER kiyoon kiyoon localhost :Kiung Yoon
+O :irc.local 001 lee :Welcome to the Localnet IRC Network lee!kiyoon127.0.0.1
+I MODE lee +i
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I PING irc.local
+O :irc.local PONG irc.local :irc.local
+I JOIN #new
+O :kim!kiyoon@127.0.0.1 JOIN :#new
+O O :irc.local 353 kim#new :@kim
+O :irc.local 366 kim #new :End of /NAMES list.
+
+O :irc.local 353 kim#new :@kim
+I MODE #new
+I JOIN #new
+O :lee!kiyoon@127.0.0.1 JOIN :#new
+O O :lee!kiyoon@127.0.0.1 JOIN :#new
+O O :irc.local 353 lee#new :@kim lee
+O :irc.local 366 lee #new :End of /NAMES list.
+
+O :irc.local 353 lee#new :@kim lee
+I MODE #new
+I PRIVMSG #new :aef
+O :lee!kiyoon@127.0.0.1 PRIVMSG #new :aef
+I PRIVMSG #new :zxcv
+O :kim!kiyoon@127.0.0.1 PRIVMSG #new :zxcv
+O client end
+O client end

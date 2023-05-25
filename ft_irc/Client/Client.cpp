@@ -1,6 +1,6 @@
 #include "Client.hpp"
 
-Client::Client(int clntfd) : _nickname(""), _username(""), _isInit(false), _password("") {
+Client::Client(int clntfd) : _nickname(""), _username(""), _isInit(false), _password(""), _msg("") {
 	struct sockaddr_in	clnt_addr;
 	socklen_t			ca_size = sizeof(clnt_addr);
 	
@@ -34,6 +34,10 @@ void Client::delAllChannel() {
 		_joinList[i]->delMember(_nickname, true);
 }
 
+void	Client::addMsg(string msg) {
+	_msg += msg;
+}
+
 void	Client::setInit(bool flag) { _isInit = flag; }
 
 void Client::setNickname(string nickname) { _nickname = nickname; }
@@ -41,6 +45,8 @@ void Client::setNickname(string nickname) { _nickname = nickname; }
 void Client::setUsername(string username) { _username = username; }
 
 void Client::setPassword(string password) { _password = password; }
+
+void Client::setMsg(string msg) { _msg = msg; }
 
 bool	Client::getInit() { return _isInit; }
 
@@ -55,3 +61,5 @@ vector<Channel *> Client::getJoinList() { return _joinList; }
 string Client::getPassword() { return _password; }
 
 string	Client::getIp() { return _ip; }
+
+string	Client::getMsg() { return _msg; }

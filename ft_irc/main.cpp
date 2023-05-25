@@ -22,8 +22,9 @@ int main(int ac, char **av)
 	vector<Channel *>		chList;
 
 	while (1) {
-
-		if (poll(&vfds[0], vfds.size(), 0) == -1)
+		int	ret = poll(&vfds[0], vfds.size(), 0);
+		
+		if (ret == -1)
 			perr("Error: poll error");
 
 		if (vfds[0].revents & POLLIN) {
@@ -37,28 +38,35 @@ int main(int ac, char **av)
 			clntList.push_back(clnt);
 			if (clntList.size() + 1 > MAX_SOCKET)
 				perr("Error: out of range descriptor");
-			continue;
 		}
 
 		for (size_t i = 1; i < vfds.size(); i++) {
 			if (vfds[i].revents & POLLIN) {
 				int clntfd = vfds[i].fd;
-				while (1) {
-					string msg = ss.recv(clntfd);
-					if (errno == EWOULDBLOCK)
-						continue;
-					else if (msg.empty() || msg.substr(0, 4) == "QUIT") {
-						printOutput(logFile, "client end\n");
-						quitClient(clntfd, vfds, clntList, i, chList);
-						break;
-					}
-					else {
-						Command cmd = Command(msg, clntList[i - 1], clntList, chList, password, logFile);
-						printInput(logFile, msg);
-						if (cmd.execute() == -1)
+				
+				string msg = ss.recv(clntfd);
+				
+				if (msg.empty() || msg.substr(0, 4) == "QUIT") {
+					printOutput(logFile, "client end\n");
+					quitClient(clntfd, vfds, clntList, i, chList);
+					break;
+				}
+				else {
+					clntList[i - 1]->addMsg(msg);
+					if (*(--msg.end()) == '\n')
+					{
+						if (clntList[i - 1]->getMsg()[0] >= 'A' && clntList[i - 1]->getMsg()[0] <= 'Z')
+						{
+							Command cmd = Command(clntList[i - 1]->getMsg(), clntList[i - 1], clntList, chList, password, logFile);
+							printInput(logFile, clntList[i - 1]->getMsg());
+							if (cmd.execute() == -1)
+								incorrectPassword(clntfd, vfds, clntList, i);
+							noMemberChannel(chList);
+							clntList[i - 1]->setMsg("");
+							break;
+						}
+						else
 							incorrectPassword(clntfd, vfds, clntList, i);
-						noMemberChannel(chList);
-						break;
 					}
 				}
 			}
